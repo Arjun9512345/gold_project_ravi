@@ -20,9 +20,10 @@
                                 *ngFor="let data of autocomplete_itemList"
                                 style="border-bottom:solid 0.5px rgba(170, 170, 170, 0.42);height: 70px ">
 
-                      <img [src]="'assets/images/logos/imageNotFound.png'"
-                           (error)="'assets/images/logos/imageNotFound.png'"
-                           style="width: 50px;height: 50px;object-fit:cover;border: solid 0.5px rgba(170, 170, 170, 0.42);
+                      <img
+                        [src]="data.item_type=='Gold'?'assets/images/gold_icon.png':(data.item_type=='Silver'?'assets/images/silver_icon.jpg':'assets/images/logos/imageNotFound.png')"
+                        (error)="'assets/images/logos/imageNotFound.png'"
+                        style="width: 50px;height: 50px;object-fit:cover;border: solid 0.5px rgba(170, 170, 170, 0.42);
             box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(170, 170, 170, 0.42); border-radius: 25px;padding: 2px;margin: 5px"/>
                       {{data.name}} &nbsp; ( {{data.desc}} )
                     </mat-option>
@@ -56,48 +57,63 @@
                          fxLayoutGap.lt-sm="0px">
                       <!--         todo left side div-->
                       <div fxFlex="20" fxLayoutAlign="start">
-                        <img [src]="'assets/images/logos/imageNotFound.png'"
-                             (error)="'assets/images/logos/imageNotFound.png'"
-                             class="Item_image"/>
+                        <img
+                          [src]="item.item_type=='Gold'?'assets/images/gold_icon.png':(item.item_type=='Silver'?'assets/images/silver_icon.jpg':'assets/images/logos/imageNotFound.png')"
+                          (error)="'assets/images/logos/imageNotFound.png'"
+                          class="Item_image"/>
                       </div>
                       <div fxFlex="80" fxLayout="row"
                            fxLayoutAlign="space-between center">
                         <div fxLayout="column" fxFlex="100">
                                   <span>{{item.item_name}} (<b style="color: red"> {{item.item_desc}} </b>)
-                                     <button (click)="delete_ScanedBarcode(item)" mat-icon-button
+                                     <button (click)="delete_ScanedBarcode(i)" mat-icon-button
                                              matTooltip="Delete Item Line"
                                              class="rounded_shadow_button">
                                   <mat-icon>delete</mat-icon>
                                 </button>
                                   </span>
                           <div fxLayout="row" fxLayoutAlign="space-between center">
-                               <span >
+                               <span>
                             <b>MRP : </b>
-                             &nbsp;&nbsp;₹  <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput [(ngModel)]="item.item_mrp"
-                                       placeholder="Enter Amount">
+                             &nbsp;&nbsp;₹  <input type="number" class="myinputbox_style"
+                                                   (keyup)="userManualValueChange()" matInput
+                                                   [(ngModel)]="item.item_mrp"
+                                                   placeholder="Enter Amount">
                                  <!--                             <b>-->
                                  <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
                                  <!--                            </b>-->
                           </span>
                             <span>
                             <b>Qty : </b>
-                               <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput [(ngModel)]="item.qty"
-                                       placeholder="Enter Amount">
+                               <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput
+                                      [(ngModel)]="item.qty"
+                                      placeholder="Enter Amount">
                               <!--                             <b>-->
                               <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
                               <!--                            </b>-->
                           </span>
                           </div>
-                          <span style="margin-top: 2px">
+                          <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <span style="margin-top: 2px">
                             <b>Weight : </b>
-                              <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput [(ngModel)]="item.item_weight"
-                                       placeholder="Enter Amount"> &nbsp;/gram
-                            <!--                             <b>-->
-                            <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
-                            <!--                            </b>-->
+                              <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput
+                                     [(ngModel)]="item.item_weight"
+                                     placeholder="Enter Amount"> &nbsp;/gram
+                                  <!--                             <b>-->
+                                  <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
+                                  <!--                            </b>-->
                           </span>
-                          <span
-                            fxLayoutAlign="space-between center"><b>Selling Price : </b>₹ {{item.item_mrp?.toFixed(2)}}</span>
+                            <span style="margin-top: 2px">
+                            <b>Making ₹: </b>
+                              <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput
+                                     [(ngModel)]="item.item_making_charge"
+                                     placeholder="Enter Making Charge">
+                              <!--                             <b>-->
+                              <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
+                              <!--                            </b>-->
+                          </span>
+                          </div>
+
                           <span
                             fxLayoutAlign="space-between center"><b>Sub Total : </b>₹ {{item.line_sub_total?.toFixed(2)}}</span>
                           <span fxLayoutAlign="space-between center"><b> GST : <b
@@ -169,21 +185,24 @@
                   <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
                                   floatLabel="never">
                     <mat-label>Enter Customer Name</mat-label>
-                    <input #searchcustomer [value]="selected_customer_name_byuser" autocomplete="off" matInput placeholder="Customer Name"/>
+                    <input #searchcustomer [value]="selected_customer_name_byuser" autocomplete="off" matInput
+                           placeholder="Customer Name"/>
                     <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
                                           color="warn"></mat-progress-spinner>
                   </mat-form-field>
                   <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
                                   floatLabel="never">
                     <mat-label>Enter Customer Phone No</mat-label>
-                    <input #searchcustomer_phone_no [value]="selected_customer_phone_no_byuser" autocomplete="off" matInput placeholder="Customer Phone No."/>
+                    <input #searchcustomer_phone_no [value]="selected_customer_phone_no_byuser" autocomplete="off"
+                           matInput placeholder="Customer Phone No."/>
                     <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
                                           color="warn"></mat-progress-spinner>
                   </mat-form-field>
                   <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
                                   floatLabel="never">
                     <mat-label>Enter Customer Address</mat-label>
-                    <input #searchcustomer_address [value]="selected_customer_address_byuser" autocomplete="off" matInput placeholder="Customer Address"/>
+                    <input #searchcustomer_address [value]="selected_customer_address_byuser" autocomplete="off"
+                           matInput placeholder="Customer Address"/>
                     <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
                                           color="warn"></mat-progress-spinner>
                   </mat-form-field>
@@ -321,8 +340,15 @@
   <br>
   <mat-divider></mat-divider>
   <br>
-  <div class="mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+  <div class="mat-elevation-z0" fxLayout="column" fxLayoutAlign="start">
     <div fxLayout="column">
+      <button class="textOverflow mr-sm-12 mr-md-12" mat-button
+              [matTooltip]="'Add Product'"
+              [matMenuTriggerFor]="product_add_menu"
+              (menuOpened)="item_name.focus()">
+        <mat-icon>person_add</mat-icon>
+        <b> &nbsp;Add Product</b>
+      </button>
       <div style="overflow-y:auto!important;max-height: 550px ">
         <div *ngFor="let item of product_list;let i=index">
           <mat-divider></mat-divider>
@@ -331,29 +357,29 @@
                fxLayoutGap.lt-sm="0px">
             <!--         todo left side div-->
             <div fxFlex="20" fxLayoutAlign="start">
-              <img [src]="'assets/images/logos/imageNotFound.png'"
-                   (error)="'assets/images/logos/imageNotFound.png'"
-                   class="Item_image" width="100"/>
+              <img
+                [src]="item.item_type=='Gold'?'assets/images/gold_icon.png':(item.item_type=='Silver'?'assets/images/silver_icon.jpg':'assets/images/logos/imageNotFound.png')"
+                (error)="'assets/images/logos/imageNotFound.png'"
+                class="Item_image" width="100"/>
             </div>
             <div fxFlex="80" fxLayout="row"
                  fxLayoutAlign="space-between center">
               <div fxLayout="column" fxFlex="100">
                                   <span>{{item.name}} (<b style="color: red"> {{item.desc}} </b>)
-                                     <button (click)="DeleteProduct(index)" mat-icon-button
+                                     <button (click)="DeleteProduct(i)" mat-icon-button
                                              matTooltip="Delete Item Line"
                                              class="rounded_shadow_button">
                                   <mat-icon>delete</mat-icon>
                                 </button>
                                   </span>
                 <span fxLayoutAlign="space-between center">
-                            <b>MRP : </b>
-                             <b>
-                             ₹  {{item.item_type}}
-                            </b>
+                            <b>Item Type : </b>
+                             <b>{{item.item_type}} </b>
                           </span>
-                <span fxLayoutAlign="space-between center"><b> GST : <b
-                  style="font-size: 8px">( {{item.gst_per}}
-                  % )</b></b>  </span>
+                <span fxLayoutAlign="space-between center">
+                            <b>GST : </b>
+                             <b>{{item.gst_per}}% </b>
+                          </span>
               </div>
             </div>
           </div>
@@ -362,6 +388,61 @@
       </div>
     </div>
   </div>
-
+  <mat-menu #product_add_menu="matMenu" class="w-400" [overlapTrigger]="false">
+    <div class="h3 pl-20 pr-20 pt-8 pb-12">
+      <b>Add Product</b>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout="column" class="p-20">
+      <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                      floatLabel="never">
+        <mat-label>Item Name</mat-label>
+        <input #item_name autocomplete="off" matInput placeholder="Item Name"/>
+        <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
+                              color="warn"></mat-progress-spinner>
+      </mat-form-field>
+      <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                      floatLabel="never">
+        <mat-label>Item Description</mat-label>
+        <input #item_desc autocomplete="off" matInput placeholder="Item Description"/>
+        <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
+                              color="warn"></mat-progress-spinner>
+      </mat-form-field>
+      <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                      floatLabel="never">
+        <mat-label>Item Type</mat-label>
+        <mat-select #item_type autocomplete="off" placeholder="Item Type">
+          <mat-option value="Gold">Gold</mat-option>
+          <mat-option value="Silver">Silver</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                      floatLabel="never">
+        <mat-label>GST %</mat-label>
+        <input #item_gst_per type="number" value="0" autocomplete="off" matInput placeholder="GST %"/>
+      </mat-form-field>
+      <div class="p-8" fxFlex="100">
+        <button
+          (click)="AddProduct(item_name.value,item_desc.value,item_type.value,item_gst_per.value);item_name.value='';item_desc.value='';item_type.value='';item_gst_per.value=''"
+          fxFlex="100"
+          mat-stroked-button style="border-radius: 0px;font-size: 16px;border-color: #404040;"
+          color="primary" class="p-4"> Submit
+        </button>
+      </div>
+      <!--                  <div fxFlex="100" style="text-align: center" fxLayoutAlign="row">-->
+      <!--                    <div class="separator_of_add_customer_or_submit">-->
+      <!--                      <span class="text">OR</span>-->
+      <!--                    </div>-->
+      <!--                  </div>-->
+      <!--                  <div class="p-8" fxFlex="100">-->
+      <!--                    <button (click)="openCustomerMasterDialog(searchcustomer.value)" fxFlex="100" mat-stroked-button-->
+      <!--                            style="border-radius: 0px;font-size: 16px;border-color: #404040;"-->
+      <!--                            color="primary" class="p-4">-->
+      <!--                      Add Customer-->
+      <!--                    </button>-->
+      <!--                  </div>-->
+    </div>
+  </mat-menu>
 </ng-template>
 

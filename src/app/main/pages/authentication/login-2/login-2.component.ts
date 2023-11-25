@@ -102,7 +102,8 @@ export class Login2Component implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
-
+    let product_list_string:string=this._sessionManageMent.getBarcode;
+    this.product_list=JSON.parse(product_list_string);
   }
 
 
@@ -150,9 +151,11 @@ export class Login2Component implements OnInit, OnDestroy {
       this.sale_order_header_line_list.push({
         item_name: selected_item_scan_filter[0].name,
         item_desc: selected_item_scan_filter[0].desc,
+        item_type:selected_item_scan_filter[0].item_type,
         item_mrp: 0,
         item_weight:0,
         item_gst_per: selected_item_scan_filter[0].gst_per,
+        item_making_charge:0,
         qty:1,
         line_sub_total:0,
         line_total_gst_amt:0,
@@ -164,9 +167,11 @@ export class Login2Component implements OnInit, OnDestroy {
       this.sale_order_header_line_list[sale_order_line_index]={
         item_name: selected_item_scan_filter[0].name,
         item_desc: selected_item_scan_filter[0].desc,
+        item_type:selected_item_scan_filter[0].item_type,
         item_mrp: this.sale_order_header_line_list[sale_order_line_index].item_mrp,
         item_weight: this.sale_order_header_line_list[sale_order_line_index].item_weight,
         item_gst_per: selected_item_scan_filter[0].gst_per,
+        item_making_charge:0,
         qty:this.sale_order_header_line_list[sale_order_line_index].qty+=1,
         line_sub_total:0,
         line_total_gst_amt:0,
@@ -183,10 +188,10 @@ export class Login2Component implements OnInit, OnDestroy {
 
       value.line_sub_total=value.qty*value.item_mrp*value.item_weight;
       value.line_total_gst_amt=value.line_sub_total*value.item_gst_per/100;
-      value.line_total_amount=value.line_sub_total+(value.line_sub_total*value.item_gst_per/100);
+      value.line_total_amount=value.line_sub_total+(value.line_sub_total*value.item_gst_per/100)+value.item_making_charge;
 
       this.total_qty+=value.qty;
-      this.total_weight+=value.item_weight;
+      this.total_weight+=(value.item_weight*value.qty);
       this.sub_total+=value.line_sub_total;
       this.total_gst+=value.line_total_gst_amt;
       this.total_amount+=value.line_total_amount;
@@ -204,10 +209,10 @@ export class Login2Component implements OnInit, OnDestroy {
 
       value.line_sub_total=value.qty*value.item_mrp*value.item_weight;
       value.line_total_gst_amt=(value.line_sub_total*value.item_gst_per/100);
-      value.line_total_amount=value.line_sub_total+(value.line_sub_total*value.item_gst_per/100);
+      value.line_total_amount=value.line_sub_total+(value.line_sub_total*value.item_gst_per/100)+value.item_making_charge;
 
       this.total_qty+=value.qty;
-      this.total_weight+=value.item_weight;
+      this.total_weight+=(value.item_weight*value.qty);
       this.sub_total+=value.line_sub_total;
       this.total_gst+=value.line_total_gst_amt;
       this.total_amount+=value.line_total_amount;
@@ -224,7 +229,7 @@ export class Login2Component implements OnInit, OnDestroy {
     this.sale_order_header_line_list.map(value => {
 
       this.total_qty+=value.qty;
-      this.total_weight+=value.item_weight;
+      this.total_weight+=(value.item_weight*value.qty);
       this.sub_total+=value.line_sub_total;
       this.total_gst+=value.line_total_gst_amt;
       this.total_amount+=value.line_total_amount;
@@ -249,23 +254,40 @@ export class Login2Component implements OnInit, OnDestroy {
     this.total_amount=0;
   }
 
-  product_list: Array<ProductListModel> = [
-    {name: 'Gold', desc: 'Gold 24K', item_type: 'Gold', gst_per: 5},
-    {name: 'Silver', desc: 'Silver 20g', item_type: 'Silver', gst_per: 5},
-  ]
+  product_list: Array<ProductListModel> = [];
   @ViewChild('product_list_ui') product_list_ui!: TemplateRef<any>;
-
+  dialogRef:any;
   productItemAddInsert() {
-    var dialogRef = this.dialog.open(this.product_list_ui, {width: "500px"});
-    dialogRef.afterClosed().subscribe(value => {
-      window.location.reload();
-    });
+    this.dialogRef = this.dialog.open(this.product_list_ui, {width: "500px"});
   }
   DeleteProduct(index){
-
+    this.product_list.splice(index,1);
+    this._sessionManageMent.setBarcode(JSON.stringify(this.product_list));
+    let product_list_string:string=this._sessionManageMent.getBarcode;
+    this.product_list=JSON.parse(product_list_string);
+    // this.dialogRef.close();
   }
-  AddPro(index){
-
+  AddProduct(name,desc,item_type,gst_per){
+    if(name==null||name==''||name==undefined){
+      this._toastr.error("Please Enter Product Name.");
+      return;
+    }
+    let search_index_filter= this.product_list.findIndex(value => {
+       return value.name.toString().toLowerCase()==name.toString().toLowerCase();
+     });
+    if(search_index_filter>=0){
+      this._toastr.error("Product Already Added.");
+      return;
+    }
+    if(gst_per==null || gst_per=='' || gst_per==undefined)
+      gst_per=0;
+    this.product_list.push(
+      {name: name, desc: desc, item_type: item_type, gst_per: gst_per}
+    );
+    this._sessionManageMent.setBarcode(JSON.stringify(this.product_list));
+    let product_list_string:string=this._sessionManageMent.getBarcode;
+    this.product_list=JSON.parse(product_list_string);
+    // this.dialogRef.close();
   }
 
   openCreatePaymentDialog() {
@@ -282,9 +304,11 @@ export interface ProductListModel {
 export interface SaleOrderListModel {
   item_name: string,
   item_desc: string,
+  item_type:string,
   item_mrp: number,
   item_weight:number,
   item_gst_per: number,
+  item_making_charge: number,
   qty:number,
   line_sub_total:number,
   line_total_gst_amt:number,
