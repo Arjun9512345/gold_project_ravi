@@ -330,16 +330,16 @@
                fxLayoutGap="10px"
                fxLayoutGap.lt-sm="0px">
             <!--         todo left side div-->
-            <div fxFlex="30" fxLayoutAlign="start">
+            <div fxFlex="20" fxLayoutAlign="start">
               <img [src]="'assets/images/logos/imageNotFound.png'"
                    (error)="'assets/images/logos/imageNotFound.png'"
                    class="Item_image" width="100"/>
             </div>
-            <div fxFlex="70" fxLayout="row"
+            <div fxFlex="80" fxLayout="row"
                  fxLayoutAlign="space-between center">
               <div fxLayout="column" fxFlex="100">
                                   <span>{{item.name}} (<b style="color: red"> {{item.desc}} </b>)
-                                     <button (click)="delete_ScanedBarcode(item)" mat-icon-button
+                                     <button (click)="DeleteProduct(index)" mat-icon-button
                                              matTooltip="Delete Item Line"
                                              class="rounded_shadow_button">
                                   <mat-icon>delete</mat-icon>

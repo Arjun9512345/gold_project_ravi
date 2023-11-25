@@ -261,6 +261,12 @@ export class Login2Component implements OnInit, OnDestroy {
       window.location.reload();
     });
   }
+  DeleteProduct(index){
+
+  }
+  AddPro(index){
+
+  }
 
   openCreatePaymentDialog() {
   }
