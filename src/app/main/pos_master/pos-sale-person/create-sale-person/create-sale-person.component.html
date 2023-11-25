@@ -1,0 +1,51 @@
+<div class="create_pos_sale_person_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}}
+        <b *ngIf="this.data.flag=='Update Sale Person'">( <b style="color: red">{{this.data.sale_person_Data?.code}}</b> )</b></b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <b style="padding: 5px;"><u>Info</u></b>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline" fxFlex="49">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name" type="text" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="49">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="email_id" type="text" autocomplete="off">
+      </mat-form-field>
+
+    </div>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline" fxFlex="49">
+        <mat-label>Zivame Employee ID</mat-label>
+        <input matInput [(ngModel)]="zivame_employee_id" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="49">
+        <mat-label>Contact No.</mat-label>
+        <input matInput [(ngModel)]="phone_no" type="tel" maxlength="10" autocomplete="off">
+      </mat-form-field>
+
+
+    </div>
+
+    <div fxLayout="column">
+      <button style="margin-top: 23px"
+              [disabled]="((name==''||name==null)|| (email_id==''||email_id==null)|| (phone_no==''||phone_no==null)|| (zivame_employee_id==''||zivame_employee_id==null)) "
+              (click)="OnsubmitHit()" color="accent"
+              mat-raised-button> SAVE
+      </button>
+    </div>
+
+  </div>
+</div>
+
+

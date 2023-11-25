@@ -1,0 +1,279 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="getsaledashboard">
+  <div class="content p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+
+        <div class=" h3 mb-8 p-12">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+              <b>Sale Day Close</b>
+            <div *ngIf="day_close_data_response?.length>0">
+              <button (click)="discardDocument()" aria-label="Submit" color="warn" mat-raised-button>
+                Discard
+              </button>
+              &nbsp; &nbsp;
+              <button aria-label="Submit" (click)="SubmitDocumentDocument()" color="accent" mat-raised-button>
+                Submit
+              </button>
+            </div>
+            <button *ngIf="day_close_data_response?.length<=0" (click)="SubmitDocumentDocument()" [matMenuTriggerFor]="filterMenu" color="accent" matTooltip="Download Report" mat-raised-button>
+              Report
+            </button>
+
+          </div>
+          <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+            <b>Filter Detail</b>
+            <mat-divider class="mt-12 mb-12"></mat-divider>
+            <div [formGroup]="adjustmentFormGroup" class="ml-12 mr-12" fxLayout="column" fxLayoutAlign="start stretch"
+                 (click)="$event.stopPropagation()">
+              <mat-form-field appearance="legacy" style="width: 100%">
+                <mat-label>Store Name</mat-label>
+                <mat-select formControlName="store" (opened)="inp_store.focus();inp_store.value=''"
+                            (closed)="storeFilterArray = storeMasterListModels">
+                  <input matInput class="h-40 mt-8 p-16"
+                         (keyup)="filterOptions($event?.target?.value)"
+                         autocomplete="off"
+                         #inp_store>
+                  <mat-divider></mat-divider>
+                  <mat-option *ngFor="let item of storeFilterArray" [value]="item?.id">{{item?.name}} ( {{item.id}} )</mat-option>
+                </mat-select>
+                <mat-icon class="mx-4" matPrefix>storefront</mat-icon>
+              </mat-form-field>
+              <!--    Dates-->
+              <!--        <div fxLayout="row" fxLayoutAlign="space-between" style="width: 100%">-->
+              <mat-form-field appearance="legacy" style="width: 100%">
+                <mat-label>Start Date</mat-label>
+                <input matInput formControlName="start_date" [max]="today" [matDatepicker]="start" (click)="start.open()"/>
+                <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
+                <mat-datepicker #start></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="legacy" style="width: 100%">
+                <mat-label>End Date</mat-label>
+                <input matInput formControlName="end_date" [matDatepicker]="end"
+                       [min]="adjustmentFormGroup?.get('start_date').value" [max]="today" (click)="end.open()"/>
+                <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
+                <mat-datepicker #end></mat-datepicker>
+              </mat-form-field>
+
+            </div>
+            <div class="mt-12" fxLayout="row" class="ml-12 mr-12" fxLayoutAlign="space-between center" style="width: 100%">
+              <button (click)="DownloadReport();filterMenu.closed" fxFlex="45"
+                      [disabled]="adjustmentFormGroup.invalid"
+                      aria-label="Submit"
+                      color="accent"
+                      mat-flat-button
+                      style="width:48%">Get </button>
+
+
+              <button (click)="adjustmentFormGroup.reset(); $event.stopPropagation()" fxFlex="45"
+                      aria-label="Reset"
+                      color="primary"
+                      mat-flat-button
+                      style="width:48%">Reset</button>
+            </div>
+          </mat-menu>
+
+        </div>
+
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" >
+          <form [formGroup]="saledashboardForm" *ngIf="day_close_data_response?.length<=0">
+            <div fxLayout="column">
+              <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                <mat-form-field appearance="outline" fxFlex="33" >
+                  <mat-label>Store Name</mat-label>
+                  <mat-select formControlName="store_id">
+                    <mat-option (click)="BindPosTerminal(data.id)" *ngFor="let data of storeMasterListModels" [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="date_range_data?.length>0" appearance="outline" fxFlex="33">
+                  <mat-label>Start Date </mat-label>
+                  <input matInput formControlName="from_date" readonly >
+<!--                  <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>-->
+<!--                  <mat-datepicker  #frompicker></mat-datepicker>-->
+                  <mat-error>
+                    Start Date is required
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="date_range_data?.length>0" fxFlex="33">
+                  <mat-label>End Date </mat-label>
+                  <input matInput formControlName="to_date" readonly (click)="endpicker.open()"
+                         autocomplete="off" [matDatepicker]="endpicker" [min]="date_range_data[0].start_date" [max]="date_range_data[0].end_date"  placeholder="Choose to date">
+                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                  <mat-datepicker  #endpicker></mat-datepicker>
+                  <mat-error>
+                    End Date is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row"  fxLayout.lt-sm="column" *ngIf="date_range_data?.length>0" fxLayoutGap="20px">
+                <mat-form-field *ngIf="false" appearance="outline" fxFlex="33" >
+                  <mat-label>Terminal Name</mat-label>
+                  <mat-select formControlName="store_id" (selectionChange)="getDateRange()">
+                    <mat-option  *ngFor="let data of pos_teminal_list" [value]="data.pos_code.toString()">{{data.computer_description}} ( {{data.pos_code}} )</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div  fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.lt-sm="center">
+                  <div fxLayout="column" style="width: 150px; height:80px;margin-top: 15px">
+                    <button (click)="CreateDayCloseHeader()" [disabled]="saledashboardForm.invalid"
+                            aria-label="Submit"
+                            color="accent"
+                            mat-raised-button>
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="wrapper2" *ngIf="day_close_data_response?.length>0">
+            <div fxLayout="column">
+              <div  fxLayout="column" fxLayout.gt-xs="row">
+                <div class="mr-8" fxFlex="33">
+                  <div class="pristine-card auto-width mb-16"
+                       style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                       fxLayoutAlign="start">
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Document No.</b></span>
+                      <span class="title dialog-title" style="color: green">{{day_close_data_response[0]?.document_no}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Status </b></span>
+                      <span class="title dialog-title">{{day_close_data_response[0]?.status}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Created On</b></span>
+                      <span
+                        class="title dialog-title">{{day_close_data_response[0]?.created_on|date:'dd/MM/yyyy hh:mm aa'}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b> Store Id</b></span>
+                      <span class="title dialog-title"> {{day_close_data_response[0].store_id}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="ml-8 mr-8" fxFlex="33">
+                  <div class="pristine-card auto-width mb-16"
+                       style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                       fxLayoutAlign="start">
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Start Date</b></span>
+                      <span class="title dialog-title" style="color: green">{{day_close_data_response[0]?.tran_start_date|date:'dd/MM/yyyy'}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>End Date</b></span>
+                      <span class="title dialog-title" style="color: green">{{day_close_data_response[0]?.tran_end_date|date:'dd/MM/yyyy'}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Total No of Orders</b></span>
+                      <span
+                        class="title dialog-title">{{day_close_data_response[0]?.total_no_of_order}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b> Terminal Id</b></span>
+                      <span class="title dialog-title"> {{day_close_data_response[0].terminal_id}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="ml-8 mr-8" fxFlex="33">
+                  <div class="pristine-card auto-width mb-16"
+                       style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                       fxLayoutAlign="start">
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Total Sale</b></span>
+                      <span class="title dialog-title" style="color: green">{{day_close_data_response[0]?.total_sales_amount}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Total Return</b></span>
+                      <span class="title dialog-title" style="color: green">{{day_close_data_response[0]?.total_sale_retur_amount}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b> Total GST</b></span>
+                      <span class="title dialog-title"> {{(day_close_data_response[0].total_cgst_amount+day_close_data_response[0].total_sgst_amount+day_close_data_response[0].total_igst_amount).toFixed(2)}}</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                      <span class="title dialog-title"><b>Total Day Close Amount</b></span>
+                      <span
+                        class="title dialog-title">{{day_close_data_response[0]?.total_day_close_amount}}</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="widget" fxFlex="100" fxFlex.gt-sm="100">
+
+                <div class=" auto-width mb-32">
+
+                  <div class="p-4" fxLayout="row">
+                    <div class="headertableMyCustome " fxFlex="100">
+                      <table >
+                        <tbody style="font-size: 12px;">
+                        <tr>
+                          <th>Tender Type</th>
+                          <th>Total Amount</th>
+                          <th>Counted Amount</th>
+                          <th>Float Amount</th>
+                          <th>Difference Amount</th>
+
+                        </tr>
+                        <tr *ngFor="let item of day_close_data_response[0]?.spl">
+                          <td>{{item.tender_type}}</td>
+                          <td>{{item.trans_amount}}</td>
+                          <td><input type="number" [(ngModel)]="item.counted_amount"
+                                     (change)="changeAmountValue(item)" style="padding: 5px;width: 100%"/></td>
+                          <td>
+                            <span>{{item.float_amount}}</span></td>
+                          <td>{{item.difference_amount}}</td>
+                        </tr>
+
+                        <tr>
+                          <td style="text-align:right"><b>TOTAL : </b></td>
+                          <td>{{getTotalAmount()}}</td>
+                          <td>{{getCountedAmount()}}</td>
+                          <td>{{getFloatAmountAmount()}}</td>
+                          <td>{{getDiffrenceAmount()}}</td>
+                        </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

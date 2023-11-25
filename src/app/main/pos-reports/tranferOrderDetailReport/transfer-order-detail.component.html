@@ -1,0 +1,165 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="stockLedger">
+  <div class="content p-20" pristinePerfectScrollbar>
+
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+
+        <div class=" h3 p-16 pb-0 mb-8">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+            <b>Transfer Order Detail Report</b>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+
+              <button matTooltip="Download Excel"
+                      *ngIf="dataSourceHeader?.data?.length>0 && dataSourceHeader?.data[0]?.condition?.toLowerCase()!='false'"
+                      mat-raised-button color="accent" (click)="downloadExcel()">
+                <mat-icon class="mx-8">cloud_download</mat-icon>
+                Get Report
+              </button> &nbsp;&nbsp;
+              <button matTooltip="Open Filter" color="accent" mat-raised-button [matMenuTriggerFor]="filterMenu">
+                <mat-icon class="mx-8">search</mat-icon>
+                Filter
+              </button>
+              <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+                <b>Filter Detail</b>
+                <mat-divider class="mt-12 mb-12"></mat-divider>
+                <div [formGroup]="transferOrderFormGroup" class="ml-12 mr-12" fxLayout="column" fxLayoutAlign="start stretch"
+                      (click)="$event.stopPropagation()">
+                  <mat-form-field appearance="legacy" style="width: 100%">
+          <mat-label>Store Name</mat-label>
+          <mat-select formControlName="store" (opened)="inp_store.focus();inp_store.value=''"
+                      (closed)="storeFilterArray = storeMasterListModels">
+            <input matInput class="h-40 mt-8 p-16"
+                   (keyup)="filterOptions($event?.target?.value)"
+                   autocomplete="off"
+                   #inp_store>
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let item of storeFilterArray" [value]="item?.id">{{item?.name}} ( {{item.id}} )</mat-option>
+          </mat-select>
+          <mat-icon class="mx-4" matPrefix>storefront</mat-icon>
+        </mat-form-field>
+                  <!--    Dates-->
+                  <!--        <div fxLayout="row" fxLayoutAlign="space-between" style="width: 100%">-->
+          <mat-form-field appearance="legacy" style="width: 100%">
+            <mat-label>Start Date</mat-label>
+            <input matInput formControlName="start_date" [max]="today" [matDatepicker]="start" (click)="start.open()"/>
+            <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="legacy" style="width: 100%">
+            <mat-label>End Date</mat-label>
+            <input matInput formControlName="end_date" [matDatepicker]="end"
+                   [min]="transferOrderFormGroup?.get('start_date').value" [max]="today" (click)="end.open()"/>
+            <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="legacy" style="width: 100%">
+            <mat-label>Document Number</mat-label>
+            <input matInput formControlName="doc_no"/>
+            <mat-icon class="mx-4" matPrefix>description</mat-icon>
+          </mat-form-field>
+                  <!--        </div>-->
+
+                </div>
+                <div class="mt-12" fxLayout="row" class="ml-12 mr-12" fxLayoutAlign="space-between center" style="width: 100%">
+                  <button (click)="getReport();filterMenu.closed" fxFlex="45"
+                          [disabled]="transferOrderFormGroup.invalid"
+                          aria-label="Submit"
+                          color="accent"
+                          mat-flat-button
+                          style="width:48%">Get </button>
+
+
+                  <button (click)="transferOrderFormGroup.reset(); $event.stopPropagation()" fxFlex="45"
+                          aria-label="Reset"
+                          color="primary"
+                          mat-flat-button
+                          style="width:48%">Reset</button>
+                  </div>
+              </mat-menu>
+            </div>
+
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-tab-group>
+          <!--          Header-->
+          <mat-tab label="Transfer Order Header">
+            <div class="p-16" fxFlex fxLayout="column">
+              <div fxLayout="column">
+                <span class="example-container">
+              <table [dataSource]="dataSourceHeader"
+                     *ngIf="dataSourceHeader?.data?.length>0 && dataSourceHeader?.data[0]?.condition?.toLowerCase()!='false'"
+                     mat-table matSort>
+                <ng-container *ngFor="let column of displayedColumnsHeader;" [matColumnDef]="column"
+                              [sticky]="column=='transfer_order_type'">
+                  <th *matHeaderCellDef mat-header-cell>
+                    <div class="filterHeader">
+                      <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                      <input (keyup)="applyFilter($event.target.value,column, 'header')"
+                             [placeholder]="column|firstAnd_Split">
+                    </div>
+                  </th>
+                  <td *matCellDef="let element;let j = index" mat-cell>
+                    <p>{{element[column]}}</p>
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumnsHeader" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumnsHeader;" mat-row></tr>
+              </table>
+              <div *ngIf="dataSourceHeader?.data?.length<=0 || dataSourceHeader?.data[0]?.condition=='False'"
+                   class="h3 m-16">No Record Found.</div>
+              <mat-divider
+                *ngIf="dataSourceHeader?.data?.length<=0 || dataSourceHeader?.data[0]?.condition=='False'"></mat-divider>
+            </span>
+              </div>
+              <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length"
+                             (page)="myPagginaterEvent($event)" #headerPaginator showFirstLastButtons></mat-paginator>
+            </div>
+          </mat-tab>
+
+          <!--          Line-->
+          <mat-tab label="Transfer Order Line">
+            <div class="p-16" fxFlex fxLayout="column">
+              <div fxLayout="column">
+                <span class="example-container">
+              <table [dataSource]="dataSourceLine" *ngIf="dataSourceLine?.data?.length>0 " mat-table matSort #linesort>
+                <ng-container *ngFor="let column of displayedColumnsLine;" [matColumnDef]="column"
+                              [sticky]="column=='document_no' || column== 'transfer_order_type'">
+                  <th *matHeaderCellDef mat-header-cell>
+                    <div class="filterHeader">
+                      <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                      <input (keyup)="applyFilter($event.target.value,column,'line')"
+                             [placeholder]="column|firstAnd_Split">
+                    </div>
+                  </th>
+                  <td *matCellDef="let element;let j = index" mat-cell>
+                    <p>{{element[column]}}</p>
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumnsLine" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumnsLine;" mat-row></tr>
+              </table>
+              <div *ngIf="dataSourceLine?.data?.length<=0 " class="h3 m-16">No Record Found.</div>
+              <mat-divider *ngIf="dataSourceLine?.data?.length<=0"></mat-divider>
+            </span>
+              </div>
+              <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length"
+                             (page)="myPagginaterEvent($event)" #PaginatorLine showFirstLastButtons></mat-paginator>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+

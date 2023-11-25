@@ -1,0 +1,101 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="sale_history_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate" style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Sales Credit Note</b>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div class="temptable">
+            <table mat-table
+                   [dataSource]="viewBrandDataSource" multiTemplateDataRows matSort
+                   class="mat-elevation-z1">
+              <ng-container [sticky]="column=='sale_header_no'?true:false" matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="filterHeader">
+                    <b mat-sort-header *ngIf="column!='sale_header_no'">{{column|firstAnd_Split}}</b>
+                    <b mat-sort-header *ngIf="column=='sale_header_no'">{{'receipt_no'|firstAnd_Split}}</b>
+                    <br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='Action'"
+                           [placeholder]="column|firstAnd_Split"
+                           matInput>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                <p *ngIf="column!='Action'">{{element[column]}}</p>
+                  <button *ngIf="column=='Action'" mat-icon-button>
+                    <mat-icon *ngIf="element['Action']">keyboard_arrow_up</mat-icon>
+                    <mat-icon *ngIf="!element['Action']">keyboard_arrow_down</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                  <div class="example-element-detail"
+                       [@detailExpand]="element['Action'] ? 'expanded' : 'collapsed'">
+                    <div fxFlex="100" fxLayout="column" >
+                      <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                        <div fxFlex="25">
+                          <b>Receipt No.</b>
+                        </div>
+                        <div fxFlex="25">
+                          <b>Created By</b>
+                        </div>
+                        <div fxFlex="25">
+                          <b>Applied By</b>
+                        </div>
+                        <div fxFlex="25">
+                          <b>Paid credit Amount</b>
+                        </div>
+                      </div>
+                      <mat-divider></mat-divider>
+                      <div *ngIf="element['creditnotDetail'] && element['creditnotDetail'].length>0;else tableelse">
+                        <div class="rowCell" *ngFor="let creadit of element['creditnotDetail']" fxLayout="column">
+                          <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                            <div fxFlex="25">
+                              {{creadit.sale_header_no}}
+                            </div>
+                            <div fxFlex="25">
+                              {{creadit.return_customer_Name}}
+                            </div>
+                            <div fxFlex="25">
+                              {{creadit.applied_customer_Name}}
+                            </div>
+                            <div fxFlex="25">
+                              {{creadit.credit_amt}}
+                            </div>
+                          </div>
+                          <mat-divider></mat-divider>
+                        </div>
+                      </div>
+                      <ng-template #tableelse>
+                        <div class="p-8">No Record Found...</div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                  class="example-element-row"
+                  [class.example-expanded-row]="element['Action']"
+                  (click)="selected_Row( element)">
+              </tr>
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <mat-paginator #first_paginator [pageSizeOptions]="[ 5, 10, 20, 30,40,50]" pageSize="10"
+                           showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,92 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="store_inventory_report">
+  <div class="p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-16 pb-0 mb-8" fxLayout="row" fxLayoutAlign="space-between center">
+          <b>Store Inventory Report</b>
+          <span fxLayout="row">
+          <button matTooltip="Category"
+                  *ngIf="dataSource?.data?.length>0 && dataSource?.data[0]?.condition?.toLowerCase()!='false'"
+                  mat-raised-button color="accent" (click)="showPopUp()">
+            <mat-icon class="mx-8">visibility</mat-icon>Category
+          </button>
+            &nbsp;&nbsp;
+          <button matTooltip="Download Excel"
+                  *ngIf="dataSource?.data?.length> 0 && dataSource?.data[0]?.condition?.toLowerCase()!='false'"
+                  mat-raised-button color="accent" (click)="downloadExcel()">
+            <mat-icon class="mx-8">cloud_download</mat-icon>Get Report
+              </button> &nbsp;&nbsp;
+        </span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div class="popup_locationContent" fxLayout="column" matDialogContent>
+            <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="30px"
+                 fxLayoutGap.lt-sm="0px">
+              <div fxFlex="50">
+                <mat-form-field appearance="outline" fxFlex="50">
+                  <mat-label>Store Name</mat-label>
+                  <mat-select [(ngModel)]="store_code" (selectionChange)="getReport(store_code)">
+                    <mat-option *ngFor="let data of storeMasterListModels" [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="example-container">
+            <table [dataSource]="dataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column"
+                            [stickyEnd]="column=='item_no'">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p >{{element[column]}}</p>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length" (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #category>
+  <div fxLayout="column" fxFlex>
+    <span class="bb" fxLayout="row" fxLayoutAlign="space-between center">
+      <h3>Category Inventory {{store_code}}</h3>
+      <button mat-icon-button mat-dialog-close><mat-icon>clear</mat-icon></button>
+    </span>
+    <table style="width: 100%">
+    <thead>
+    <tr>
+    <th>Category Name</th>
+    <th>Inventory</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ele of  CategoryRep?.data">
+      <td>{{ele?.cat_name }}</td>
+      <td>{{ele?.inv}}</td>
+    </tr>
+    </tbody>
+    <tfoot class="bt">
+    <td><b>Grand Total</b></td>
+    <td><b>{{getTotal()}}</b></td>
+    </tfoot>
+  </table>
+  </div>
+</ng-template>
+

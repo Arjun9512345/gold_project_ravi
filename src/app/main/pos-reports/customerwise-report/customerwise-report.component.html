@@ -1,0 +1,129 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="sale_history_List_page">
+  <div class="p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate" style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class=" h3 p-16 pb-0 mb-8">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+            <b>Customer wise Report</b>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <button matTooltip="Download Excel" mat-raised-button color="accent"
+                      *ngIf="customerData?.length>0"
+                      (click)="downloadExcel()">
+                <mat-icon class="mx-8">cloud_download</mat-icon>Get Report
+              </button>
+              &nbsp;&nbsp;
+              <button matTooltip="Open Filter" color="accent"  mat-raised-button [matMenuTriggerFor]="filterMenu" >
+                <mat-icon class="mx-8">search</mat-icon>Filter
+              </button>
+
+              <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+                <p class="text-bold m-0 h3" style="color: rgb(72 72 72)">Filter</p>
+                <mat-divider class="mt-12 mb-12"></mat-divider>
+                <div   [formGroup]="customerWiseForm"  fxLayout="column" fxLayoutAlign="start stretch" (click)="$event.stopPropagation()">
+                  <mat-form-field appearance="legacy" style="width: 100%">
+                    <mat-label>Store Name</mat-label>
+                    <mat-select formControlName="store_id" multiple>
+                      <mat-option *ngFor="let data of storeMasterListModels"
+                                  [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <!--Dates-->
+                  <div fxLayout="row" fxLayoutAlign="space-between" style="width: 100%">
+                    <mat-form-field appearance="legacy" style="width: 48%">
+                      <mat-label>From Date</mat-label>
+                      <input matInput formControlName="from_date" readonly (click)="frompicker.open()"
+                             autocomplete="off" [matDatepicker]="frompicker" [max]="today" placeholder="Choose from date"
+                             (ngModelChange)="showTable=false">
+                      <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+                      <mat-datepicker #frompicker></mat-datepicker>
+                      <mat-error>
+                        From Date is required
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="legacy" style="width: 48%">
+                      <mat-label>To Date</mat-label>
+                      <input matInput formControlName="to_date" readonly (click)="endpicker.open()"
+                             autocomplete="off" [matDatepicker]="endpicker" [min]="this.customerWiseForm.get('from_date').value"
+                             [max]="today" placeholder="Choose to date"
+                             (ngModelChange)="showTable=false">
+                      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                      <mat-datepicker #endpicker></mat-datepicker>
+                      <mat-error>
+                        To Date is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <span class="mt-12"  fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%">
+                  <button (click)="getCreditNoteViewList();filterMenu.closed" fxFlex="45" [disabled]="customerWiseForm.invalid"
+                          aria-label="Submit"
+                          color="accent"
+                          mat-flat-button
+                          style="width:48%">
+                          Get
+                        </button>
+                  <button (click)="customerWiseForm.reset(); $event.stopPropagation()" fxFlex="45"
+                          aria-label="Reset"
+                          color="primary"
+                          mat-flat-button
+                          style="width:48%">
+                   Reset
+                  </button>
+                  </span>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column">
+        <div class="p-10" >
+          <div class="p-12" *ngIf="!showTable" ><h2>No Records Found</h2></div>
+          <mat-accordion displayMode="flat" multi class="mat-table" *ngIf="showTable">
+            <section matSort class="mat-elevation-z2 mat-header-row mat-expansion-panel-header" fxLayout="row">
+              <span class="mat-header-cell p-8" mat-sort-header="project_name" fxFlex="25">Cust_id</span>
+              <span class="mat-header-cell p-8" mat-sort-header="tot_hours" fxFlex="25">Name</span>
+              <span class="mat-header-cell p-8" mat-sort-header="tot_hours" fxFlex="25">Phone no.</span>
+              <span class="mat-header-cell p-8" mat-sort-header="tot_hours" fxFlex="25">Email id</span>
+              <span class="mat-header-cell p-8" mat-sort-header="tot_hours" fxFlex="25">Total amount</span>
+            </section>
+
+            <mat-expansion-panel *ngFor="let item of customerData;let i=index" [class]="(i%2==0)?'dark':''">
+              <mat-expansion-panel-header class="mat-row" >
+                <span class="mat-cell px-8"  fxFlex="25">{{item.cust_id}}</span>
+                <span class="mat-cell px-8"  fxFlex="25">{{item.name}}</span>
+                <span class="mat-cell px-8"  fxFlex="25">{{item.phone_no}}</span>
+                <span class="mat-cell px-8"  fxFlex="25">{{item.email_id}}</span>
+                <span class="mat-cell px-8"  fxFlex="25">{{getTotalAmount(item?.sp[0]?.amount+item?.sp[1]?.amount+item?.sp[2]?.amount+item?.sp[3]?.amount)}}</span>
+
+
+              </mat-expansion-panel-header>
+              <div class="px-0 py-8 headertableMyCustome">
+
+                <table >
+                  <tbody style="font-size: 12px;">
+                  <tr>
+                    <th>Payment Type</th>
+                    <th>Amount</th>
+                  </tr>
+                  <tr *ngFor="let sp of item.sp">
+                    <td>{{sp?.pay_type}}</td>
+                    <td>{{sp?.amount}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--customerWiseForm-->
+

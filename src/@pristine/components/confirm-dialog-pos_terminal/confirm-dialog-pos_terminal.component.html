@@ -1,0 +1,21 @@
+<h1 matDialogTitle>{{confirmMessage}}</h1>
+<div fxLayoutAlign="center" mat-dialog-actions>
+  <div fxFlex fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>{{inputFieldMessage}}</mat-label>
+      <input [(ngModel)]="pass_update_computer_desc" [placeholder]="inputFieldMessage" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{inputemailMessage}}</mat-label>
+      <input [(ngModel)]="pass_update_email" [placeholder]="inputemailMessage" matInput>
+    </mat-form-field>
+    <div fxLayout="row">
+      <button (click)="dialogRef.close({condition:'true',message:pass_update_computer_desc,email:pass_update_email})" class="mat-accent mr-16"
+              mat-raised-button>{{addbutton}}
+      </button>
+      <button (click)="dialogRef.close(false)" color="warn" mat-raised-button>Cancel</button>
+    </div>
+  </div>
+
+</div>
+

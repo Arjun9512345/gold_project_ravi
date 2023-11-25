@@ -1,0 +1,79 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="nav_sync_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate" style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Nav Sync List</b>
+          <button  mat-icon-button matTooltip="Download Excel"
+                  (click)="DownloadExcel()"
+                  class="header_button">
+            <mat-icon>system_update</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div fxLayout="row">
+          <mat-form-field appearance="outline" fxFlex="30">
+            <mat-label>Select Store</mat-label>
+            <mat-select (selectionChange)="getPosTerminalViewList($event.value)">
+              <mat-option   [value]="'Sale'">Sale Data</mat-option>
+              <mat-option   [value]="'Day Close'">Day Close</mat-option>
+              <mat-option   [value]="'Transfer'">Transfer Data</mat-option>
+              <mat-option   [value]="'Internal'">Cycle/Item Adjustment Data</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+          <div class="example-container">
+            <table [dataSource]="viewBrandDataSource" mat-table matSort>
+              <ng-container [sticky]="column=='pos_code'?true:false" [stickyEnd]="column=='Action'?true:false"
+                            *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='Action' && column!='brand_icon'"
+                           [placeholder]="column|firstAnd_Split"
+                           matInput>
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column!='Action' && column!='push_xml' && column!='response_xml' && column!='response_message'">{{element[column]}}</p>
+                  <p *ngIf="column=='push_xml'">
+
+                    <button  mat-icon-button (click)="copyText(element[column])" matTooltip="Copy Nav Send Xml">
+
+                      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16.5 12.5H15v4l3 2 .75-1.23-2.25-1.52V12.5zM16 9L2 3v7l9 2-9 2v7l7.27-3.11C10.09 20.83 12.79 23 16 23c3.86 0 7-3.14 7-7s-3.14-7-7-7zm0 12c-2.75 0-4.98-2.22-5-4.97v-.07c.02-2.74 2.25-4.97 5-4.97 2.76 0 5 2.24 5 5S18.76 21 16 21z"/></svg>
+                    </button>
+
+
+                  </p>
+                  <p *ngIf="column=='response_xml'">
+
+                    <button  mat-icon-button (click)="copyText(element[column])" matTooltip="Copy Nav Response Xml">
+                      <mat-icon>turned_in_not</mat-icon>
+                    </button>
+
+                  </p>
+                  <p *ngIf="column=='response_message'">{{element[column]}}</p>
+                  <mat-chip-list   *ngIf="column=='Action'" mat-icon-button >
+                    <mat-chip matTooltip="Hit To Nav" (click)="hitToNavAgain(element)"> <mat-icon>send</mat-icon></mat-chip>
+                  </mat-chip-list>
+
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="viewBrandDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewBrandDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator #first_paginator [pageSizeOptions]="[ 5, 10, 20, 30,40,50]" pageSize="10"
+                         showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

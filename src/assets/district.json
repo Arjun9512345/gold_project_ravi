@@ -1,0 +1,2132 @@
+[
+  {
+    "name": "NEW DELHI"
+  },
+  {
+    "name": "BARWANI"
+  },
+  {
+    "name": "Jaintia Hills"
+  },
+  {
+    "name": "JAJAPUR"
+  },
+  {
+    "name": "ADILABAD"
+  },
+  {
+    "name": "LALITPUR"
+  },
+  {
+    "name": "Yavatmal"
+  },
+  {
+    "name": "KANDHAMAL"
+  },
+  {
+    "name": "AMBEDKAR NAGAR"
+  },
+  {
+    "name": "KOKRAJHAR"
+  },
+  {
+    "name": "FIROZPUR"
+  },
+  {
+    "name": "LUCKNOW"
+  },
+  {
+    "name": "LAKHIMPUR"
+  },
+  {
+    "name": "Pune"
+  },
+  {
+    "name": "MAHRAJGANJ"
+  },
+  {
+    "name": "Avanigadda"
+  },
+  {
+    "name": "RAJAURI"
+  },
+  {
+    "name": "Upper Subansiri"
+  },
+  {
+    "name": "POONCH"
+  },
+  {
+    "name": "KOLLAM"
+  },
+  {
+    "name": "BHIND"
+  },
+  {
+    "name": "BALANGIR"
+  },
+  {
+    "name": "PURULIYA"
+  },
+  {
+    "name": "BUXAR"
+  },
+  {
+    "name": "WEST CHAMPARAN"
+  },
+  {
+    "name": "KAWARDHA"
+  },
+  {
+    "name": "MORBI"
+  },
+  {
+    "name": "KANNUR"
+  },
+  {
+    "name": "HARIDWAR"
+  },
+  {
+    "name": "DARBHANGA"
+  },
+  {
+    "name": "JHARSUGUDA"
+  },
+  {
+    "name": "HAPUR"
+  },
+  {
+    "name": "BARDHAMAN"
+  },
+  {
+    "name": "PURI"
+  },
+  {
+    "name": "Lunglei"
+  },
+  {
+    "name": "HOSHIARPUR"
+  },
+  {
+    "name": "JAISALMER"
+  },
+  {
+    "name": "KAMAREDDY"
+  },
+  {
+    "name": "Kurnool"
+  },
+  {
+    "name": "SERAIKELAKHARSAWAN"
+  },
+  {
+    "name": "Sangli"
+  },
+  {
+    "name": "RAMPUR"
+  },
+  {
+    "name": "LATUR"
+  },
+  {
+    "name": "Kiphire"
+  },
+  {
+    "name": "Lower Dibang Valley"
+  },
+  {
+    "name": "MAHESANA"
+  },
+  {
+    "name": "PALGHAR"
+  },
+  {
+    "name": "UDAIPUR"
+  },
+  {
+    "name": "West Tripura"
+  },
+  {
+    "name": "BHADRAK"
+  },
+  {
+    "name": "Bapatla"
+  },
+  {
+    "name": "NADIA"
+  },
+  {
+    "name": "West Garo Hills"
+  },
+  {
+    "name": "PULWAMA"
+  },
+  {
+    "name": "SIRCILLA"
+  },
+  {
+    "name": "MURSHIDABAD"
+  },
+  {
+    "name": "NARMADA"
+  },
+  {
+    "name": "KATHUA"
+  },
+  {
+    "name": "JHABUA"
+  },
+  {
+    "name": "SATARA"
+  },
+  {
+    "name": "KENDUJHAR"
+  },
+  {
+    "name": "DUNGARPUR"
+  },
+  {
+    "name": "SRINAGAR"
+  },
+  {
+    "name": "KHANDWA"
+  },
+  {
+    "name": "RATNAGIRI"
+  },
+  {
+    "name": "BARGARH"
+  },
+  {
+    "name": "NILGIRIS"
+  },
+  {
+    "name": "MAHENDRAGARH"
+  },
+  {
+    "name": "SAHIBGANJ"
+  },
+  {
+    "name": "NIRMAL"
+  },
+  {
+    "name": "AHMED NAGAR"
+  },
+  {
+    "name": "Gandhinagar"
+  },
+  {
+    "name": "GIRIDH"
+  },
+  {
+    "name": "SABARKANTHA"
+  },
+  {
+    "name": "BHANDARA"
+  },
+  {
+    "name": "ALWAR"
+  },
+  {
+    "name": "BUNDI"
+  },
+  {
+    "name": "DINDIGUL"
+  },
+  {
+    "name": "LAHUL  SPITI"
+  },
+  {
+    "name": "UMARIA"
+  },
+  {
+    "name": "DHENKANAL"
+  },
+  {
+    "name": "HYDERABAD"
+  },
+  {
+    "name": "BELAGAVI"
+  },
+  {
+    "name": "Saraswathipuram"
+  },
+  {
+    "name": "ETAWAH"
+  },
+  {
+    "name": "BHAVNAGAR"
+  },
+  {
+    "name": "ALAPPUZHA"
+  },
+  {
+    "name": "DHANBAD"
+  },
+  {
+    "name": "Udupi"
+  },
+  {
+    "name": "BALAGHAT"
+  },
+  {
+    "name": "BARMER"
+  },
+  {
+    "name": "GARHWA"
+  },
+  {
+    "name": "BELLARY"
+  },
+  {
+    "name": "HANUMANGARH"
+  },
+  {
+    "name": "NAVSARI"
+  },
+  {
+    "name": "BENGALURU RURAL"
+  },
+  {
+    "name": "Kollegal"
+  },
+  {
+    "name": "AMRAVATI"
+  },
+  {
+    "name": "ARWAL"
+  },
+  {
+    "name": "SAHARSA"
+  },
+  {
+    "name": "Jangaon"
+  },
+  {
+    "name": "BOKARO"
+  },
+  {
+    "name": "Bidar"
+  },
+  {
+    "name": "SIROHI"
+  },
+  {
+    "name": "JALNA"
+  },
+  {
+    "name": "SINDHUDURG"
+  },
+  {
+    "name": "BAHRAICH"
+  },
+  {
+    "name": "RAEBARELI"
+  },
+  {
+    "name": "Dhalai"
+  },
+  {
+    "name": "DEORIA"
+  },
+  {
+    "name": "MORENA"
+  },
+  {
+    "name": "RAIGARH(MH)"
+  },
+  {
+    "name": "AURAIYA"
+  },
+  {
+    "name": "BHAGALPUR"
+  },
+  {
+    "name": "TINSUKIA"
+  },
+  {
+    "name": "LAKHISARAI"
+  },
+  {
+    "name": "KOZHIKODE"
+  },
+  {
+    "name": "South Andaman"
+  },
+  {
+    "name": "SEHORE"
+  },
+  {
+    "name": "KADAPA"
+  },
+  {
+    "name": "UNNAO"
+  },
+  {
+    "name": "BUDGAM"
+  },
+  {
+    "name": "CHICKMAGALUR"
+  },
+  {
+    "name": "Kohima"
+  },
+  {
+    "name": "NAINITAL"
+  },
+  {
+    "name": "KARNAL"
+  },
+  {
+    "name": "GAYA"
+  },
+  {
+    "name": "RAIPUR"
+  },
+  {
+    "name": "KAIMUR BHABUA"
+  },
+  {
+    "name": "RAJKOT"
+  },
+  {
+    "name": "EAST SINGHBHUM"
+  },
+  {
+    "name": "North & Middle Andaman"
+  },
+  {
+    "name": "DADRA  NAGAR HAVELI"
+  },
+  {
+    "name": "SOLAPUR"
+  },
+  {
+    "name": "JHUJHUNU"
+  },
+  {
+    "name": "MAHABUB NAGAR"
+  },
+  {
+    "name": "NANDURBAR"
+  },
+  {
+    "name": "North Tripura"
+  },
+  {
+    "name": "Agartala "
+  },
+  {
+    "name": "TONK"
+  },
+  {
+    "name": "SANGRUR"
+  },
+  {
+    "name": "OSMANABAD"
+  },
+  {
+    "name": "SUPAUL"
+  },
+  {
+    "name": "Kupwara"
+  },
+  {
+    "name": "DODA"
+  },
+  {
+    "name": "TIRUVARUR"
+  },
+  {
+    "name": "Parkal"
+  },
+  {
+    "name": "AGAR MALWA"
+  },
+  {
+    "name": "Tuensang"
+  },
+  {
+    "name": "Dantewada"
+  },
+  {
+    "name": "NAGAON"
+  },
+  {
+    "name": "PATNA"
+  },
+  {
+    "name": "Narayanpur"
+  },
+  {
+    "name": "Imphal West"
+  },
+  {
+    "name": "GADWAL"
+  },
+  {
+    "name": "DHAR"
+  },
+  {
+    "name": "Champhai"
+  },
+  {
+    "name": "Sepahijala"
+  },
+  {
+    "name": "JAMUI"
+  },
+  {
+    "name": "KORIYA"
+  },
+  {
+    "name": "HINGOLI"
+  },
+  {
+    "name": "Chandel"
+  },
+  {
+    "name": "NABARANGAPUR"
+  },
+  {
+    "name": "DHOLPUR"
+  },
+  {
+    "name": "SRIKAKULAM"
+  },
+  {
+    "name": "KISHANGANJ"
+  },
+  {
+    "name": "EAST CHAMPARAN"
+  },
+  {
+    "name": "KORBA"
+  },
+  {
+    "name": "BALRAMPUR"
+  },
+  {
+    "name": "SIDHI"
+  },
+  {
+    "name": "KAPURTHALA"
+  },
+  {
+    "name": "SHAHDARA"
+  },
+  {
+    "name": "BOTAB"
+  },
+  {
+    "name": "ARAVALLI"
+  },
+  {
+    "name": "PALWAL"
+  },
+  {
+    "name": "SIRSA"
+  },
+  {
+    "name": "BANDIPUR"
+  },
+  {
+    "name": "CHAMOLI"
+  },
+  {
+    "name": "DANGS"
+  },
+  {
+    "name": "KHUNTI"
+  },
+  {
+    "name": "SIDDHARTHNAGAR"
+  },
+  {
+    "name": "GUNTUR"
+  },
+  {
+    "name": "SOUTH WEST DELHI"
+  },
+  {
+    "name": "BATHINDA"
+  },
+  {
+    "name": "AMBALA"
+  },
+  {
+    "name": "RAISEN"
+  },
+  {
+    "name": "BULDHANA"
+  },
+  {
+    "name": "PUDUKKOTTAI"
+  },
+  {
+    "name": "NORTH 24 PARGANAS"
+  },
+  {
+    "name": "Bijapur(CGH)"
+  },
+  {
+    "name": "FARIDABAD"
+  },
+  {
+    "name": "Kanker"
+  },
+  {
+    "name": "NAYAGARH"
+  },
+  {
+    "name": "FARIDKOT"
+  },
+  {
+    "name": "JEHANABAD"
+  },
+  {
+    "name": "PALAMAU"
+  },
+  {
+    "name": "PATHANAMTHITTA"
+  },
+  {
+    "name": "JHALAWAR"
+  },
+  {
+    "name": "GANDHI NAGAR"
+  },
+  {
+    "name": "PRATAPGHAR"
+  },
+  {
+    "name": "RAMANATHAPURAM"
+  },
+  {
+    "name": "BARPETA"
+  },
+  {
+    "name": "VILLUPURAM"
+  },
+  {
+    "name": "SULTANPUR"
+  },
+  {
+    "name": "KATIHAR"
+  },
+  {
+    "name": "AMRELI"
+  },
+  {
+    "name": "SHAHDOL"
+  },
+  {
+    "name": "LUDHIANA"
+  },
+  {
+    "name": "CACHAR"
+  },
+  {
+    "name": "DIMA HASSO - NORTH CACHAR HILL"
+  },
+  {
+    "name": "NORTH EAST DELHI"
+  },
+  {
+    "name": "GIR SOMNATH"
+  },
+  {
+    "name": "MEERUT"
+  },
+  {
+    "name": "KURUKSHETRA"
+  },
+  {
+    "name": "JODHPUR"
+  },
+  {
+    "name": "Chittoor"
+  },
+  {
+    "name": "East Kameng"
+  },
+  {
+    "name": "BARABANKI"
+  },
+  {
+    "name": "SIWAN"
+  },
+  {
+    "name": "MEWAT"
+  },
+  {
+    "name": "BILASPUR HP"
+  },
+  {
+    "name": "KINNAUR"
+  },
+  {
+    "name": "Hazaribagh"
+  },
+  {
+    "name": "Chamrajnagar"
+  },
+  {
+    "name": "TARN TARAN"
+  },
+  {
+    "name": "HATHRAS"
+  },
+  {
+    "name": "JASPUR"
+  },
+  {
+    "name": "Bastar"
+  },
+  {
+    "name": "GANDERBAL"
+  },
+  {
+    "name": "MALDA"
+  },
+  {
+    "name": "SURAJPUR"
+  },
+  {
+    "name": "WEST DELHI"
+  },
+  {
+    "name": "PALAKKAD"
+  },
+  {
+    "name": "CHITRAKOOT"
+  },
+  {
+    "name": "ERNAKULAM"
+  },
+  {
+    "name": "Zunhebotto"
+  },
+  {
+    "name": "CHIKKABALLAPUR"
+  },
+  {
+    "name": "SAMBALPUR"
+  },
+  {
+    "name": "UDHAMPUR"
+  },
+  {
+    "name": "Dharwad"
+  },
+  {
+    "name": "CUDDALORE"
+  },
+  {
+    "name": "VIZIANAGARAM"
+  },
+  {
+    "name": "NELLORE"
+  },
+  {
+    "name": "PERAMBALUR"
+  },
+  {
+    "name": "GAUTAM BUDDHA NAGAR"
+  },
+  {
+    "name": "SOUTH 24 PARGANAS"
+  },
+  {
+    "name": "MUNGELI"
+  },
+  {
+    "name": "AHMEDABAD"
+  },
+  {
+    "name": "EAST MIDNAPORE"
+  },
+  {
+    "name": "Mysuru"
+  },
+  {
+    "name": "Gomati"
+  },
+  {
+    "name": "SANGAREDDY"
+  },
+  {
+    "name": "Nicobar"
+  },
+  {
+    "name": "KASARGOD"
+  },
+  {
+    "name": "WEST MIDNAPORE"
+  },
+  {
+    "name": "DARRANG"
+  },
+  {
+    "name": "INDORE"
+  },
+  {
+    "name": "BIKANER"
+  },
+  {
+    "name": "SIKAR"
+  },
+  {
+    "name": "Bangalore"
+  },
+  {
+    "name": "MUMBAI SUBUEBAN"
+  },
+  {
+    "name": "Ri Bhoi"
+  },
+  {
+    "name": "KENDRAPARA"
+  },
+  {
+    "name": "NAGAPATTINAM"
+  },
+  {
+    "name": "BANDA"
+  },
+  {
+    "name": "KATNI"
+  },
+  {
+    "name": "Kurung Kumey"
+  },
+  {
+    "name": "HAVERI"
+  },
+  {
+    "name": "PEDDAPALLI"
+  },
+  {
+    "name": "JALPAIGURI"
+  },
+  {
+    "name": "BONGAIGAON"
+  },
+  {
+    "name": "HOSHANGABAD"
+  },
+  {
+    "name": "GANJAM"
+  },
+  {
+    "name": "MALKANGIRI"
+  },
+  {
+    "name": "NANDED"
+  },
+  {
+    "name": "ERODE"
+  },
+  {
+    "name": "Changlang"
+  },
+  {
+    "name": "SIVAGANGA"
+  },
+  {
+    "name": "MANCHERIAL"
+  },
+  {
+    "name": "NORTH SIKKIM"
+  },
+  {
+    "name": "THRISSUR"
+  },
+  {
+    "name": "Kochi"
+  },
+  {
+    "name": "MANSA"
+  },
+  {
+    "name": "KOTA"
+  },
+  {
+    "name": "RAJSAMAND"
+  },
+  {
+    "name": "GORAKHPUR"
+  },
+  {
+    "name": "MUMBAI"
+  },
+  {
+    "name": "GAJAPATI"
+  },
+  {
+    "name": "JAMNAGAR"
+  },
+  {
+    "name": "JHANSI"
+  },
+  {
+    "name": "KUSHINAGAR"
+  },
+  {
+    "name": "ANANTHAPUR"
+  },
+  {
+    "name": "JANJGIRCHAMPA"
+  },
+  {
+    "name": "Jagdalpur"
+  },
+  {
+    "name": "ANAND"
+  },
+  {
+    "name": "MANDLA"
+  },
+  {
+    "name": "Tamenglong"
+  },
+  {
+    "name": "KANPUR NAGAR"
+  },
+  {
+    "name": "DAHOD"
+  },
+  {
+    "name": "Peren"
+  },
+  {
+    "name": "ALLAHABAD"
+  },
+  {
+    "name": "DHAMTARI"
+  },
+  {
+    "name": "SAMBA"
+  },
+  {
+    "name": "DAVANGERE"
+  },
+  {
+    "name": "TIRUPPUR"
+  },
+  {
+    "name": "SITAPUR"
+  },
+  {
+    "name": "DHUBRI"
+  },
+  {
+    "name": "GHAZIPUR"
+  },
+  {
+    "name": "UDALGURI"
+  },
+  {
+    "name": "BHUPALPALLI"
+  },
+  {
+    "name": "SOUTH SIKKIM"
+  },
+  {
+    "name": "SARAN"
+  },
+  {
+    "name": "WEST SINGHBHUM"
+  },
+  {
+    "name": "BURHANPUR"
+  },
+  {
+    "name": "South Tripura"
+  },
+  {
+    "name": "CHHINDWARA"
+  },
+  {
+    "name": "Kolhapur"
+  },
+  {
+    "name": "PATAN"
+  },
+  {
+    "name": "NEEMUCH"
+  },
+  {
+    "name": "NA"
+  },
+  {
+    "name": "Lakshadweep"
+  },
+  {
+    "name": "Bishnupur"
+  },
+  {
+    "name": "PANCHKULA"
+  },
+  {
+    "name": "KANGRA"
+  },
+  {
+    "name": "RANGAREDDY"
+  },
+  {
+    "name": "BHONGIR"
+  },
+  {
+    "name": "FARRUKHABAD"
+  },
+  {
+    "name": "NASHIK"
+  },
+  {
+    "name": "MADHUBANI"
+  },
+  {
+    "name": "Janjgir-Champa"
+  },
+  {
+    "name": "MUZAFFARPUR"
+  },
+  {
+    "name": "Mandya"
+  },
+  {
+    "name": "BEGUSARAI"
+  },
+  {
+    "name": "DEVBHOOMI DWERKA"
+  },
+  {
+    "name": "Hanamkonda"
+  },
+  {
+    "name": "DEWAS"
+  },
+  {
+    "name": "Khagaria"
+  },
+  {
+    "name": "MALAPPURAM"
+  },
+  {
+    "name": "BETUL"
+  },
+  {
+    "name": "PARBHANI"
+  },
+  {
+    "name": "SIDDIPET"
+  },
+  {
+    "name": "NALBARI"
+  },
+  {
+    "name": "SHEIKHPURA"
+  },
+  {
+    "name": "PANCH MAHALS"
+  },
+  {
+    "name": "AJMER"
+  },
+  {
+    "name": "DHARMAPURI"
+  },
+  {
+    "name": "GOLAGHAT"
+  },
+  {
+    "name": "SHOPIAN"
+  },
+  {
+    "name": "KARUR"
+  },
+  {
+    "name": "Vikarabad"
+  },
+  {
+    "name": "KOTHAGUDEM"
+  },
+  {
+    "name": "GADAG"
+  },
+  {
+    "name": "BIJNOR"
+  },
+  {
+    "name": "Hindupur"
+  },
+  {
+    "name": "ARARIA"
+  },
+  {
+    "name": "GUMLA"
+  },
+  {
+    "name": "RAMBAN"
+  },
+  {
+    "name": "LOHARDAGA"
+  },
+  {
+    "name": "KOLAR"
+  },
+  {
+    "name": "WEST SIKKIM"
+  },
+  {
+    "name": "BENGALURU"
+  },
+  {
+    "name": "TIRUCHIRAPPALLI"
+  },
+  {
+    "name": "GUNA"
+  },
+  {
+    "name": "East Siang"
+  },
+  {
+    "name": "West Siang"
+  },
+  {
+    "name": "Upper Siang"
+  },
+  {
+    "name": "MAHARAJGANJ"
+  },
+  {
+    "name": "BILASPUR (HP)"
+  },
+  {
+    "name": "ANANTHNAG"
+  },
+  {
+    "name": "REASI"
+  },
+  {
+    "name": "GOPALGANJ"
+  },
+  {
+    "name": "BEMETARA"
+  },
+  {
+    "name": "SAWAI MADHOPUR"
+  },
+  {
+    "name": "NARSINGHPUR"
+  },
+  {
+    "name": "DATIA"
+  },
+  {
+    "name": "GADCHIROLI"
+  },
+  {
+    "name": "SONITPUR"
+  },
+  {
+    "name": "GOALPARA"
+  },
+  {
+    "name": "HAILAKANDI"
+  },
+  {
+    "name": "AURANGABAD"
+  },
+  {
+    "name": "BAGESHWAR"
+  },
+  {
+    "name": "CHAMBA"
+  },
+  {
+    "name": "AKOLA"
+  },
+  {
+    "name": "Churachandpur"
+  },
+  {
+    "name": "NUAPADA"
+  },
+  {
+    "name": "MAHOBA"
+  },
+  {
+    "name": "CHANDAULI"
+  },
+  {
+    "name": "EAST DELHI"
+  },
+  {
+    "name": "DIU"
+  },
+  {
+    "name": "KACHCHH"
+  },
+  {
+    "name": "HARDA"
+  },
+  {
+    "name": "VIDISHA"
+  },
+  {
+    "name": "DEBAGARH"
+  },
+  {
+    "name": "KARBI ANGLONG"
+  },
+  {
+    "name": "MEDAK"
+  },
+  {
+    "name": "BANKURA"
+  },
+  {
+    "name": "Tirap"
+  },
+  {
+    "name": "JAGTIAL"
+  },
+  {
+    "name": "KHERI"
+  },
+  {
+    "name": "SURGUJA"
+  },
+  {
+    "name": "HAZARIBAG"
+  },
+  {
+    "name": "BIJAPUR"
+  },
+  {
+    "name": "BAKSA"
+  },
+  {
+    "name": "NALANDA"
+  },
+  {
+    "name": "Kalghatgi"
+  },
+  {
+    "name": "KOPPAL"
+  },
+  {
+    "name": "BHILWARA"
+  },
+  {
+    "name": "VARANASI"
+  },
+  {
+    "name": "SANT RAVIDAS NAGAR"
+  },
+  {
+    "name": "ALMORA"
+  },
+  {
+    "name": "PURNIA"
+  },
+  {
+    "name": "SHEOHAR"
+  },
+  {
+    "name": "SHEOPUR"
+  },
+  {
+    "name": "MAU"
+  },
+  {
+    "name": "BALOD"
+  },
+  {
+    "name": "Ahmedabad City"
+  },
+  {
+    "name": "DAMAN"
+  },
+  {
+    "name": "THANJAVUR"
+  },
+  {
+    "name": "NAGAR KURNOOL"
+  },
+  {
+    "name": "PAKUR"
+  },
+  {
+    "name": "RAYAGADA"
+  },
+  {
+    "name": "NAMAKKAL"
+  },
+  {
+    "name": "UNA"
+  },
+  {
+    "name": "FAIZABAD"
+  },
+  {
+    "name": "JAUNPUR"
+  },
+  {
+    "name": "YAMUNANAGAR"
+  },
+  {
+    "name": "Papum Pare"
+  },
+  {
+    "name": "AGRA"
+  },
+  {
+    "name": "MORADABAD"
+  },
+  {
+    "name": "GWALIOR"
+  },
+  {
+    "name": "RATLAM"
+  },
+  {
+    "name": "WASHIM"
+  },
+  {
+    "name": "Wokha"
+  },
+  {
+    "name": "SAHARANPUR"
+  },
+  {
+    "name": "SANT KABIR NAGAR"
+  },
+  {
+    "name": "BALESWAR"
+  },
+  {
+    "name": "MAYURBHANJ"
+  },
+  {
+    "name": "SUNDERGARH"
+  },
+  {
+    "name": "KORAPUT"
+  },
+  {
+    "name": "East Godavari"
+  },
+  {
+    "name": "NORTH WEST DELHI"
+  },
+  {
+    "name": "PAURI GARHWAL"
+  },
+  {
+    "name": "BANKA"
+  },
+  {
+    "name": "GARIABAND"
+  },
+  {
+    "name": "JUNAGADH"
+  },
+  {
+    "name": "JALAUN"
+  },
+  {
+    "name": "BALLIA"
+  },
+  {
+    "name": "SAMASTIPUR"
+  },
+  {
+    "name": "SOLAN"
+  },
+  {
+    "name": "JAMTARA"
+  },
+  {
+    "name": "Miraj"
+  },
+  {
+    "name": "BANSWARA"
+  },
+  {
+    "name": "IDUKKI"
+  },
+  {
+    "name": "JABALPUR"
+  },
+  {
+    "name": "MUZAFFARNAGAR"
+  },
+  {
+    "name": "UDHAM SINGH NAGAR"
+  },
+  {
+    "name": "MIRZAPUR"
+  },
+  {
+    "name": "NORTH DINAJPUR"
+  },
+  {
+    "name": "VAISHALI"
+  },
+  {
+    "name": "HOOGHLY"
+  },
+  {
+    "name": "KOTTAYAM"
+  },
+  {
+    "name": "BARAN"
+  },
+  {
+    "name": "Mon"
+  },
+  {
+    "name": "MUKTSAR"
+  },
+  {
+    "name": "GURGAON"
+  },
+  {
+    "name": "THIRUVANANTHAPURAM"
+  },
+  {
+    "name": "CHHATARPUR"
+  },
+  {
+    "name": "SATNA"
+  },
+  {
+    "name": "BULANDSHAHR"
+  },
+  {
+    "name": "SURAT"
+  },
+  {
+    "name": "FATEHPUR"
+  },
+  {
+    "name": "TUTICORIN"
+  },
+  {
+    "name": "BAREILLY"
+  },
+  {
+    "name": "CENTRAL DELHI"
+  },
+  {
+    "name": "Kargil"
+  },
+  {
+    "name": "Kasaragod"
+  },
+  {
+    "name": "UJJAIN"
+  },
+  {
+    "name": "Prayagraj Allahabad"
+  },
+  {
+    "name": "PILIBHIT"
+  },
+  {
+    "name": "SIMDEGA"
+  },
+  {
+    "name": "FATEHGARH SAHIB"
+  },
+  {
+    "name": "KARAIKAL"
+  },
+  {
+    "name": "CHENNAI"
+  },
+  {
+    "name": "Machilipatnam"
+  },
+  {
+    "name": "CHAMARAJANAGAR"
+  },
+  {
+    "name": "GONDIA"
+  },
+  {
+    "name": "GODDA"
+  },
+  {
+    "name": "KANYAKUMARI"
+  },
+  {
+    "name": "SUKMA"
+  },
+  {
+    "name": "BHARUCH"
+  },
+  {
+    "name": "REWARI"
+  },
+  {
+    "name": "Aizawal"
+  },
+  {
+    "name": "PATIALA"
+  },
+  {
+    "name": "MOGA"
+  },
+  {
+    "name": "KAMRUP"
+  },
+  {
+    "name": "DHEMAJI"
+  },
+  {
+    "name": "MADHEPURA"
+  },
+  {
+    "name": "BHIWANI"
+  },
+  {
+    "name": "Imphal East"
+  },
+  {
+    "name": "West Khasi Hills"
+  },
+  {
+    "name": "MAHISAGAR"
+  },
+  {
+    "name": "JHAJJAR"
+  },
+  {
+    "name": "CHATRA"
+  },
+  {
+    "name": "ROHTAK"
+  },
+  {
+    "name": "VELLORE"
+  },
+  {
+    "name": "KANPUR DEHAT"
+  },
+  {
+    "name": "KAITHAL"
+  },
+  {
+    "name": "WAYANAD"
+  },
+  {
+    "name": "NORTH GOA"
+  },
+  {
+    "name": "DARJILING"
+  },
+  {
+    "name": "MARIGAON"
+  },
+  {
+    "name": "DUMKA"
+  },
+  {
+    "name": "BAGALKOT"
+  },
+  {
+    "name": "BHOJPUR"
+  },
+  {
+    "name": "BILASPURCGH"
+  },
+  {
+    "name": "SONIPAT"
+  },
+  {
+    "name": "SRIGANGANAGAR"
+  },
+  {
+    "name": "ARIYALUR"
+  },
+  {
+    "name": "ALIRAJPUR"
+  },
+  {
+    "name": "DHULE"
+  },
+  {
+    "name": "JAGATSINGHAPUR"
+  },
+  {
+    "name": "AMROHA"
+  },
+  {
+    "name": "SHAHJAHANPUR"
+  },
+  {
+    "name": "ROHTAS"
+  },
+  {
+    "name": "DEOGHAR"
+  },
+  {
+    "name": "Nagpur"
+  },
+  {
+    "name": "Baramulla"
+  },
+  {
+    "name": "SAGAR"
+  },
+  {
+    "name": "SAMBHAL"
+  },
+  {
+    "name": "RAJNANDGAON"
+  },
+  {
+    "name": "ASHOK NAGAR"
+  },
+  {
+    "name": "Ukhrul"
+  },
+  {
+    "name": "Serchhip"
+  },
+  {
+    "name": "UTTARKASHI"
+  },
+  {
+    "name": "EAST SIKKIM"
+  },
+  {
+    "name": "DAMOH"
+  },
+  {
+    "name": "MUNGER"
+  },
+  {
+    "name": "Saiha"
+  },
+  {
+    "name": "VIRUDHUNAGAR"
+  },
+  {
+    "name": "WANAPARTHY"
+  },
+  {
+    "name": "NAWANSHAHR"
+  },
+  {
+    "name": "NAGAUR"
+  },
+  {
+    "name": "BAGPAT"
+  },
+  {
+    "name": "TEHRI GARHWAL"
+  },
+  {
+    "name": "Joida"
+  },
+  {
+    "name": "Jalgaon"
+  },
+  {
+    "name": "KOLKATA"
+  },
+  {
+    "name": "Thoubal"
+  },
+  {
+    "name": "Kolasib"
+  },
+  {
+    "name": "PONDICHERRY"
+  },
+  {
+    "name": "BASTI"
+  },
+  {
+    "name": "KHORDA"
+  },
+  {
+    "name": "Trimulgherry"
+  },
+  {
+    "name": "TAPI"
+  },
+  {
+    "name": "CHANDRAPUR"
+  },
+  {
+    "name": "Lawngtlai"
+  },
+  {
+    "name": "VISAKHAPATNAM"
+  },
+  {
+    "name": "SURENDRA NAGAR"
+  },
+  {
+    "name": "CHITRADURGA"
+  },
+  {
+    "name": "South Garo Hills"
+  },
+  {
+    "name": "SHIVPURI"
+  },
+  {
+    "name": "KALAHANDI"
+  },
+  {
+    "name": "BHARATPUR"
+  },
+  {
+    "name": "JALOR"
+  },
+  {
+    "name": "Warangal"
+  },
+  {
+    "name": "GHAZIABAD"
+  },
+  {
+    "name": "PANIPAT"
+  },
+  {
+    "name": "BEED"
+  },
+  {
+    "name": "FIROZABAD"
+  },
+  {
+    "name": "RUDRAPRAYAG"
+  },
+  {
+    "name": "KULGAM"
+  },
+  {
+    "name": "MATHURA"
+  },
+  {
+    "name": "KANNAUJ"
+  },
+  {
+    "name": "JORHAT"
+  },
+  {
+    "name": "SHIVAMOGGA"
+  },
+  {
+    "name": "ROPAR"
+  },
+  {
+    "name": "JAMMU"
+  },
+  {
+    "name": "Dimapur"
+  },
+  {
+    "name": "COIMBATORE"
+  },
+  {
+    "name": "KOTHAGUDEM COLLS"
+  },
+  {
+    "name": "RAICHUR"
+  },
+  {
+    "name": "SEONI"
+  },
+  {
+    "name": "TIRUVANNAMALAI"
+  },
+  {
+    "name": "KANCHIPURAM"
+  },
+  {
+    "name": "East Garo Hills"
+  },
+  {
+    "name": "CHANDIGHAR"
+  },
+  {
+    "name": "PORBANDAR"
+  },
+  {
+    "name": "Dakshina Kannada"
+  },
+  {
+    "name": "AMRITSAR"
+  },
+  {
+    "name": "BIRBHUM"
+  },
+  {
+    "name": "PANNA"
+  },
+  {
+    "name": "ANUPPUR"
+  },
+  {
+    "name": "KARIMGANJ"
+  },
+  {
+    "name": "SOUTH DELHI"
+  },
+  {
+    "name": "BIJAPUR(KAR)"
+  },
+  {
+    "name": "COOCH BEHAR"
+  },
+  {
+    "name": "LATEHAR"
+  },
+  {
+    "name": "Upper Dibang Valley"
+  },
+  {
+    "name": "JIND"
+  },
+  {
+    "name": "HAMIRPURHP"
+  },
+  {
+    "name": "HASSAN"
+  },
+  {
+    "name": "MOHALI"
+  },
+  {
+    "name": "FAZILKA"
+  },
+  {
+    "name": "NALGONDA"
+  },
+  {
+    "name": "HAMIRPUR"
+  },
+  {
+    "name": "HARDOI"
+  },
+  {
+    "name": "PRATAPGARH"
+  },
+  {
+    "name": "KAMRUP METROPOLITAN"
+  },
+  {
+    "name": "KARAULI"
+  },
+  {
+    "name": "AMETHI"
+  },
+  {
+    "name": "BOUDH"
+  },
+  {
+    "name": "TIRUVALLUR"
+  },
+  {
+    "name": "VALSAD"
+  },
+  {
+    "name": "TUMAKURU"
+  },
+  {
+    "name": "DINDORI"
+  },
+  {
+    "name": "Lower Subansiri"
+  },
+  {
+    "name": "SURYAPET"
+  },
+  {
+    "name": "SIRMAUR"
+  },
+  {
+    "name": "Aligarh"
+  },
+  {
+    "name": "WARDHA"
+  },
+  {
+    "name": "PALI"
+  },
+  {
+    "name": "KRISHNAGIRI"
+  },
+  {
+    "name": "HISAR"
+  },
+  {
+    "name": "West Kameng"
+  },
+  {
+    "name": "AZAMGARH"
+  },
+  {
+    "name": "GONDA"
+  },
+  {
+    "name": "PRAKASAM"
+  },
+  {
+    "name": "KRISHNA"
+  },
+  {
+    "name": "JALANDHAR"
+  },
+  {
+    "name": "BANASKANTHA"
+  },
+  {
+    "name": "SRI GANGANAGAR"
+  },
+  {
+    "name": "HOWRAH"
+  },
+  {
+    "name": "SHIMLA"
+  },
+  {
+    "name": "Mammit"
+  },
+  {
+    "name": "RAIGARH"
+  },
+  {
+    "name": "Mokokchung"
+  },
+  {
+    "name": "MAINPURI"
+  },
+  {
+    "name": "SHRAWASTI"
+  },
+  {
+    "name": "CHAMPAWAT"
+  },
+  {
+    "name": "SIBSAGAR"
+  },
+  {
+    "name": "Lohit"
+  },
+  {
+    "name": "TIKAMGARH"
+  },
+  {
+    "name": "Aizawl"
+  },
+  {
+    "name": "MANDSAUR"
+  },
+  {
+    "name": "SOUTH GOA"
+  },
+  {
+    "name": "KANSHIRAM NAGAR"
+  },
+  {
+    "name": "SONBHADRA"
+  },
+  {
+    "name": "SOUTH DINAJPUR"
+  },
+  {
+    "name": "VADODARA"
+  },
+  {
+    "name": "Ramgarh"
+  },
+  {
+    "name": "RAJGARH"
+  },
+  {
+    "name": "CUTTACK"
+  },
+  {
+    "name": "NAWADA"
+  },
+  {
+    "name": "MANDI"
+  },
+  {
+    "name": "Malegaon"
+  },
+  {
+    "name": "DURG"
+  },
+  {
+    "name": "Kodagu"
+  },
+  {
+    "name": "KHAMMAM"
+  },
+  {
+    "name": "DEHRADUN"
+  },
+  {
+    "name": "RANCHI"
+  },
+  {
+    "name": "UTTARA KANNADA"
+  },
+  {
+    "name": "Senapati"
+  },
+  {
+    "name": "East Khasi Hills"
+  },
+  {
+    "name": "KARIM NAGAR"
+  },
+  {
+    "name": "BUDAUN"
+  },
+  {
+    "name": "BHOPAL"
+  },
+  {
+    "name": "Ranga Reddy"
+  },
+  {
+    "name": "MAHE"
+  },
+  {
+    "name": "MADURAI"
+  },
+  {
+    "name": "NIZAMABAD"
+  },
+  {
+    "name": "FATEHABAD"
+  },
+  {
+    "name": "GURDASPUR"
+  },
+  {
+    "name": "ETAH"
+  },
+  {
+    "name": "MAHASAMUND"
+  },
+  {
+    "name": "NORTH DELHI"
+  },
+  {
+    "name": "KHEDA"
+  },
+  {
+    "name": "KHARGONE"
+  },
+  {
+    "name": "Longleng"
+  },
+  {
+    "name": "PATHANKOT"
+  },
+  {
+    "name": "JAIPUR"
+  },
+  {
+    "name": "Siddapur"
+  },
+  {
+    "name": "SINGRAULI"
+  },
+  {
+    "name": "SALEM"
+  },
+  {
+    "name": "PITHORAGARH"
+  },
+  {
+    "name": "Leh"
+  },
+  {
+    "name": "KALABURAGI"
+  },
+  {
+    "name": "ANGUL"
+  },
+  {
+    "name": "DAUSA"
+  },
+  {
+    "name": "BALOD BAZER"
+  },
+  {
+    "name": "KULLU"
+  },
+  {
+    "name": "Dharmanagar"
+  },
+  {
+    "name": "West Godavari"
+  },
+  {
+    "name": "RAMANAGAR"
+  },
+  {
+    "name": "REWA"
+  },
+  {
+    "name": "KODERMA"
+  },
+  {
+    "name": "CHURU"
+  },
+  {
+    "name": "TIRUNELVELI"
+  },
+  {
+    "name": "THENI"
+  },
+  {
+    "name": "YADGIR"
+  },
+  {
+    "name": "SHAJAPUR"
+  },
+  {
+    "name": "Phek"
+  },
+  {
+    "name": "SITAMARHI"
+  },
+  {
+    "name": "THANE"
+  },
+  {
+    "name": "Tawang"
+  },
+  {
+    "name": "CHITTORGARH"
+  },
+  {
+    "name": "KAUSHAMBI"
+  },
+  {
+    "name": "DIBRUGARH"
+  },
+  {
+    "name": "Shillong"
+  },
+  {
+    "name": "SONAPUR"
+  },
+  {
+    "name": "North And Middle Andaman"
+  }
+]

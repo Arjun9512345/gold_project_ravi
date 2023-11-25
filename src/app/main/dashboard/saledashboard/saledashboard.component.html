@@ -1,0 +1,204 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="getsaledashboard">
+  <div class="content p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+
+        <div class=" h3 mb-8 p-16">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+            <div>
+              <b>Sale Dashboard </b>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column">
+          <form [formGroup]="saledashboardForm">
+            <div fxLayout="column" fxLayoutGap="10px">
+              <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column">
+                <div fxFlex="33" fxLayout="row"  fxLayoutAlign.lt-sm="center">
+                  <div fxLayout="column" style="width: 80%;">
+                    <mat-form-field appearance="outline" fxFlex="50">
+                      <mat-label>Store Name</mat-label>
+                      <mat-select formControlName="store_id">
+                        <mat-option *ngFor="let data of storeMasterListModels" [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxFlex="33" fxLayout="row"  fxLayoutAlign.lt-sm="center">
+                  <div fxLayout="column" style="width: 80%;">
+                    <mat-form-field appearance="outline">
+                      <mat-label>From Date </mat-label>
+                      <input matInput formControlName="from_date" readonly (click)="frompicker.open()"
+                             autocomplete="off" [matDatepicker]="frompicker" [max]="today" placeholder="Choose from date"
+                      (ngModelChange)="showTable=false">
+                      <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+                      <mat-datepicker  #frompicker></mat-datepicker>
+                      <mat-error>
+                        From Date is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxFlex="33" fxLayout="row"  fxLayoutAlign="center" fxLayoutAlign.lt-sm="center">
+                  <div fxLayout="column" style="width: 80%;">
+                    <mat-form-field appearance="outline">
+                      <mat-label>To Date </mat-label>
+                      <input matInput formControlName="to_date" readonly (click)="endpicker.open()"
+                             autocomplete="off" [matDatepicker]="endpicker" [min]="this.saledashboardForm.get('from_date').value" [max]="today" placeholder="Choose to date"
+                             (ngModelChange)="showTable=false">
+                      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                      <mat-datepicker  #endpicker></mat-datepicker>
+                      <mat-error>
+                        To Date is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div  fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.lt-sm="center"
+                     style="margin-bottom: 15px">
+                  <div fxLayout="column" style="width: 80px; margin-top: 10px">
+                    <button (click)="getSaleDashboard()" [disabled]="saledashboardForm.invalid"
+                        aria-label="Submit"
+                        color="accent"
+                        mat-raised-button>
+                  Get
+                </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="wrapper2" *ngIf="showTable">
+            <div fxLayout="column" fxLayout.gt-sm="row"
+                 fxLayoutAlign="start" fxLayoutAlign.gt-sm="start start">
+              <div class="widget" fxFlex="100" fxFlex.gt-sm="100">
+
+                <div class=" auto-width mb-32">
+
+                  <div class="p-4" fxLayout="row">
+                    <div class="headertableMyCustome " fxFlex="100">
+                      <table >
+                        <tbody style="font-size: 12px;">
+                        <tr>
+                          <th>Sale Description</th>
+                          <th>Return Description</th>
+                          <th>Total Amount</th>
+
+                        </tr>
+                        <tr *ngFor="let item of sale_dashboard_detail">
+                          <td><b>CASH AMT : </b>{{item?.sale_cash_amt}}</td>
+                          <td><b>CASH RETURN AMT : </b>{{item?.return_cash_amt}}</td>
+                          <td>{{item?.diff_cash_amt}}</td>
+                        </tr>
+                        <tr *ngFor="let item of sale_dashboard_detail">
+                          <td><b>CREDIT : </b>{{item?.sale_credit_amt}}</td>
+                          <td><b>CREDIT NOTE : </b>{{item?.return_credit_amt}}</td>
+                          <td>{{item?.diff_credit_amt}}</td>
+                        </tr>
+                        <tr *ngFor="let item of sale_dashboard_detail">
+                          <td colspan="2"><b>CARD : </b>{{item?.sale_card_amt}}</td>
+                          <td>{{item?.diff_card_amt}}</td>
+                        </tr>
+                        <tr *ngFor="let item of sale_dashboard_detail">
+                          <td colspan="2"><b>PAYTM : </b>{{item?.sale_paytm_amt}}</td>
+                          <td>{{item?.diff_paytm_amt}}</td>
+                        </tr>
+                        <tr *ngFor="let item of sale_dashboard_detail">
+                          <td colspan="2"><b>UPI : </b>{{item?.sal_upi_amt}}</td>
+                          <td>{{item?.diff_upi_amt}}</td>
+                        </tr>
+                        <tr *ngFor="let item of sale_dashboard_detail">
+                          <td colspan="2"><b>JIO Cashback : </b>{{item?.sale_jio_cashback}}</td>
+                          <td>{{item?.diff_jio_cashback}}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" style="text-align:right"><b>TOTAL</b></td>
+                          <td>{{total_amount}}</td>
+                        </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="h3 mb-8 p-16" fxLayoutAlign="end" *ngIf="showTable">
+            <button (click)="pdfGenrate()" mat-icon-button matTooltip="Download PDF"
+                    class="header_button" >
+              <mat-icon>print</mat-icon>
+            </button>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+    <div  #content class="row" id="content">
+      <table>
+        <thead>
+        <tr>
+          <td colspan="2" style="text-align:center; font-size: 16px"><b>From Date :</b> {{saledashboardForm.get('from_date').value |date:'dd-MM-yyyy'}}</td>
+          <td  colspan="2" style="text-align:center; font-size: 16px"><b>To Date :</b> {{saledashboardForm.get('to_date').value |date:'dd-MM-yyyy'}}</td>
+        </tr>
+        </thead>
+        <tbody >
+        <tr style="font-size: 14px;">
+          <th>Sale Description</th>
+          <th colspan="2">Return Description</th>
+          <th colspan="2" >Total Amount</th>
+
+        </tr>
+        <tr *ngFor="let item of sale_dashboard_detail" style="font-size: 12px;">
+          <td><b>CASH AMT : </b>{{item?.sale_cash_amt}}</td>
+          <td colspan="2"><b>CASH RETURN AMT : </b>{{item?.return_cash_amt}}</td>
+          <td colspan="2" style="text-align:right">{{item?.diff_cash_amt}}</td>
+        </tr>
+        <tr *ngFor="let item of sale_dashboard_detail">
+          <td><b>CREDIT : </b>{{item?.sale_credit_amt}}</td>
+          <td colspan="2"><b>CREDIT NOTE : </b>{{item?.return_credit_amt}}</td>
+          <td colspan="2" style="text-align:right">{{item?.diff_credit_amt}}</td>
+        </tr>
+        <tr *ngFor="let item of sale_dashboard_detail">
+          <td colspan="3"><b>CARD : </b>{{item?.sale_card_amt}}</td>
+          <td colspan="2" style="text-align:right">{{item?.diff_card_amt}}</td>
+        </tr>
+        <tr *ngFor="let item of sale_dashboard_detail">
+          <td colspan="3"><b>PAYTM : </b>{{item?.sale_paytm_amt}}</td>
+          <td colspan="2" style="text-align:right">{{item?.diff_paytm_amt}}</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align:right"><b>TOTAL</b></td>
+          <td colspan="2" style="text-align:right">{{total_amount}}</td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

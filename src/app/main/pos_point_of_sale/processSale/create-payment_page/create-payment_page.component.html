@@ -1,0 +1,258 @@
+<div class="create_item_paymentcart_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data?.flag}}</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="35" class="p-12">
+        <div fxLayout="column">
+          <div class="mat-card mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Total Qty</b></span>
+              <span class="title dialog-title"><b> ₹&nbsp;{{data?.sale_data?.total_qty?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Subtotal</b></span>
+              <span class="title dialog-title"><b> ₹&nbsp;{{data.sale_data.sub_total?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Discount</b></span>
+              <span class="title dialog-title"><b> ₹&nbsp;{{data?.sale_data?.total_discount?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Tax</b></span>
+              <span class="title dialog-title"><b> ₹&nbsp;{{data?.sale_data.total_gst?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>To pay</b></span>
+              <span class="title dialog-title"><b> ₹&nbsp;{{data?.sale_data.total_amount?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Redeem</b></span>
+              <span
+                class="title dialog-title"><b> ₹&nbsp;{{data?.sale_data.cashback_apply_amount?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Rounded Off Amt</b></span>
+              <span
+                class="title dialog-title"><b> ₹&nbsp;{{getRounded_Amount(data?.sale_data.total_amount - this.data.sale_data.cashback_apply_amount)?.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Total pay</b></span>
+              <span
+                class="title dialog-title"><b> ₹&nbsp;{{(getTotal_Amount(data?.sale_data.total_amount - this.data.sale_data.cashback_apply_amount)).toFixed(2)}}</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="65" class="p-12">
+        <div fxLayout="column">
+          <div class="mat-card mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+            <div class="p-12" fxLayout="column">
+              <b class="mb-4">Amount tendered</b>
+              <input class="search_input_pos" type="number" (keydown)="checkKeyCode($event)"
+                     [(ngModel)]="enter_user_input_amount" fxFlex="100">
+              <b style="color: red;margin-top: 10px;margin-bottom: 10px;font-size: 17px"> <span
+                *ngIf="pay_by_cod_amount_return_to_customer<0">Please Return Remaining Amount To Customer : {{pay_by_cod_amount_return_to_customer}}</span></b>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <button [ngClass]="pay_by_cod?'buttonClassIfpress':''" (click)="calculateCashByCardAndByCredit('CASH')"
+                        mat-stroked-button style="width:140px;height: 45px;border-radius: 0px;border-color: #404040;"
+                        color="primary">
+                  <mat-icon>money</mat-icon> &nbsp; Cash
+                </button>
+                <button [ngClass]="pay_by_paytm?'buttonClassIfpress':''"
+                        (click)="calculateCashByCardAndByCredit('PAYTM');" mat-stroked-button
+                        style="width:140px;height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <mat-icon>style</mat-icon> &nbsp; Paytm
+                </button>
+                <button [ngClass]="pay_by_credit?'buttonClassIfpress':''"
+                        (click)="calculateCashByCardAndByCredit('CREDIT');" mat-stroked-button
+                        style="width:140px;height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <mat-icon>local_atm</mat-icon> &nbsp; Credit Note
+                </button>
+
+              </div>
+              <div fxLayout="row" class="mt-4" fxLayoutAlign="space-between center">
+                <div><b>Cash : </b>{{pay_by_cod_amount}}</div>
+                <div><b>Paytm : </b>{{pay_by_paytm_amount}}</div>
+                <div><b>Credit Note : </b>{{pay_by_credit_amount}}</div>
+
+              </div>
+              <div fxLayout="row" class="mt-4" fxLayoutAlign="space-between center">
+
+                <button [ngClass]="pay_by_card?'buttonClassIfpress':''"
+                        (click)="calculateCashByCardAndByCredit('CARD');" mat-stroked-button
+                        style="width:140px;height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <mat-icon>style</mat-icon> &nbsp; Card
+                </button>
+
+                <button [ngClass]="pay_by_upi?'buttonClassIfpress':''"
+                        (click)="calculateCashByCardAndByCredit('UPI');" mat-stroked-button
+                        style="width:140px;height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <img src="assets/images/upi-icon.png" width="30" height="30">
+                  &nbsp; UPI
+                </button>
+
+                <button [ngClass]="pay_by_giftcard?'buttonClassIfpress':''"
+                        (click)="calculateCashByCardAndByCredit('Gift Card');" mat-stroked-button
+                        style="width:140px;height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <img src="assets/images/gift_card.jpg" width="30" height="30">
+                  &nbsp; Gift Card
+                </button>
+
+
+              </div>
+              <div fxLayout="row" class="mt-4" fxLayoutAlign="space-between center">
+                <div><b>Card : </b>{{pay_by_card_amount}}</div>
+                <div><b>UPI : </b>{{pay_by_upi_amount}}</div>
+                <div><b>Gift Card : </b>{{pay_by_giftcard_amount}}</div>
+              </div>
+              <br>
+
+              <mat-divider *ngIf="FooterSection=='Credit'" style="margin-top: 10px"></mat-divider>
+              <div *ngIf="FooterSection=='Credit'" fxLayout="column" class="p-8">
+                <input class="search_input_pos_card" [(ngModel)]="credit_note_no" (keyup)="SearchCreditDataFromServer()"
+                       [matAutocomplete]="auto" placeholder="Enter Credit Not No..." type="text">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of credit_note_list" [value]="option.credit_no">
+                    {{option.credit_no}} ( ₹ {{(option.credit_payment - option.credit_applied).toFixed(2)}} )
+                  </mat-option>
+                </mat-autocomplete>
+                <br>
+                <button (click)="getCreditNoteDetail()" mat-stroked-button
+                        style="height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <mat-icon>style</mat-icon> &nbsp; Apply
+                </button>
+              </div>
+
+
+              <mat-divider *ngIf="FooterSection=='Gift Card'" style="margin-top: 10px"></mat-divider>
+              <div *ngIf="FooterSection=='Gift Card'" fxLayout="column" class="p-8">
+                <input class="search_input_pos_card" [(ngModel)]="gift_card_no" placeholder="Enter Gift Card No" type="text">
+                <br>
+                <button (click)="getGiftCardDetail()" mat-stroked-button
+                        style="height: 45px;border-radius: 0px;border-color: #404040;" color="primary">
+                  <mat-icon>style</mat-icon> &nbsp; Apply
+                </button>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="FooterSection=='Card'" fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="15px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="100" class="p-12">
+        <div fxLayout="column" fxFlex="1 0 auto">
+          <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+            <div class="h3 p-8">
+              <b>Card Detail</b>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+              <input class="search_input_pos_card" [(ngModel)]="card_holder_name" placeholder="Card Holder Name..."
+                     type="text" fxFlex="50">
+              <input class="search_input_pos_card" [(ngModel)]="card_no" placeholder="Enter Card No." type="number"
+                     fxFlex="50">
+            </div>
+            <div fxLayout="row" class="p-12" fxLayoutGap="5px">
+              <input class="search_input_pos_card" placeholder="MM" [(ngModel)]="card_month" type="tel" maxlength="2"
+                     fxFlex="10">
+              <b class="p-8">&nbsp;&nbsp;/&nbsp;&nbsp;</b>
+              <input class="search_input_pos_card" placeholder="yyyy" [(ngModel)]="card_year" type="tel" maxlength="4"
+                     fxFlex="15">
+              <button (click)="applyCardPayment()" mat-stroked-button
+                      style="height: 45px;border-radius: 0px;border-color: #404040;margin-left: 35px" color="primary">
+                <mat-icon>style</mat-icon> &nbsp; Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="FooterSection=='Paytm'" fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="15px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="100" class="p-12">
+        <div fxLayout="column" fxFlex="1 0 auto">
+          <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+            <div class="h3 p-8">
+              <b>Paytm Detail</b>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+              <input class="search_input_pos_card" [(ngModel)]="paytm_mobile_no" placeholder="Paytm Mobile No..."
+                     type="tel" maxlength="10" fxFlex="50">
+
+              <button (click)="applyPaytmPayment()" fxFlex="20" mat-stroked-button
+                      style="height: 45px;border-radius: 0px;border-color: #404040;margin-left: 35px" color="primary">
+                <mat-icon>style</mat-icon> &nbsp; Apply
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="FooterSection=='UPI'" fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="15px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="100" class="p-12">
+        <div fxLayout="column" fxFlex="1 0 auto">
+          <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+            <div class="h3 p-8">
+              <b>UPI Detail</b>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+              <input class="search_input_pos_card" [(ngModel)]="UPI_no" placeholder="UPI ID ..." fxFlex="50">
+
+              <button (click)="applyUPIPayment()" fxFlex="20" mat-stroked-button
+                      style="height: 45px;border-radius: 0px;border-color: #404040;margin-left: 35px" color="primary">
+                <mat-icon>style</mat-icon> &nbsp; Apply
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div matDialogActions>
+    <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+      <button (click)="OnsubmitHit();" mat-stroked-button
+              style="height: 45px;border-radius: 0px;border-color: #404040;margin-left: 12px" color="primary">
+        <mat-icon>style</mat-icon> &nbsp; Confirm To Pay
+      </button>
+      <b style="font-size: 20px;" *ngIf="getRemainingAmount==0">
+        Total Pay Amount
+        : {{(data?.sale_data?.total_amount + this.getRounded_Amount(this.data?.sale_data.total_amount) - data?.sale_data?.cashback_apply_amount).toFixed(2)}}
+      </b>
+      <b style="font-size: 20px;">
+        Remaining Amount : {{getRemainingAmount.toFixed(2)}}
+      </b>
+    </div>
+
+  </div>
+</div>
+
+

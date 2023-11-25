@@ -1,0 +1,53 @@
+
+@import "src/@pristine/scss/pristine";
+
+#getsaledashboard {
+
+
+  .wrapper2 {
+    width: auto;
+    height: auto;
+    //padding-left: 20px;
+    //padding-right: 20px;
+    // border: 1px solid gray;
+  }
+
+  .headertableMyCustome {
+    overflow-x: auto;
+    table{
+      width:100%;
+      border-collapse: collapse;
+    }
+
+    .tbl-content{
+      overflow-x:auto;
+      margin-top: 0px;
+    }
+    .tbl-content-header{
+    }
+    .tablestyle{
+      //border-collapse: collapse;
+    }
+
+    th{
+      padding: 15px 10px;
+      border-bottom: 1px solid;
+      border: 1px solid #ebeff5;
+    }
+    td{
+      padding: 10px;
+      border-bottom: 1px solid;
+      border: 1px solid #ebeff5;
+      //text-align:center;
+    }
+    //tr:nth-child(even) {background-color: #f5f7fc;}
+    tr:hover {background-color: #f5f7fc;}
+  }
+
+}
+
+
+
+
+
+

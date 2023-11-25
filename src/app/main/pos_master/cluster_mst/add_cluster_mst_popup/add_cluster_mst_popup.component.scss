@@ -1,0 +1,213 @@
+@import "src/@pristine/scss/pristine";
+.create_sale_history_page_detail {
+  margin-top: -15px;
+  .Item_image{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border: solid 0.5px rgba(170, 170, 170, 0.42);
+    box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(170, 170, 170, 0.42);
+    border-radius: 15px;
+    padding: 2px;
+
+  }
+  .search_input_pos{
+    height: 150px;
+    font-weight: 400;
+    font-size: 30px;
+    color: #495057;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px;
+  }
+  .search_input_pos_card{
+    font-weight: 400;
+    color: #495057;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px;
+  }
+  .buttonClassIfpress{
+    background-color: #404040;
+    color: white;
+    mat-icon{
+      color: white;
+    }
+  }
+  .search_input_pos_card:hover {
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid rgba(0,123,255,.25);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25)
+  }
+  .search_input_pos:hover {
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid rgba(0,123,255,.25);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25)
+  }
+  // fro file upload
+  .file-upload {
+    background-color: #ffffff;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .file-upload-btn {
+    width: 100%;
+    margin: 0;
+    color: #fff;
+    background: #1FB264;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #15824B;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .file-upload-btn:hover {
+    background: #1AA059;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+  }
+
+  .file-upload-btn:active {
+    border: 0;
+    transition: all .2s ease;
+  }
+
+  .file-upload-content {
+    display: none;
+    text-align: center;
+  }
+
+  .file-upload-input {
+    position: absolute;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .image-upload-wrap {
+    margin-top: 20px;
+    border: 2px dashed #1FB264;
+    position: relative;
+    height: 100%;
+  }
+
+  .image-dropping,
+  .image-upload-wrap:hover {
+    background-color: rgb(185, 236, 209);
+    border: 2px dashed #ffffff;
+  }
+
+  .image-title-wrap {
+    padding: 0 15px 15px 15px;
+    color: #222;
+  }
+
+  .drag-text {
+    text-align: center;
+  }
+
+  .file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .remove-image {
+    width: 200px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+  }
+
+  .remove-image:active {
+    border: 0;
+    transition: all .2s ease;
+  }
+  .title{
+  font-size: 15px;
+}
+  .popup_locationContent {
+    overflow-y: auto;
+  }
+
+  mat-form-field {
+    height: 70px;
+
+    mat-error {
+      font-size: 11px;
+    }
+
+    mat-label {
+      font-size: 12px;
+    }
+
+    mat-select {
+      mat-option {
+        font-size: 12px;
+      }
+    }
+  }
+  .header_button {
+    height: 30px;
+    width: 30px;
+    line-height: 35px;
+    box-shadow: 1px 1px 1px 1px rgba(170, 170, 170, 0.42);
+
+    .mat-icon {
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      font-size: 20px;
+    }
+  }
+
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+    padding: 0.55em 0px !important;
+  }
+
+  ::ng-deep .mat-form-field-label-wrapper {
+    top: -1.30em;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.3em) scale(.75);
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+}

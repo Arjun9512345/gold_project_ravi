@@ -1,0 +1,242 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="receivetranferOrderBYuserPage">
+  <div class="content p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+        <div class="h3 p-8" fxLayoutAlign="space-between center">
+          <b>{{this.inputjson.type|titlecase}} Transfer Order
+            <span
+              *ngIf="transferOrderDataList.length>0 && transferOrderDataList[0]?.creation_type!=null &&transferOrderDataList[0]?.creation_type!=undefined &&transferOrderDataList[0]?.creation_type!=''">
+             ( <b style="color: red">Upload By {{transferOrderDataList[0]?.creation_type}} </b>)
+          </span>
+
+          </b>
+
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column">
+          <div *ngIf="transferOrderDataList.length>0" fxLayout="column" fxLayout.gt-xs="row">
+            <div class="mr-8" fxFlex="33">
+              <div class="pristine-card auto-width mb-16"
+                   style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                   fxLayoutAlign="start">
+                <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title" style="color: red"><b>Transfer Detail</b></span>
+                  <span class="title dialog-title"><b style="color: red">R. Qty </b>( {{getTotalReceivedQty()}} )</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Transfer Order No.</b></span>
+                  <span class="title dialog-title" style="color: green">{{transferOrderDataList[0]?.document_no}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Order Status </b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.order_status}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Order DateTime</b></span>
+                  <span
+                    class="title dialog-title">{{transferOrderDataList[0]?.created_date|date:'dd/MM/yyyy hh:mm aa'}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Shortage Qty </b></span>
+                  <span class="title dialog-title"> {{getTotalPendingQty()}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Total Qty</b></span>
+                  <span class="title dialog-title"
+                        *ngIf="transferOrderDataList?.length>0 && transferOrderDataList[0].order_status!='Pending'"> {{transferOrderDataList[0]?.total_quantity}}</span>
+
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Transfer Cost</b></span>
+                  <span class="title dialog-title"
+                        *ngIf="transferOrderDataList?.length>0 && transferOrderDataList[0].order_status!='Pending'">₹ {{transferOrderDataList[0]?.total_transfer_cost.toFixed(2)}}</span>
+                  <span class="title dialog-title"
+                        *ngIf="transferOrderDataList?.length>0 && transferOrderDataList[0].order_status=='Pending'">₹ {{getTotalTansferCost().toFixed(2)}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Transfer Cost (GST)</b></span>
+                  <span class="title dialog-title"
+                        *ngIf="transferOrderDataList?.length>0 && transferOrderDataList[0].order_status!='Pending'">₹ {{transferOrderDataList[0]?.total_transfer_cost_with_gst.toFixed(2)}}</span>
+                  <span class="title dialog-title"
+                        *ngIf="transferOrderDataList?.length>0 && transferOrderDataList[0].order_status=='Pending'">₹ {{getTotalTansferCostWithGst().toFixed(2)}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="ml-8 mr-8" fxFlex="33">
+              <div class="pristine-card auto-width mb-16"
+                   style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                   fxLayoutAlign="start">
+                <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title" style="color: red"><b>From Location</b></span>
+                  <span class="title dialog-title"></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Name</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.fromLocation[0].name}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Address</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.fromLocation[0].address}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>State</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.fromLocation[0].state}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Country</b></span>
+                  <span class="title dialog-title"> {{transferOrderDataList[0]?.fromLocation[0].country}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Email</b></span>
+                  <span class="title dialog-title"> {{transferOrderDataList[0]?.fromLocation[0].email}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Phone No</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.fromLocation[0].contact_no}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>GST Detail</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.fromLocation[0].gst_type}}
+                    ( {{transferOrderDataList[0]?.fromLocation[0].gst_no}} )</span>
+                </div>
+
+              </div>
+            </div>
+            <div class="ml-8" fxFlex="33">
+              <div class="pristine-card auto-width mb-16"
+                   style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                   fxLayoutAlign="start">
+                <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title" style="color: red"><b>To Location</b></span>
+                  <span class="title dialog-title"></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Name</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.toLocation[0].name}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Address</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.toLocation[0].address}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>State</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.toLocation[0].state}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Country</b></span>
+                  <span class="title dialog-title"> {{transferOrderDataList[0]?.toLocation[0].country}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Email</b></span>
+                  <span class="title dialog-title"> {{transferOrderDataList[0]?.toLocation[0].email}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Phone No</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.toLocation[0].contact_no}}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>GST Detail</b></span>
+                  <span class="title dialog-title">{{transferOrderDataList[0]?.toLocation[0].gst_type}}
+                    ( {{transferOrderDataList[0]?.toLocation[0].gst_no}} )</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px">
+
+            <mat-form-field
+              [ngStyle]="{'display':(transferOrderDataList?.length>0 && transferOrderDataList[0].order_status=='Transfer Posted' )?'block':'none'}"
+              appearance="outline" fxFlex="33">
+              <mat-label>Scan Item</mat-label>
+              <input autocomplete=" off" matInput id="myScanbarcodeId" #ScanItemdata
+                     (keyup.enter)="ScanReceivedBarcode(ScanItemdata.value)">
+            </mat-form-field>
+
+            <button style="height: 50px!important;" *ngIf="transferOrderDataList?.length>0 && transferOrderDataList[0].order_status=='Transfer Posted'" (click)="complete_order()" color="warn" mat-raised-button
+                    matTooltip="Mark Receive">
+              Mark Receive
+            </button>
+
+          </div>
+
+          <div class="h3 mb-8 p-8" fxLayout="column" [ngStyle]="{'display':dataSource?.data?.length>0?'block':'none'}">
+
+            <div class="example-container">
+              <table [dataSource]="dataSource" mat-table matSort>
+                <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                  <th *matHeaderCellDef mat-header-cell>
+                    <div class="filterHeader">
+                      <b mat-sort-header>{{column|firstAnd_Split}}</b>
+                    </div>
+                  </th>
+                  <td *matCellDef="let element" mat-cell>
+
+                    <p *ngIf="column!='Action'&& column!='barcode'&&column!='shortage_qty';else elseAction">{{element[column]}}</p>
+                    <ng-template #elseAction>
+
+                      <p *ngIf="column=='created_on'">{{element[column]|date:'dd/MM/yyyy HH:MM a'}}</p>
+                      <a *ngIf="column=='barcode'" (click)="item_info(element)">
+                        {{element[column]}}
+                      </a>
+                      <p *ngIf="column=='shortage_qty'">{{element['received_qty_forcefully']}}</p>
+                    </ng-template>
+
+                  </td>
+
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns ; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+              </table>
+              <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+              <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+            </div>
+            <mat-paginator #mypaginationpaginator [pageSizeOptions]="[ 5, 10, 20, 30,40,50]"
+                           showFirstLastButtons></mat-paginator>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

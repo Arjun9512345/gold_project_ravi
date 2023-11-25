@@ -1,0 +1,63 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="customer_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate" style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Customer List</b>
+          <button mat-icon-button matTooltip="Add Customer" (click)="AddBrandList('Add Customer',null)"
+                  class="header_button">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div class="postedexample-container1">
+            <table [dataSource]="viewCustomerDataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column"
+                            [stickyEnd]="column=='Action'"
+                            [sticky]="column=='cust_id'">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='store_credit_amount' &&column!='Action' && column!='create_datetime' && column!='Sale'"
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column!='Action'&& column!='create_datetime' && column!='Sale';else elseAction">{{element[column]}}</p>
+                  <ng-template #elseAction>
+                    <!--                    <button  matTooltip="Update Item" class="rounded_shadow_button" (click)="updateitem(element)" *ngIf="column=='Edit'" mat-icon-button>-->
+                    <!--                      <mat-icon class="icon-size">edit</mat-icon>-->
+                    <!--                    </button>-->
+                    <p *ngIf="column=='create_datetime'">{{element[column]|date:'dd/MM/yyyy'}}</p>
+                    <button matTooltip="View Customer" class="rounded_shadow_button" (click)="AddBrandList('Update Customer',element)"
+                            *ngIf="column=='Action'" mat-icon-button>
+                      <mat-icon class="icon-size">visibility</mat-icon>
+                    </button>
+
+                    <button  matTooltip="View Sale History" class="rounded_shadow_button" (click)="navigatetosaleHistory(element['phone_no'])"
+                            *ngIf="column=='Sale'" mat-icon-button>
+                      <mat-icon class="icon-size">send</mat-icon>
+                    </button>
+                  </ng-template>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row
+                  (click)="clickOnRow(row.cust_id)"
+                  [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
+            </table>
+            <div *ngIf="viewCustomerDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewCustomerDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageIndex]="PageNumber" [pageSize]="RowsPerPage" [length]="length"
+                         (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

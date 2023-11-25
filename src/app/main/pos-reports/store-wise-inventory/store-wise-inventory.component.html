@@ -1,0 +1,199 @@
+<div  class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="storewiseinventory" >
+  <div class="content p-20" pristinePerfectScrollbar>
+    <!--<div >-->
+    <!--  <div >-->
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+
+        <div class=" h3 p-16 pb-0 mb-8">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+            <b>Store Wise Inventory Report</b>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+
+              <button matTooltip="Download Excel" mat-raised-button color="accent"
+                      *ngIf="dataSource?.data?.length>0 && dataSource?.data[0]?.condition?.toLowerCase() !='false' && dataSource?.data[0]?.hasOwnProperty('condition')" (click)="downloadExcel()">
+                <mat-icon class="mx-8">cloud_download</mat-icon>Get Report
+              </button> &nbsp;&nbsp;
+              &nbsp;&nbsp;
+              <button matTooltip="Open Filter"  mat-raised-button color="accent" [matMenuTriggerFor]="filterMenu" >
+                <mat-icon class="mx-8">search</mat-icon>Filter
+              </button>
+
+
+              <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+                <p class="text-bold m-0 h3" style="color: rgb(72 72 72)">Filter</p>
+                <mat-divider class="mt-12 mb-12"></mat-divider>
+                <div   [formGroup]="storeWiseInventoryReport"  fxLayout="column" fxLayoutAlign="start stretch" (click)="$event.stopPropagation()">
+
+                   <!--        Store List-->
+                   <mat-form-field appearance="legacy" style="width: 100%;">
+                    <mat-label>Store Name</mat-label>
+                    <mat-select formControlName="store" (opened)="inp_store.focus();inp_store.value=''" (closed)="storeFilterArray = storeMasterListModels" required multiple style="max-width: 100%">
+                      <input matInput (keyup)="filterOptions($event?.target?.value, 'store')"
+                             class="h-40 mt-8 p-16"
+                             autocomplete="off"
+                             #inp_store>
+                      <mat-divider></mat-divider>
+                      <mat-option *ngFor="let item of storeFilterArray" [value]="item?.id">{{item?.name}} ( {{item.id}} )</mat-option>
+                    </mat-select>
+                    <mat-icon class="mx-4" matPrefix >storefront</mat-icon>
+                  </mat-form-field>
+
+                  <!--        Item-->
+                  <mat-form-field appearance="legacy" style="width: 100%">
+                    <mat-label>Item Name</mat-label>
+                    <input matInput [matAutocomplete]="item" formControlName="item" (keyup)="getItem(itemInput.value)" #itemInput>
+                    <mat-autocomplete #item="matAutocomplete">
+                      <mat-option *ngFor="let item of itemArray" [value]="item?.mid">{{item?.mid}}</mat-option>
+                    </mat-autocomplete>
+                    <mat-icon class="mx-4" matPrefix >local_mall</mat-icon>
+                    <mat-progress-bar *ngIf="itemLoading" mode="indeterminate"
+                                      style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px"></mat-progress-bar>
+                  </mat-form-field>
+
+                  <!--    Category List-->
+                  <mat-form-field appearance="legacy" style="width: 100%">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="category"
+                                (opened)="inp_category.focus();inp_category.value=''"
+                                (closed)="itemList = itemListMaster"
+                                (selectionChange)="getSubItemCategory()">
+                      <input matInput placeholder="Select Category" (keyup)="filterOptions($event?.target?.value, 'category')"
+                             class="h-40 mt-8 p-16"
+                             autocomplete="off" #inp_category>
+                      <mat-divider></mat-divider>
+                      <mat-option [value]="''"></mat-option>
+                      <mat-option *ngFor="let item of itemList" [value]="item?.code">{{item?.name}}</mat-option>
+                    </mat-select>
+                    <mat-icon class="mx-4" matPrefix >shopping_basket</mat-icon>
+                    <button class="m-0 p-0" mat-icon-button matSuffix
+                            (click)="storeWiseInventoryReport?.get('category')?.reset(); $event.stopPropagation()"
+                            [fxHide]="storeWiseInventoryReport?.get('category')?.value==''">
+                      <mat-icon class="m-0 p-0"  >clear</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <!--Sub Category-->
+<!--                  <mat-form-field appearance="legacy" style="width: 100%" [fxHide]="storeWiseInventoryReport?.get('category')?.value==''">-->
+<!--                    <mat-label>Sub Category</mat-label>-->
+<!--                    <mat-select formControlName="sub_category" (opened)="inp_subcat.focus();inp_subcat.value=''"-->
+<!--                                (closed)="subItemFilterArray = subItemMasterListModels" >-->
+<!--                      <input matInput placeholder="Select Sub-Category" (keyup)="filterOptions($event?.target?.value, 'sub_category',  subItemFilterArray)" class="px-4 b" #inp_subcat>-->
+<!--                      <mat-option *ngFor="let item of subItemFilterArray" [value]="item?.code">{{item?.name}}</mat-option>-->
+<!--                    </mat-select>-->
+<!--                    <mat-icon class="mx-4" matPrefix >shopping_bag</mat-icon>-->
+<!--                    <mat-progress-bar *ngIf="subItemMasterListModels.length<0" mode="indeterminate"-->
+<!--                                      style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px"></mat-progress-bar>-->
+<!--                    <mat-error>Sub Category Required</mat-error>-->
+<!--                  </mat-form-field>-->
+
+                </div>
+                   <span class="mt-12"  fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%">
+                      <button (click)="getReport();filterMenu.closed" fxFlex="45" [disabled]="storeWiseInventoryReport.invalid"
+                              aria-label="Submit"
+                              color="accent"
+                              mat-flat-button
+                              style="width:48%">
+                            Get
+                          </button>
+
+
+                      <button (click)="storeWiseInventoryReport.reset(); $event.stopPropagation()" fxFlex="45"
+                              aria-label="Reset"
+                              color="primary"
+                              mat-flat-button
+                              style="width:48%">
+                       Reset
+                      </button>
+                  </span>
+              </mat-menu>
+
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <!--          Filter Select Options-->
+        <div class="p-16" fxFlex fxLayout="column">
+          <div class="temptable">
+            <table mat-table
+                   [dataSource]="dataSource" multiTemplateDataRows matSort
+                   class="mat-elevation-z0">
+              <ng-container [sticky]="column=='barcode'" [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="filterHeader">
+                    <b mat-sort-header *ngIf="column!='action'">{{column|firstAnd_Split}}</b><br>
+<!--                    <input (keyup)="applyFilter($event.target.value,column)"-->
+<!--                           *ngIf="column!='action' && column!='total' "-->
+<!--                           [placeholder]="column|firstAnd_Split"-->
+<!--                           matInput>-->
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" (click)="expandItemno = element['barcode'];element['action'] = (element['action']=='collapsed' ? 'expanded' : 'collapsed')">
+                  <p *ngIf="column!='action'">{{element[column]}}</p>
+                  <button *ngIf="column=='action'" mat-icon-button #buttonRef>
+                    <mat-icon *ngIf="element['action'] == 'expanded'">keyboard_arrow_up</mat-icon>
+                    <mat-icon *ngIf="element['action'] =='collapsed'">keyboard_arrow_down</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                  <div class="example-element-detail"
+                  [@detailExpand]="element['action']=='expanded' ? 'expanded' : 'collapsed'">
+                    <div fxFlex="100" fxLayout="column" >
+                      <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                        <div fxFlex="30">
+                          <b>Location Name</b>
+                        </div>
+                        <div fxFlex="30">
+                          <b>Location Code</b>
+                        </div>
+                        <div fxFlex="30">
+                          <b>Quantity</b>
+                        </div>
+                      </div>
+                      <mat-divider></mat-divider>
+                      <div *ngIf="element['location'] && element['location'].length>0;else tableelse">
+                        <div class="rowCell" *ngFor="let ele of element['location']" fxLayout="column">
+                          <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                            <div fxFlex="30">
+                              {{ele.name}}
+                            </div>
+                            <div fxFlex="30">
+                              {{ele.id}}
+                            </div>
+                            <div fxFlex="30">
+                              {{ele.quantity}}
+                            </div>
+                          </div>
+                          <mat-divider></mat-divider>
+                        </div>
+                      </div>
+                      <ng-template #tableelse>
+                        <div class="p-8">No Record Found...</div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                  class="example-element-row"
+                  [class.example-expanded-row]="element['action']">
+              </tr>
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[ 5, 10, 20, 30,40,50]" pageSize="10"
+                           showFirstLastButtons></mat-paginator>
+          </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+

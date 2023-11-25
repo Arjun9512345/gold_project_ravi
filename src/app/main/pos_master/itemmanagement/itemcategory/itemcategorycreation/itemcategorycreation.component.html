@@ -1,0 +1,53 @@
+<div fxFlex fxLayout="column" fxLayoutAlign="start" id="AddItemCategory">
+  <div mat-dialog-title style="margin-top: -35px">
+    <div class="h5 mb-8 pt-16">Create Item Category
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div [formGroup]="itemcategory" fxFlex="" fxLayout="column">
+    <div fxFlex="" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start" fxLayoutGap="20px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline">
+        <mat-label>Category Code <sub style="color:red">*</sub></mat-label>
+        <input formControlName="catcode" matInput type="text">
+        <mat-error
+          *ngIf="itemcategory.get('catcode').hasError('required') && itemcategory.get('catcode').touched && itemcategory.get('catcode').dirty">
+          Category Code Required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Name<sub style="color: red">*</sub></mat-label>
+        <input formControlName="itemname" matInput type="text">
+        <mat-error
+          *ngIf="itemcategory.get('itemname').hasError('required') && itemcategory.get('itemname').touched && itemcategory.get('itemname').dirty">
+          Category Name Required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput type="text"></textarea>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div class="pt-16" fxLayout="row" fxLayoutAlign="end">
+    <button (click)="CreateItemCategory()" *ngIf="data.flag.toLowerCase()=='insert'else elseblock"
+            class="mat-accent mr-16"
+            mat-raised-button>Save
+    </button>
+    <ng-template #elseblock>
+      <button (click)="CreateItemCategory()" class="mat-accent mr-16"
+              mat-raised-button>Update
+      </button>
+    </ng-template>
+    <button (click)="cancle()" color="warn" mat-raised-button>Cancel</button>
+  </div>
+
+</div>
+
+
+

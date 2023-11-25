@@ -1,0 +1,47 @@
+<div class="create_sale_history_page_detail">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}}</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <div fxLayout="column" fxFlex="1 0 auto">
+      <mat-form-field fxFlex="90" class="formcontollclass" appearance="outline" >
+        <mat-label>Cluster Name</mat-label>
+        <input matInput [(ngModel)]="cluster_name">
+      </mat-form-field>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex="95" class="formcontollclass" appearance="outline" >
+          <mat-label>Store Name</mat-label>
+          <mat-select autocomplete="off" [(ngModel)]="store_code">
+            <input #search_byLocation autocomplete="off" class="myInput" focused="'true'" matInput placeholder="Search" type="text">
+            <mat-option *ngFor="let data of storeMasterListModels|search_by_key:'name': search_byLocation.value" [value]="data.id.toString()">{{data.name}} ({{data.id}})</mat-option>
+          </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <button style="margin-top: 10px" (click)="addLocation_data()" aria-label="Close dialog" mat-icon-button class="header_button">
+          <mat-icon>add</mat-icon>
+        </button>
+
+      </div>
+
+
+      <mat-chip-list>
+        <mat-chip color="warn" *ngFor="let location of selected_location_list"
+                  selected>{{ location.location_name }} ( {{location.location_id}} )
+        </mat-chip>
+      </mat-chip-list>
+      <br>
+    </div>
+    <button  (click)="submit_clusterMaster()"  mat-stroked-button style="height: 45px;border-color: #404040;" color="primary">
+      <mat-icon>check_circle</mat-icon> &nbsp;<b>Submit</b>
+    </button>
+
+  </div>
+</div>
+

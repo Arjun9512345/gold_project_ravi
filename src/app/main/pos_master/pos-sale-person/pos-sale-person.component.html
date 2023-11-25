@@ -1,0 +1,61 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="pos_sale_person_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate" style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Sale Person List </b>
+          <button mat-icon-button matTooltip="Add Sale Person" (click)="AddSalePersonList('Add Sale Person',null)"
+                  class="header_button">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div fxLayout="row">
+            <mat-form-field appearance="outline" fxFlex="30">
+              <mat-label>Select Store</mat-label>
+              <mat-select>
+                <mat-option (click)="getSalePersonViewList(option.id)" *ngFor="let option of store_ListData" [value]="option.id">{{option.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="example-container">
+            <table [dataSource]="viewSalepersonDataSource" mat-table matSort>
+              <ng-container  [stickyEnd]="(column=='Edit' ||column=='Delete')?true:false"
+                             *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='Edit' && column!='Delete'"
+                           [placeholder]="column|firstAnd_Split"
+                           matInput>
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column!='Edit' && column!='Delete' && column != 'sale_commission' && column!='total_amount'">{{element[column]}}</p>
+                  <p *ngIf="column == 'sale_commission'">{{element[column]}}%</p>
+                  <p *ngIf="column == 'total_amount'" matTooltip="Pay to Sale person" (click)="openPaidToSalePerson(element)"><a>{{element[column]}}</a></p>
+                  <button *ngIf="column=='Edit'" (click)="AddSalePersonList('Update Sale Person',element)" mat-icon-button matTooltip="Update Sale Person"  class="header_button">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button *ngIf="column=='Delete'"  mat-icon-button (click)="DeleteSalePerson(element)" matTooltip="Delete Sale Person"  class="header_button">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="viewSalepersonDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewSalepersonDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator #first_paginator [pageSizeOptions]="[ 5, 10, 20, 30,40,50]" pageSize="10"
+                         showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

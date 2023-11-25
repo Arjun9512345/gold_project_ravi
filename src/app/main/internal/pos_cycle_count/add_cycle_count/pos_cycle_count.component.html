@@ -1,0 +1,140 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="cycle_count_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Cycle Count</b>
+          <b *ngIf="cycle_count_data_list.length>0"> ( <b
+            style="color: red">{{cycle_count_data_list[0]?.header?.document_no}} </b>)</b>
+          <button *ngIf="cycle_count_data_list[0]?.header?.status=='Pending'"
+                  style="float: right;margin-left: 10px"
+                  color="accent"
+                  (click)="hitToDeleteDocumentData()"
+                  [matTooltip]="'Delete Document'"
+                  mat-raised-button>
+            Delete Document
+          </button>
+          <button *ngIf="viewBrandDataSource.data.length>0 && cycle_count_data_list[0]?.header?.status=='Pending'"
+                  style="float: right"
+                  color="accent"
+                  (click)="hitToCompleteData()"
+                  [matTooltip]="'Cycle Count Complete'"
+                  mat-raised-button>
+            Complete
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="cycle_count_data_list.length<=0" class="p-16" fxLayout="column" fxLayout.lt-sm="column">
+          <div fxFlexFill fxLayout="column" fxLayout.gt-xs="row">
+            <mat-form-field fxFlex="33" appearance="outline">
+              <mat-label>Document Type</mat-label>
+              <mat-select [formControl]="document_type">
+                <mat-option value="Full Cycle Count">Full Cycle Count</mat-option>
+                <mat-option value="Cycle Count">Cycle Count</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxFlex="33" class="pt-12 pl-24">
+              <button color="accent" (click)="CreateCycleCountHeader()" [matTooltip]="'Create Header'" mat-raised-button>
+                Create Header
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <div *ngIf="cycle_count_data_list.length>0" fxLayout="column" class="p-16" fxLayout.gt-xs="row">
+          <div class="mr-8" fxFlex="45">
+            <div class="pristine-card auto-width mb-8"
+                 style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                 fxLayoutAlign="start">
+              <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                <span class="title dialog-title" style="color: red"><b>Cycle Count Detail</b></span>
+                <span class="title dialog-title"></span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Document Type</b></span>
+                <span class="title dialog-title"
+                      style="color: green">{{cycle_count_data_list[0]?.header.document_type}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Location Name </b></span>
+                <span class="title dialog-title">{{sessionManageMent.getLocationName}}
+                  ( {{cycle_count_data_list[0]?.header.location_id}} )</span>
+              </div>
+              <mat-divider></mat-divider>
+
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Status</b></span>
+                <span class="title dialog-title"> {{cycle_count_data_list[0]?.header.status}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="ml-8 mr-8" fxFlex="45">
+            <div class="pristine-card auto-width mb-8"
+                 style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                 fxLayoutAlign="start">
+              <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                <span class="title dialog-title" style="color: red"><b>Header Detail</b></span>
+                <span class="title dialog-title"></span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Total Qty</b></span>
+                <span class="title dialog-title">{{cycle_count_data_list[0]?.header?.total_qty}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Total items</b></span>
+                <span class="title dialog-title">{{cycle_count_data_list[0]?.header?.total_items}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Created On </b></span>
+                <span class="title dialog-title"> {{cycle_count_data_list[0]?.header.created_on|date:'dd/MM/yyyy hh:mm a'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [ngStyle]="{'display':cycle_count_data_list?.length>0?'block':'none'}" class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+
+          <div fxLayout="row"  fxLayout.sm="column" fxLayoutAlign="space-between">
+
+            <mat-form-field appearance="outline" fxFlex="35">
+              <mat-label>Scan Barcode</mat-label>
+              <input matInput autocomplete="off" id="sacnItemBarcode" [disabled]="cycle_count_data_list[0]?.header?.status=='Pending'?false:true" #ScanItemdata (keyup.enter)="ScanItemNoByUser()"/>
+            </mat-form-field>
+
+
+          </div>
+          <div class="example-container">
+            <table [dataSource]="viewBrandDataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='delete' && column!='scan_qty'&& column!='approve_qty' && column!='item_no'"
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column != 'delete'">{{element[column]}}</p>
+                  <button mat-icon-button matTooltip="Delete Item" *ngIf="column=='delete'" (click)="DeleteItemNoByUser(element)"  [disabled]="cycle_count_data_list[0]?.header?.status=='Pending'?false:true"><mat-icon>delete</mat-icon></button>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="viewBrandDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewBrandDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageIndex]="PageNumber" [pageSize]="RowsPerPage" [length]="length"
+                         (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

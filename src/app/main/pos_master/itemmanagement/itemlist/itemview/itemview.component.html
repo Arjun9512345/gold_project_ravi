@@ -1,0 +1,243 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="itemviewPage">
+  <div class="content p-20" pristinePerfectScrollbar>
+    <div fxLayout="column" fxLayoutAlign="start">
+      <div *ngIf="iteminfo?.length>0" fxLayout="column" fxLayout.gt-xs="row">
+        <div class="mr-8" fxFlex="40">
+          <div class="pristine-card mat-elevation-z1 auto-width mb-16" style="border-radius: 3px;" fxLayout="column"
+               fxLayoutAlign="start">
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b style="font-size: 16px">Item Detail</b></span>
+              <span class="title dialog-title"></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Item no</b></span>
+              <span class="title dialog-title" style="color: green">{{iteminfo[0]?.item_no}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Barcode</b></span>
+              <span class="title dialog-title" >
+                 <button (click)="clickOnitemView(iteminfo[0]?.mid)" matTooltip="SO Hold Detail" mat-button>
+                      {{iteminfo[0]?.mid}}
+                 </button>
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Item Name</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.name}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Description </b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.description}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Quantity</b></span>
+              <span class="title dialog-title"><b>{{iteminfo[0]?.good_inventory}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Quantity To Take</b></span>
+              <span class="title dialog-title"><b>{{iteminfo[0]?.quantity_to_take}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="pl-8 pr-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>SO Block Qty.</b></span>
+              <span class="title dialog-title">
+                 <button [matMenuTriggerFor]="so_data_list" matTooltip="SO Hold Detail" mat-button>
+                     {{iteminfo[0]?.so_block_qty}}
+                 </button>
+                  <mat-menu #so_data_list="matMenu" class="w-500" [overlapTrigger]="false">
+                <div class="h3 pl-20 pr-20 pt-8 pb-12">
+                  <b>SO Block List</b>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="column" (click)="$event.stopPropagation()">
+                  <div fxFlex="100" id="mydata">
+                      <table class="tablestyle">
+                        <tr>
+                          <th>SO No.</th>
+                          <th>Order Status</th>
+                          <th>Qty</th>
+                        </tr>
+                        <tr *ngFor="let data of iteminfo[0].so_data">
+                          <td>
+                            {{data?.sale_header_no}}
+                          </td>
+                           <td>
+                               {{data?.order_status}}
+                          </td>
+                           <td>
+                              {{data?.qty}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" *ngIf="this.iteminfo[0].so_data.length<=0">
+                            No Record Found..
+                          </td>
+                        </tr>
+                      </table>
+                  </div>
+                </div>
+              </mat-menu>
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>TO Block Qty.</b></span>
+              <span class="title dialog-title">
+                <button [matMenuTriggerFor]="to_data_list"  matTooltip="To Block Detail" mat-button>
+                     {{iteminfo[0]?.to_block_qty}}
+                 </button>
+                 <mat-menu #to_data_list="matMenu" class="w-500" [overlapTrigger]="false">
+                <div class="h3 pl-20 pr-20 pt-8 pb-12">
+                  <b>TO Block Detail</b>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="column" (click)="$event.stopPropagation()">
+                  <div fxFlex="100" id="mydata">
+                      <table class="tablestyle">
+                        <tr>
+                          <th>Document No.</th>
+                          <th>Order Status</th>
+                          <th>Qty</th>
+                        </tr>
+                        <tr *ngFor="let data of iteminfo[0].to_data">
+                          <td>
+                            {{data?.document_no}}
+                          </td>
+                           <td>
+                               {{data?.order_status}}
+                          </td>
+                           <td>
+                              {{data?.ordered_quantity}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" *ngIf="this.iteminfo[0].to_data.length<=0">
+                            No Record Found..
+                          </td>
+                        </tr>
+                      </table>
+                  </div>
+                </div>
+              </mat-menu>
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Base U.O.M.</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.base_unit_of_measure}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Purchase U.O.M.</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.purchase_unit_of_measure}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Sale U.O.M.</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.sale_unit_of_measure}}</span>
+            </div>
+            <mat-divider></mat-divider>
+
+
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Main Category</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.main_category_name}} ( {{iteminfo[0]?.main_category}}
+                )</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Sub Category</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.sub_category_name}} ( {{iteminfo[0]?.sub_category}}
+                )</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>GST </b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.gst_group_name}} ( {{iteminfo[0]?.gst_group_id}} )</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>HSN</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.hsn_code_name}} ( {{iteminfo[0]?.hsn_code}} )</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>MRP</b></span>
+              <span class="title dialog-title">₹ {{iteminfo[0]?.mrp}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Transfer Cost</b></span>
+              <span class="title dialog-title">₹ {{iteminfo[0]?.transfer_cost}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Color</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.color}}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Style</b></span>
+              <span class="title dialog-title">{{iteminfo[0]?.style}}</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="ml-8" fxFlex="60">
+          <div class="pristine-card mat-elevation-z1 auto-width mb-16" style="border-radius: 3px;" fxLayout="column"
+               fxLayoutAlign="start">
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title" style="color: red"><b>Image</b></span>
+              <span class="title dialog-title">
+                <button (click)="viewbarcode(iteminfo[0])" class="header_button" matTooltip="Get Serial No."
+                        mat-icon-button>
+                      <mat-icon>barcode</mat-icon>
+                    </button>
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="image_main_section" fxLayout="column" fxLayoutAlign="center center">
+              <img [ngStyle]="{'display':image_data?'block':'none'}" [src]="image_data?.selected_image"/>
+              <mat-progress-spinner *ngIf="!image_data" class="m-24" mode="indeterminate"
+                                    color="warn"></mat-progress-spinner>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div class="other_image_section">
+                <img (click)="image_data.selected_image=image_data.img1"
+                     [ngStyle]="{'display':image_data?'block':'none'}" [src]="image_data?.img1"/>
+                <mat-progress-spinner *ngIf="!image_data" diameter="50" class="m-24" mode="indeterminate"
+                                      color="warn"></mat-progress-spinner>
+              </div>
+              <div class="other_image_section">
+                <img (click)="image_data.selected_image=image_data.img2"
+                     [ngStyle]="{'display':image_data?'block':'none'}" [src]="image_data?.img2"/>
+                <mat-progress-spinner *ngIf="!image_data" diameter="50" class="m-24" mode="indeterminate"
+                                      color="warn"></mat-progress-spinner>
+              </div>
+              <div class="other_image_section">
+                <img (click)="image_data.selected_image=image_data.img3"
+                     [ngStyle]="{'display':image_data?'block':'none'}" [src]="image_data?.img3"/>
+                <mat-progress-spinner *ngIf="!image_data" diameter="50" class="m-24" mode="indeterminate"
+                                      color="warn"></mat-progress-spinner>
+              </div>
+              <div class="other_image_section4">
+                <img (click)="image_data.selected_image=image_data.img4"
+                     [ngStyle]="{'display':image_data?'block':'none'}" [src]="image_data?.img4"/>
+                <mat-progress-spinner *ngIf="!image_data" diameter="50" class="m-24" mode="indeterminate"
+                                      color="warn"></mat-progress-spinner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

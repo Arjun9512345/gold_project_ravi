@@ -1,0 +1,108 @@
+<div  class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="inventoryreoprt" >
+  <div class="content p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+        <div class=" h3 p-16 pb-0 mb-8">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+            <b>Inventory Report</b>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <button mat-raised-button color="accent" (click)="downloadExcel()" *ngIf="dataSource?.data?.length>0 && dataSource?.data[0].condition?.toLowerCase()!= 'false'">
+                <mat-icon class="mx-8">cloud_download</mat-icon>Get Report
+              </button> &nbsp;&nbsp;&nbsp;&nbsp;
+              <button mat-raised-button color="accent" [matMenuTriggerFor]="filterMenu" >
+                <mat-icon class="mx-8">search</mat-icon>Filter</button>
+
+              <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+                <p class="text-bold m-0 h3" style="color: rgb(72 72 72)">Filter</p>
+                <mat-divider class="mt-12 mb-12"></mat-divider>
+                <div   [formGroup]="inventoryReport"  fxLayout="column" fxLayoutAlign="start stretch" (click)="$event.stopPropagation()">
+                  <mat-form-field appearance="legacy" style="width: 100%">
+                    <mat-label>Store Name</mat-label>
+                    <mat-select formControlName="store" (opened)="inp_store.focus();inp_store.value=''" (closed)="storeFilterArray = storeMasterListModels">
+                      <input matInput (keyup)="filterOptions($event?.target?.value, 'store')"
+                             class="b h-50 p-16"
+                             #inp_store>
+                      <mat-option *ngFor="let item of storeFilterArray" [value]="item?.id">{{item?.name}} ( {{item.id}} )</mat-option>
+                    </mat-select>
+                    <mat-icon class="mx-4" matPrefix >storefront</mat-icon>
+                  </mat-form-field>
+
+                            <!--    Dates-->
+                  <div fxLayout="row" fxLayoutAlign="space-between" style="width: 100%">
+                    <mat-form-field appearance="legacy" style="width: 48%">
+                      <mat-label>Start Date</mat-label>
+                      <input matInput formControlName="start_date" [max]="today" [matDatepicker]="start" (click)="start.open()" />
+                      <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
+                      <mat-datepicker  #start></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="legacy" style="width: 48%">
+                      <mat-label>End Date</mat-label>
+                      <input matInput formControlName="end_date" [matDatepicker]="end" [min]="inventoryReport?.get('start_date').value" [max]="today" (click)="end.open()"/>
+                      <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
+                      <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <!--    Category List-->
+        <mat-form-field appearance="legacy" style="width: 100%">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category" (opened)="inp_category.focus();inp_category.value=''" (closed)="itemList = itemListMaster" (selectionChange)="getSubItemCategory()">
+            <input matInput placeholder="Select Category" class="b h-50 p-16" (keyup)="filterOptions($event?.target?.value, 'category')" #inp_category>
+            <mat-option [value]="''"></mat-option>
+            <mat-option *ngFor="let item of itemList" [value]="item?.code">{{item?.name}}</mat-option>
+          </mat-select>
+          <mat-icon class="mx-4" matPrefix >shopping_basket</mat-icon>
+          <button class="m-0 p-0" mat-icon-button matSuffix (click)="inventoryReport?.get('category')?.setValue(''); $event.stopPropagation()" [fxHide]="inventoryReport?.get('category')?.value==''"><mat-icon class="m-0 p-0"  >clear</mat-icon></button>
+        </mat-form-field>
+                </div>
+                <span class="mt-12"  fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%">
+                  <button (click)="getReport();filterMenu.closed" fxFlex="45" [disabled]="inventoryReport.invalid"
+                          aria-label="Submit"
+                          color="accent"
+                          mat-flat-button
+                          style="width:48%">Get</button>
+                  <button (click)="inventoryReport.reset(); $event.stopPropagation()" fxFlex="45"
+                          aria-label="Reset"
+                          color="primary"
+                          mat-flat-button
+                          style="width:48%">Reset</button>
+                  </span>
+              </mat-menu>
+
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+          <div class="p-16" fxFlex fxLayout="column">
+            <div class="example-container">
+              <table [dataSource]="dataSource" mat-table matSort>
+                <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                  <th *matHeaderCellDef mat-header-cell>
+                    <div class="filterHeader">
+                      <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                      <input (keyup)="applyFilter($event.target.value,column)"
+
+                             [placeholder]="column|firstAnd_Split">
+                    </div>
+                  </th>
+                  <td *matCellDef="let element" mat-cell>
+                    <p >{{element[column]}}</p>
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+              </table>
+              <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+              <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+            </div>
+            <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length" (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--===================inventoryReport=======-->

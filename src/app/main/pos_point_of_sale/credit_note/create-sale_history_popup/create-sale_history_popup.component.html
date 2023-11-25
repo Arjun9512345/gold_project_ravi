@@ -1,0 +1,159 @@
+<div class="create_sale_history_page_detail">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}}</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <div fxLayout="column" fxFlex="1 0 auto">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>
+            Customer : &nbsp;{{data.saleReturnData[0].sale_header[0]?.cust_name}}
+            ( <b style="color: red">{{data.saleReturnData[0].sale_header[0]?.cust_email_id}}</b> )
+          </b>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="column" *ngFor="let item of data.saleReturnData[0].sale_line">
+          <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">
+              <img [src]="webApiHttp.getImageSrc(item.image_url)" (error)="item.image_url='assets/images/logos/imageNotFound.png'" class="Item_image"/>
+              &nbsp;&nbsp;<b>{{item.product_name +' ( '+item.barcode+' ) '}} &nbsp;&nbsp; Qty:{{item.qty}} X ₹&nbsp;{{item.amount}} </b>
+            </span>
+            <span class="title dialog-title"><b> ₹&nbsp;{{item.qty*item.amount}}</b></span>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+          <span class="title dialog-title"><b>Discount</b></span>
+          <span class="title dialog-title"><b> ₹&nbsp;{{data?.saleReturnData[0]?.sale_header[0]?.discount}}</b></span>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+          <span class="title dialog-title"><b>Subtotal</b></span>
+          <span class="title dialog-title"><b> ₹&nbsp;{{data?.saleReturnData[0]?.sale_header[0]?.sub_total}}</b></span>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+          <span class="title dialog-title"><b>Tax</b></span>
+          <span class="title dialog-title"><b> ₹&nbsp;{{data?.saleReturnData[0]?.sale_header[0]?.tax_gst}}</b></span>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+          <span class="title dialog-title"><b>Surcharge</b></span>
+          <span class="title dialog-title"><b> ₹&nbsp;{{data?.saleReturnData[0]?.sale_header[0]?.surcharge}}</b></span>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+          <span class="title dialog-title"><b>Sale total</b></span>
+          <span class="title dialog-title"><b> ₹&nbsp;{{data?.saleReturnData[0]?.sale_header[0]?.total_amount}}</b></span>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+          <span class="title dialog-title"><b>To pay</b></span>
+          <span class="title dialog-title"><b> ₹&nbsp;{{data?.saleReturnData[0]?.sale_header[0]?.total_amount}}</b></span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column"
+         fxLayoutGap.lt-sm="0px">
+      <div fxLayout="column" fxFlex="1 0 auto">
+        <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+          <div class="h3 p-8">
+            <b>Payment Summary</b>
+          </div>
+          <mat-divider></mat-divider>
+          <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+            <div fxFlex="25">
+              <b>Payment</b>
+            </div>
+            <div fxFlex="25">
+              <b>Date-Time</b>
+            </div>
+            <div fxFlex="25">
+              <b>User</b>
+            </div>
+            <div fxFlex="25">
+              <b>Amount</b>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div *ngFor="let paymaent of data.saleReturnData[0]?.sale_payment" fxLayout="column">
+            <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+              <div fxFlex="25">
+                {{paymaent.pay_type}}
+              </div>
+              <div fxFlex="25">
+                {{paymaent.created_on|date:'dd/MM/yyyy HH:mm'}}
+              </div>
+              <div fxFlex="25">
+                {{data.saleReturnData[0].sale_header[0].cust_name}}
+              </div>
+              <div fxFlex="25">
+                {{paymaent.amount}}
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div matDialogActions >
+    <input type="text" *ngIf="email_enter" class="search_input_pos_card">
+    <button (click)="email_enter=!email_enter;"  mat-stroked-button style="height: 45px;border-color: #404040;" color="primary">
+      <mat-icon>email</mat-icon> &nbsp;<b *ngIf="email_enter">Send</b><b *ngIf="!email_enter">Email</b>
+    </button>
+    <button mat-stroked-button (click)="pdfGenerate()" style="height: 45px;border-color: #404040;margin-left: 12px" color="primary">
+      <mat-icon>print</mat-icon> &nbsp; Print
+    </button>
+  </div>
+</div>
+
+<div #content class="row" id="content" style="display:none;">
+  <div class="row">
+    <h3 align="center">Tax Invoice Report</h3>
+    <h5 align="center">Invoice No:{{data.header_no}}</h5>
+    <h6 align="center">{{today |date:'medium'}}</h6>
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="col-sm-6">
+          <b>Item</b>
+        </th>
+        <th  class="th1">
+          <b>Price</b>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let saledata of data.saleReturnData[0]?.sale_line">
+        <td>{{saledata.barcode}} &nbsp;@Qty:{{saledata?.qty}} @Total Amount:{{saledata?.amount }}</td>
+        <td class="th1">{{saledata?.qty *saledata?.amount}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="table-contentt">
+      <table clas="table">
+        <td>
+          <b>Discount:&nbsp;&nbsp;{{data.saleReturnData[0]?.sale_header[0].discount}}</b><br><br>
+          <b>Sub Total:&nbsp;&nbsp;{{data.saleReturnData[0]?.sale_header[0].sub_total}}</b><br><br>
+          <b>Tax(GST):&nbsp;&nbsp;&nbsp;{{data.saleReturnData[0]?.sale_header[0].tax_gst}}</b><br><br>
+        </td>
+      </table>
+    </div>
+    <div class="table-contentt">
+      <table class="table">
+        <td>
+          <b >Total:{{data.saleReturnData[0]?.sale_header[0].total_amount}}</b>
+        </td>
+      </table>
+    </div>
+  </div>
+  <hr>
+</div>

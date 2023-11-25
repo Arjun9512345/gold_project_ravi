@@ -1,0 +1,90 @@
+<div class="create_item_paymentcart_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}}</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="40" class="p-12">
+        <div fxLayout="column" fxFlex="1 0 auto">
+          <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Total Qty</b></span>
+              <span class="title dialog-title"><b> {{this.data?.sale_order_header_line_list[0]?.total_qty}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Discount</b></span>
+              <span
+                class="title dialog-title"><b> -₹&nbsp;{{this.data?.sale_order_header_line_list[0]?.total_discount.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Subtotal</b></span>
+              <span
+                class="title dialog-title"><b> -₹&nbsp;{{this.data?.sale_order_header_line_list[0]?.sub_total.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Tax</b></span>
+              <span
+                class="title dialog-title"><b> -₹&nbsp;{{this.data?.sale_order_header_line_list[0]?.total_gst.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Sale total</b></span>
+              <span
+                class="title dialog-title"><b> -₹&nbsp;{{this.data?.sale_order_header_line_list[0]?.total_amount.toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>Rounded Off Amt</b></span>
+              <span
+                class="title dialog-title"><b> ₹&nbsp;{{getRounded_Amount(this.data?.sale_order_header_line_list[0]?.total_amount).toFixed(2)}}</b></span>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+              <span class="title dialog-title"><b>To pay</b></span>
+              <span
+                class="title dialog-title"><b> -₹&nbsp;{{getTotal_Amount(this.data?.sale_order_header_line_list[0]?.total_amount).toFixed(2)}}</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="50" class="p-12">
+        <div fxLayout="column" fxFlex="1 0 auto">
+          <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+            <div class="p-12" fxLayout="column">
+              <b>Amount tendered</b>
+              <br>
+              <input class="search_input_pos" readonly type="text"
+                     [value]="getTotal_Amount(this.data?.sale_order_header_line_list[0]?.total_amount).toFixed(2)"
+                     fxFlex="100">
+              <br>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <!--                <button  mat-stroked-button style="height: 45px;border-radius: 0px;border-color: #404040;" (click)="OnsubmitHit('CASH')" color="primary">-->
+                <!--                 <mat-icon>money</mat-icon> &nbsp; Cash-->
+                <!--                </button>-->
+                <button [ngClass]="FooterSection=='Credit'?'buttonClassIfpress':''" (click)="OnsubmitHit('CREDIT')"
+                        mat-stroked-button style="height: 45px;border-radius: 0px;border-color: #404040;"
+                        color="primary">
+                  <mat-icon>local_atm</mat-icon> &nbsp; Credit Note
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

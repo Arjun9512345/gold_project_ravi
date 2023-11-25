@@ -1,0 +1,102 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="itemLedgerEntrylist_Page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="p-8" fxLayout="row" fxLayoutAlign="space-between center">
+          <b>Item Ledger Entry List </b>
+          <div>
+            <mat-form-field class="formcontollclass" appearance="outline">
+              <mat-label>Store Name</mat-label>
+              <mat-select autocomplete="off" [(ngModel)]="store_code" (selectionChange)="RebindLedger($event.value)">
+                <input #search_byLocation autocomplete="off" class="myInput" focused="'true'" matInput
+                       placeholder="Search" type="text">
+                <mat-option *ngFor="let data of storeMasterListModels|search_by_key:'name': search_byLocation.value"
+                            [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+              </mat-select>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <button style="margin-top: 10px" [matMenuTriggerFor]="reportFilter"
+                    mat-icon-button matTooltip="Download Report"
+                    class="header_button">
+              <mat-icon>report</mat-icon>
+            </button>
+            <mat-menu #reportFilter="matMenu" class="w-400" [overlapTrigger]="false">
+              <div class="h3 pl-20 pr-20 pt-8 pb-12">
+                <b>Report Filter</b>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="column" class="p-20" >
+                <mat-form-field class="formcontollclass" appearance="outline" (click)="$event.stopPropagation()">
+                  <mat-label>Store Name</mat-label>
+                  <mat-select autocomplete="off" #selected_location >
+                    <input #search_byLocation12 autocomplete="off" class="myInput" focused="'true'" matInput
+                           placeholder="Search" type="text">
+                    <mat-option value="All">All</mat-option>
+                    <mat-option *ngFor="let data of storeMasterListModels|search_by_key:'name': search_byLocation12.value"
+                                [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" (click)="$event.stopPropagation()">
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate #start_range placeholder="Start date">
+                    <input matEndDate #end_range placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" (click)="$event.stopPropagation()">
+                  <mat-label>Enter Barcode</mat-label>
+                  <input matInput type="text" #barcode_text>
+                </mat-form-field>
+
+                <div class="p-8" fxFlex="100">
+                  <button (click)="download_Excel(selected_location.value,barcode_text.value,start_range.value,end_range.value);" fxFlex="100"
+                          mat-stroked-button style="border-radius: 0px;font-size: 16px;border-color: #404040;"
+                          color="primary" class="p-4"> Submit
+                  </button>
+                </div>
+
+              </div>
+            </mat-menu>
+          </div>
+
+
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div class="postedexample-container">
+            <table [dataSource]="dataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column"
+                            [sticky]="column=='ile_no'">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input [id]="column+'_inputfilter'" (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='location_name' &&column!='quantitiy' && column!='created_on' "
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p>{{element[column]}}</p>
+
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length"
+                         (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

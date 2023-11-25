@@ -1,0 +1,23 @@
+<div [ngClass]="{'expanded':!collapsed}" class="pristine-search-bar">
+
+  <div class="pristine-search-bar-content">
+
+    <label for="pristine-search-bar-input">
+      <button (click)="expand()" *ngIf="collapsed" aria-label="Expand Search Bar"
+              class="pristine-search-bar-expander"
+              mat-icon-button>
+        <mat-icon class="s-24 secondary-text">search</mat-icon>
+      </button>
+    </label>
+
+    <input (input)="search($event)" class="ml-24" fxFlex id="pristine-search-bar-input" placeholder="Search"
+           type="text">
+
+    <button (click)="collapse()" aria-label="Collapse Search Bar" class="pristine-search-bar-collapser"
+            mat-icon-button>
+      <mat-icon class="s-24 secondary-text">close</mat-icon>
+    </button>
+
+  </div>
+
+</div>

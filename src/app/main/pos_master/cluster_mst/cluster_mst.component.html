@@ -1,0 +1,56 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="cluster_mst_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate"
+                        style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Cluster Master List</b>
+          <button mat-icon-button matTooltip="Add Cluster" (click)="AddStoreList('Add Store',null)"
+                  class="header_button">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel *ngFor="let item of cluster_listData;let i=index" [expanded]="step === i"
+                                 (opened)="setStep(i)"
+                                 hideToggle>
+              <mat-expansion-panel-header>
+                <div fxLayout="column" fxFlex="100">
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-panel-title>
+                      <b> {{item.cluster_name}}</b>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <span><b>Created On :</b> {{item.cm[0].created_on|date:'dd/MM/yyyy'}}</span>
+                      <mat-icon *ngIf="step == i;">keyboard_arrow_up</mat-icon>
+                      <mat-icon *ngIf="step != i;">keyboard_arrow_down</mat-icon>
+                    </mat-panel-description>
+                  </div>
+
+                </div>
+
+              </mat-expansion-panel-header>
+              <div class="pt-8" *ngIf="step == i;">
+                <mat-chip-list>
+                  <mat-chip color="warn" *ngFor="let location of item.cm"
+                            selected>{{location.lm.length > 0 ? location.lm[0].location_name : ''}}
+                    ( {{location.location_id}} )
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+
+            </mat-expansion-panel>
+
+          </mat-accordion>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

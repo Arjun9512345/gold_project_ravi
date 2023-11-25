@@ -1,0 +1,57 @@
+<div class="create_pos_sale_person_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">
+        <b>Sale Person Payment ( <b style="color: red">{{this.data.SalePersonData?.code}}</b> )</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+<!--    <b style="padding: 5px;"><u>Info</u></b>-->
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+
+      <mat-form-field appearance="outline" fxFlex="49">
+        <mat-label>Paid From Date </mat-label>
+        <input matInput [(ngModel)]="from_date" readonly (click)="frompicker.open()"
+               autocomplete="off" [matDatepicker]="frompicker" [min]="this.from_date" [max]="this.from_date" placeholder="Choose from date"
+               (ngModelChange)="getTotalCommission()" disabled>
+        <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+        <mat-datepicker  #frompicker></mat-datepicker>
+        <mat-error>
+          From Date is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="49">
+        <mat-label>Paid To Date </mat-label>
+        <input matInput [(ngModel)]="to_date" readonly (click)="topicker.open()"
+               autocomplete="off" [matDatepicker]="topicker" [min]="this.from_date" [max]="today" placeholder="Choose to date"
+               (ngModelChange)="getTotalCommission()">
+        <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
+        <mat-datepicker  #topicker></mat-datepicker>
+        <mat-error>
+          To Date is required
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px" fxLayoutAlign="end">
+
+      <div *ngIf="this.to_date!=null && this.to_date!=''"><b>Total Commission : </b>{{this.total_amount}} * {{this.data?.SalePersonData?.sale_commission}}% = {{this.total_commission}}</div>
+
+    </div>
+
+    <div fxLayout="column">
+      <button style="margin-top: 23px" [disabled]="((from_date==''||from_date==null)|| (to_date==''||to_date==null))?true:false "  (click)="OnsubmitHit()" color="accent"
+              mat-raised-button> Pay
+      </button>
+    </div>
+
+  </div>
+</div>
+
+

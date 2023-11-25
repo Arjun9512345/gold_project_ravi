@@ -1,0 +1,148 @@
+<div class="page-layout simple right-sidebar inner-scroll" fxLayout="column" id="POSdashboard">
+  <!-- CENTER -->
+  <div class="center" fxFlex>
+    <div class="main-widget" pristinePerfectScrollbar>
+      <mat-progress-bar *ngIf="!dashboardData"
+                        [bufferValue]="'85'"
+                        [color]="'warn'"
+                        [mode]="'indeterminate'"
+                        [value]="'75'"
+                        class="example-margin">
+      </mat-progress-bar>
+      <div class="wrapper">
+        <div fxLayout="column" fxLayout.gt-sm="row"
+             fxLayoutAlign="start" fxLayoutAlign.gt-sm="start start">
+          <div class="widget" fxFlex="100" fxFlex.gt-sm="33.33">
+
+            <div [ngClass.gt-sm]="'mb-0 mr-32'" class="pristine-card auto-width mb-32">
+
+              <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                <div class="pr-16">
+                  <div class="h2 secondary-text">Today Sale(Ex.Tax)</div>
+                  <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                    <mat-icon class="warn-fg mr-4 font-size-40">shopping_cart</mat-icon>
+                    &nbsp;{{pos_7_days_dataList[0]?.no_of_sale}}
+                  </div>
+                </div>
+
+                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="warn-fg" fxFlex="row" fxLayoutAlign="start center">
+                    <!--                                        <mat-icon class="green-fg mr-4">trending_up</mat-icon>-->
+                    <span>{{this.dashboardData[0]?.today_amount.toFixed(2)}}</span>
+                  </div>
+                  <div class="ml-4 text-nowrap"> ₹</div>
+                </div>
+
+              </div>
+
+              <div class="h-50 secondary-text w-100-p p-8">
+                &nbsp; Orders
+              </div>
+
+            </div>
+
+          </div>
+          <div class="widget" fxFlex="100" fxFlex.gt-sm="33.33">
+
+            <div [ngClass.gt-sm]="'mb-0 mr-32'" class="pristine-card auto-width mb-32">
+
+              <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                <div class="pr-16">
+                  <div class="h2 secondary-text">Yesterday Sale(Ex.Tax)</div>
+                  <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                    <mat-icon class="warn-fg mr-4 font-size-40">shopping_cart</mat-icon>
+                    &nbsp;&nbsp;{{pos_7_days_dataList[1]?.no_of_sale}}
+                  </div>
+                </div>
+
+                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="warn-fg" fxFlex="row" fxLayoutAlign="start center">
+                    <!--                                        <mat-icon class="green-fg mr-4">trending_up</mat-icon>-->
+                    <span>{{this.dashboardData[0]?.yesterday_amount.toFixed(2)}}</span>
+                  </div>
+                  <div class="ml-4 text-nowrap"> ₹</div>
+                </div>
+
+              </div>
+
+              <div class="h-50 secondary-text w-100-p p-8">
+                &nbsp; Orders
+              </div>
+
+            </div>
+
+          </div>
+          <div class="widget" fxFlex="100" fxFlex.gt-sm="33.33">
+
+            <div [ngClass.gt-sm]="'mb-0 mr-32'" class="pristine-card auto-width mb-32">
+
+              <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                <div class="pr-16">
+                  <div class="h2 secondary-text">Sale In Last 7 Days</div>
+                  <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                    <mat-icon class="warn-fg mr-4 font-size-40">shopping_cart</mat-icon>
+                    &nbsp;&nbsp;{{get7DaysTotalOrder()}}
+                  </div>
+                </div>
+
+                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="warn-fg" fxFlex="row" fxLayoutAlign="start center">
+                    <!--                                        <mat-icon class="green-fg mr-4">trending_up</mat-icon>-->
+                    <span>{{this.dashboardData[0]?.last_7_days.toFixed(2)}}</span>
+                  </div>
+                  <div class="ml-4 text-nowrap"> ₹</div>
+                </div>
+
+              </div>
+
+              <div class="h-50 secondary-text w-100-p p-8">
+                &nbsp; Orders
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="wrapper2">
+        <div fxLayout="column" fxLayout.gt-sm="row"
+             fxLayoutAlign="start" fxLayoutAlign.gt-sm="start start">
+          <div class="widget" fxFlex="100" fxFlex.gt-sm="100">
+
+            <div class="pristine-card auto-width mb-32">
+
+              <div class="p-4" fxLayout="row">
+                <div class="headertableMyCustome" fxFlex="100">
+                  <table>
+                    <tbody style="font-size: 12px;">
+                    <tr>
+                      <th>Seq. No.</th>
+                      <th>Date</th>
+                      <th>Order Count</th>
+                      <th>SO Amount ( ₹ )</th>
+                      <th>Return Amount ( ₹ )</th>
+                    </tr>
+                    <tr *ngFor="let item of pos_7_days_dataList">
+                      <td>{{item.id}}</td>
+                      <td>{{item.Get_Date}} ( {{getDay(item.Get_Date)}} )</td>
+                      <td>{{item.no_of_sale}}</td>
+                      <td>{{item.amount.toFixed(2)}}</td>
+                      <td>{{item.return_amount.toFixed(2)}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

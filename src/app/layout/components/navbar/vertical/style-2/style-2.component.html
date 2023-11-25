@@ -1,0 +1,24 @@
+<div [ngClass]="pristineConfig.layout.navbar.secondaryBackground" class="navbar-header">
+
+  <div class="logo">
+    <img class="logo-icon" src="assets/images/logos/pristine.svg">
+    <span class="logo-text">PRISTINE</span>
+  </div>
+
+  <button (click)="toggleSidebarFolded()" class="toggle-sidebar-folded"
+          fxHide.lt-lg mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button (click)="toggleSidebarOpened()" class="toggle-sidebar-opened"
+          fxHide.gt-md mat-icon-button>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+</div>
+
+<div [ngClass]="pristineConfig.layout.navbar.primaryBackground"
+     [pristinePerfectScrollbarOptions]="{suppressScrollX: true}" class="navbar-content"
+     pristinePerfectScrollbar>
+  <pristine-navigation layout="vertical"></pristine-navigation>
+</div>

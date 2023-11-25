@@ -1,0 +1,129 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="salecategoryreport">
+  <div class="content p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+        <div class=" h3 mb-8 p-16 pb-0">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+              <b>Sale Category Report </b>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <button matTooltip="Download Excel" color="accent"  mat-raised-button (click)="downloadExcel()"  *ngIf="showExcel">
+                <mat-icon class="mr-8">cloud_download</mat-icon>Get Report
+              </button> &nbsp;&nbsp;
+            &nbsp;&nbsp;
+              <button matTooltip="Open Filter"  color="accent"  mat-raised-button  [matMenuTriggerFor]="filterMenu" >
+                <mat-icon class="mx-8">search</mat-icon>Filter
+              </button>
+
+              <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+                <p class="text-bold m-0 h3" style="color: rgb(72 72 72)">Filter</p>
+                <mat-divider class="mt-12 mb-12"></mat-divider>
+                <div [formGroup]="salecategoryForm"  fxLayout="column" fxLayoutAlign="start stretch" (click)="$event.stopPropagation()">
+
+                  <mat-form-field appearance="legacy" style="width: 100%">
+                    <mat-label>Store Name</mat-label>
+                    <mat-select formControlName="store_id" multiple>
+                      <mat-option *ngFor="let data of storeMasterListModels"
+                                  [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <!--Dates-->
+                  <div fxLayout="row" fxLayoutAlign="space-between" style="width: 100%">
+                    <mat-form-field appearance="legacy" style="width: 48%">
+                      <mat-label>From Date</mat-label>
+                      <input matInput formControlName="from_date" readonly (click)="frompicker.open()"
+                             autocomplete="off" [matDatepicker]="frompicker" [max]="today" placeholder="Choose from date"
+                             (ngModelChange)="showTable=false">
+                      <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+                      <mat-datepicker #frompicker></mat-datepicker>
+                      <mat-error>
+                        From Date is required
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="legacy" style="width: 48%">
+                      <mat-label>To Date</mat-label>
+                      <input matInput formControlName="to_date" readonly (click)="endpicker.open()"
+                             autocomplete="off" [matDatepicker]="endpicker" [min]="this.salecategoryForm.get('from_date').value"
+                             [max]="today" placeholder="Choose to date"
+                             (ngModelChange)="showTable=false">
+                      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                      <mat-datepicker #endpicker></mat-datepicker>
+                      <mat-error>
+                        To Date is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <span class="mt-12"  fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%">
+                  <button (click)="getSaleCategoryReport();filterMenu.closed" fxFlex="45" [disabled]="salecategoryForm.invalid"
+                  aria-label="Submit"
+                  color="accent"
+                  mat-flat-button
+                  style="width:48%">
+            Get
+          </button>
+
+
+                  <button (click)="salecategoryForm.reset(); $event.stopPropagation()" fxFlex="45"
+                          aria-label="Reset"
+                          color="primary"
+                          mat-flat-button
+                          style="width:48%">
+                   Reset
+                  </button>
+                  </span>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="p-16" fxFlex fxLayout="column">
+          <div class="example-container">
+            <table [dataSource]="dataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p >{{element[column]}}</p>
+
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage"  showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template>
+
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

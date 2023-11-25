@@ -1,0 +1,36 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <b>Barcode</b>
+  <button (click)="send()" mat-dialog-close mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<div *ngIf="barcodeList?.length>0" class="mb-24" fxLayout="column" fxLayoutAlign="start">
+  <div fxFlex fxLayout="row" fxLayoutGap="10px">
+    <mat-chip-list>
+      <mat-chip *ngFor="let barocde of barcodeList"
+                matBadge="{{barocde.quantity}}" matBadgeColor="accent"
+                matBadgePosition="after">{{barocde.barcode}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div fxFlex fxLayout="row" fxLayoutGap="10px">
+    <div fxFlex="70" fxLayoutAlign="start">
+      <button (click)="previous()" [disabled]="pageNo==0" aria-label="Submit" color="accent"
+              mat-raised-button
+              style="margin-top: 10px; height: 45px">
+        Previous
+      </button>
+    </div>
+    <div fxFlex="30" fxLayoutAlign="end">
+      <button (click)="next()" [disabled]="error" aria-label="Submit"
+              color="accent" mat-raised-button
+              style="margin-top: 10px; height: 45px">
+        Next
+      </button>
+    </div>
+  </div>
+
+</div>

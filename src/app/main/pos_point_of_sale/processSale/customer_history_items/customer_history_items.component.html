@@ -1,0 +1,57 @@
+<div class="customer_history_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}} ( {{data.cust_name }} : <b
+        style="color: red">{{data.cust_mobile_no}} </b> )</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="20px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="100" class="p-4" fxLayoutAlign="space-between center" style="border: solid 1px rgba(128,128,128,0.4)">
+        <div fxFlex="100" id="mydataOfCustomer">
+          <table class="tablestyle">
+            <tr>
+              <th style="width: 70px">&nbsp;</th>
+              <th>Item No.</th>
+              <th>Name</th>
+              <th>Barcode</th>
+              <th>qty</th>
+            </tr>
+            <tr *ngFor="let data of customer_history_data">
+              <td>
+                <img [src]="data.image_url"
+                     (error)="data.image_url='assets/images/logos/imageNotFound.png'"
+                     style="width: 50px!important;height: 50px!important;object-fit:cover;border: solid 0.5px rgba(170, 170, 170, 0.42);
+            box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(170, 170, 170, 0.42); border-radius: 25px;padding: 2px;margin: 5px"/>
+              </td>
+              <td>
+                {{data?.item_no}}
+              </td>
+              <td>
+                {{data?.name}}
+              </td>
+              <td>
+                {{data?.barcode}}
+              </td>
+              <td>
+                {{data?.qty}}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" *ngIf="this.customer_history_data.length<=0">
+                No Record Found..
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

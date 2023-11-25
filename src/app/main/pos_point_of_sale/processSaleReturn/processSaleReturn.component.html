@@ -1,0 +1,194 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="SaleReturn_List_page">
+  <div class="p-24" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="20px"
+             fxLayoutGap.lt-sm="0px">
+          <!--         todo left side div-->
+          <div fxFlex="50" fxLayout="column" fxLayoutAlign="start">
+            <!--<div fxLayout="row" fxLayoutGap="2px" fxLayout.xs="column" fxLayout.sm="column">
+              <div fxFlex="60">
+                <input [disabled]="true" class="search_input_pos" #barcodeinputValue type="text" fxFlex="100"
+                       placeholder="Search for a item..." (keyup)="_filterItemAutoComplete(barcodeinputValue.value)"
+                       [matAutocomplete]="barcode_autocomplete">
+                <mat-autocomplete fxFlex="1 0 auto" #barcode_autocomplete="matAutocomplete">
+                  <mat-option
+                              matTooltip="Reatil Cost : ₹&nbsp;{{data.retail_cost}}"
+                              *ngFor="let data of autocomplete_itemList"
+                              style="border-bottom:solid 0.5px rgba(170, 170, 170, 0.42);height: 70px ">
+                    <img [src]="webApiHttp.getImageSrc(data.image_url)"
+                         (error)="data.image_url='assets/images/logos/imageNotFound.png'"
+                         style="width: 50px;height: 50px;border: solid 0.5px rgba(170, 170, 170, 0.42);
+    box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(170, 170, 170, 0.42); border-radius: 25px;padding: 2px;margin: 5px"/>
+                    {{data.product_name}} &nbsp; ( {{data.barcode}} )
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              <div fxFlex="20">
+                <button fxFlex [disabled]="true" mat-stroked-button style="height: 45px;border-radius: 0px"
+                        color="primary">
+                  Gift
+                  Card
+                </button>
+              </div>
+              <div fxFlex="20">
+                <button fxFlex [disabled]="true" mat-stroked-button style="height: 45px;border-radius: 0px;"
+                        color="primary">
+                  Cust. Sale
+                </button>
+              </div>
+            </div>
+            <br>-->
+            <!--<mat-tab-group>
+              <mat-tab label="Buy Item">
+
+              </mat-tab>
+            </mat-tab-group>-->
+
+            <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column">
+              <div class="mat-card mat-elevation-z1" fxFlex="100" fxLayout="column" fxLayoutAlign="start">
+                <div class="h3 p-12">
+                  <b>Purchased Item</b>
+                </div>
+                <div fxLayout="column" pristinePerfectScrollbar>
+                  <div
+                    *ngIf="sale_order_header_line_list?.length>0 && sale_order_header_line_list[0].barcode!=null && sale_order_header_line_list[0]?.barcode!=undefined"
+                    style="overflow-y:auto!important;max-height: 450px ">
+                    <div [ngClass]="item.selected_byuser?'item_imageSelected':''" (click)="selectRowByUser(i)"
+                         *ngFor="let item of sale_order_header_line_list;let i=index">
+                      <mat-divider></mat-divider>
+                      <div fxLayout="column" class="p-12" fxLayout="row" fxLayoutAlign="space-between center"
+                           fxLayoutGap="10px"
+                           fxLayoutGap.lt-sm="0px">
+                        <!--         todo left side div-->
+                        <div fxFlex="30" fxLayoutAlign="start">
+                          <img [src]="item.image_url"
+                               (error)="item.image_url='assets/images/logos/imageNotFound.png'"
+                               class="Item_image"/>
+                        </div>
+                        <div fxFlex="70" fxLayout="row"
+                             fxLayoutAlign="space-between center">
+                          <div fxLayout="column" fxFlex="100">
+                                  <span>{{item.product_name}} (<b style="color: red"> {{item.barcode}} </b>)
+                                    &nbsp;&nbsp;
+                                     <button (click)="delete_ScanedBarcode(item)" mat-icon-button
+                                             matTooltip="Delete Item Line"
+                                             class="rounded_shadow_button">
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                                  </span>
+                            <span fxLayoutAlign="space-between center"><b>Qty : </b>{{item.qty}}</span>
+                            <span
+                              fxLayoutAlign="space-between center"><b>Unit Price : </b>₹ {{item.unit_price?.toFixed(2)}}</span>
+                            <span
+                              fxLayoutAlign="space-between center"><b>Sub Total : </b>₹ {{item.line_sub_total?.toFixed(2)}}</span>
+                            <span fxLayoutAlign="space-between center"
+                                  *ngIf="item?.line_discount_amt>0"><b>Dis. : </b> ₹ {{item?.line_discount_amt}}</span>
+                            <span fxLayoutAlign="space-between center"><b> Tax : <b
+                              style="font-size: 8px">( {{item.gstpercentage}}
+                              % )</b></b>  ₹  {{item?.line_total_gst_amt }} </span>
+                            <mat-divider class="mt-4 pb-4"></mat-divider>
+                            <span
+                              fxLayoutAlign="space-between center"><b>Total Amount : </b><b>₹  {{item?.line_total_amount }}
+
+                                    </b>
+                                  </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!--          todo right side div -->
+          <div fxFlex="50" fxLayout="column" fxLayoutAlign="start">
+            <mat-progress-bar *ngIf="loadding" mode="indeterminate"
+                              style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+            <div class="mat-card mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+              <div class="h3 p-8">
+                <button mat-icon-button
+                        class="rounded_icon_button">
+                  <mat-icon>transfer_within_a_station</mat-icon>
+                </button>
+                <b>
+                  &nbsp;{{sale_order_header_line_list[0]?.cust_name}}
+                  ( <b style="color: red">{{sale_order_header_line_list[0]?.cust_phone_no}}</b> )
+                </b>
+                <b style="float: right" *ngIf="sale_order_header_line_list">( <b
+                  style="color: red">{{sale_order_header_line_list[0].sale_header_no}}</b> )</b>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="h3 p-8">
+                <button mat-icon-button
+                        class="rounded_icon_button">
+                  <mat-icon>receipt</mat-icon>
+                </button>
+                <b>
+                 &nbsp;Parent Receipt No : <b style="color: red">{{sale_order_header_line_list[0]?.parent_so_no}}</b>
+                </b>
+              </div>
+
+              <!--              todo group button-->
+              <mat-button-toggle-group fxFlex="1 0 auto">
+                <mat-button-toggle (click)="CancelReturnOrder(sale_order_header_line_list[0].sale_header_no)" class="buttonInsideMain" fxFlex="100" value="italic">Cancel Return</mat-button-toggle>
+              </mat-button-toggle-group>
+
+              <!--              todo total amount and total discount section-->
+              <div class="p-12" fxLayout="column" fxFlex="1 0 auto">
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Total Qty</b></span>
+                  <span class="title dialog-title"><b> {{sale_order_header_line_list[0].total_qty}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Subtotal</b></span>
+                  <span class="title dialog-title"><b> -₹&nbsp;{{sale_order_header_line_list[0].sub_total.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Discount</b></span>
+                  <span class="title dialog-title"><b> -₹&nbsp;{{sale_order_header_line_list[0].total_discount.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Gst</b></span>
+                  <span class="title dialog-title"><b> -₹&nbsp;{{sale_order_header_line_list[0].total_gst.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Total</b></span>
+                  <span class="title dialog-title"><b> -₹&nbsp;{{sale_order_header_line_list[0].total_amount.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Rounded Off Amt</b></span>
+                  <span class="title dialog-title"><b>
+                    ₹&nbsp;{{getRounded_Amount(sale_order_header_line_list[0]?.total_amount).toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+              </div>
+              <!--              todo selected item in cart-->
+
+              <!--              todo pay section-->
+              <div class="p-12" fxFlex="1 0 auto">
+                <button (click)="openCreatePaymentDialog()" mat-raised-button fxFlex="100" color="primary"
+                        class="buttonInsideMain">
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span class="title dialog-title"><b>Return</b></span>
+                    <span class="title dialog-title"><b> ₹&nbsp;{{getTotal_Amount(sale_order_header_line_list[0].total_amount).toFixed(2)}}</b></span>
+                  </div>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

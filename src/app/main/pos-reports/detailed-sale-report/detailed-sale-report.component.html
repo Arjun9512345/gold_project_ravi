@@ -1,0 +1,57 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="itemlist_Page">
+  <div class="p-20" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-16 mt-4">
+          <b>Detailed sale report</b>
+            <button (click)="downloadExcel()" matTooltip="Download Excel" mat-icon-button
+                    style="margin-right: 15px;float: right;box-shadow: 1px 1px 1px 1px rgba(170,170,170,0.42)" *ngIf="showExcel">
+              <mat-icon>cloud_download</mat-icon>
+            </button>
+
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div class="popup_locationContent" fxLayout="column" matDialogContent>
+            <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="30px"
+                 fxLayoutGap.lt-sm="0px">
+              <div fxFlex="50">
+                <mat-form-field appearance="outline" fxFlex="50">
+                  <mat-label>Store Name</mat-label>
+                  <mat-select [(ngModel)]="store_code" (selectionChange)="detailed_item_list(store_code)">
+                    <mat-option *ngFor="let data of storeMasterListModels" [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="example-container">
+            <table [dataSource]="dataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column"
+              [stickyEnd]="">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p >{{element[column]}}</p>
+
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length" (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

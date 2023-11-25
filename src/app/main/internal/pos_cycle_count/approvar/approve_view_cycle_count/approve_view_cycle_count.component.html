@@ -1,0 +1,122 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="approve_view_cycle_count_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Approve Cycle Count</b>
+          <b *ngIf="cycle_count_data_list.length>0"> ( <b
+            style="color: red">{{cycle_count_data_list[0]?.header?.document_no}} </b>)</b>
+          <button *ngIf="viewBrandDataSource.data.length>0 && cycle_count_data_list[0]?.header?.status=='Pending For Approval'"
+                  style="margin-left: 10px;float: right"
+                  color="warn"
+                  (click)="RejectCycleCount()"
+                  [matTooltip]="'Reject Cycle Count'"
+                  mat-raised-button>
+            Reject
+          </button>
+
+          <button *ngIf="viewBrandDataSource.data.length>0 && cycle_count_data_list[0]?.header?.status=='Pending For Approval'"
+                  style="float: right"
+                  color="accent"
+                  (click)="approveCycleCount()"
+                  [matTooltip]="'Approve Cycle Count'"
+                  mat-raised-button>
+            Approved
+          </button>
+
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="cycle_count_data_list.length>0" fxLayout="column" class="p-16" fxLayout.gt-xs="row">
+          <div class="mr-8" fxFlex="45">
+            <div class="pristine-card auto-width mb-8"
+                 style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                 fxLayoutAlign="start">
+              <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                <span class="title dialog-title" style="color: red"><b>Cycle Count Detail</b></span>
+                <span class="title dialog-title"></span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Document Type</b></span>
+                <span class="title dialog-title"
+                      style="color: green">{{cycle_count_data_list[0]?.header.document_type}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Location Name </b></span>
+                <span class="title dialog-title">{{sessionManageMent.getLocationName}}
+                  ( {{cycle_count_data_list[0]?.header.location_id}} )</span>
+              </div>
+              <mat-divider></mat-divider>
+
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Status</b></span>
+                <span class="title dialog-title"> {{cycle_count_data_list[0]?.header.status}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="ml-8 mr-8" fxFlex="45">
+            <div class="pristine-card auto-width mb-8"
+                 style="border-top-left-radius: 0px;border-top-right-radius: 0px;" fxLayout="column"
+                 fxLayoutAlign="start">
+              <div fxLayout="row" class="p-8" fxLayoutAlign="space-between center">
+                <span class="title dialog-title" style="color: red"><b>Header Detail</b></span>
+                <span class="title dialog-title"></span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Total Qty</b></span>
+                <span class="title dialog-title">{{cycle_count_data_list[0]?.header?.total_qty}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Total items</b></span>
+                <span class="title dialog-title">{{cycle_count_data_list[0]?.header?.total_items}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" class="p-4" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"><b>Created On </b></span>
+                <span class="title dialog-title"> {{cycle_count_data_list[0]?.header.created_on|date:'dd/MM/yyyy hh:mm a'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [ngStyle]="{'display':cycle_count_data_list?.length>0?'block':'none'}" class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+
+          <div class="approveviewexample-container1">
+            <table [dataSource]="viewBrandDataSource" mat-table matSort>
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='approve_qty' && column!='scan_qty' && column!='item_no' && column!='total_qty_inventory'"
+                           [placeholder]="column|firstAnd_Split">
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column != 'approve_qty'">{{element[column]}}</p>
+                  <input *ngIf="column == 'approve_qty'" matInput autocomplete="off" [(ngModel)]="element[column]"
+                         type="number" style="border: solid 1px rgba(234,234,234,0.84);padding: 5px"
+                         [disabled]="cycle_count_data_list[0]?.header?.status=='Pending For Approval'?false:true"
+                        #input_value
+                         (focusout)="ScanItemNoByUser(element['barcode'],input_value.value)"
+                         (keyup.enter)="ScanItemNoByUser(element['barcode'],input_value.value)"
+                  />
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: row.manual_adjust>0?true:false}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" mat-row></tr>
+            </table>
+            <div *ngIf="viewBrandDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewBrandDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageIndex]="PageNumber" [pageSize]="RowsPerPage" [length]="length"
+                         (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

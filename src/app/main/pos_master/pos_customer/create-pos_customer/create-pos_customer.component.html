@@ -1,0 +1,98 @@
+<div class="create_item_barnd_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}}
+        <b  *ngIf="this.data.flag=='Update Customer'">( <b style="color: red">{{this.data.customerData.cust_id}}</b> )</b></b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <b style="padding: 5px;"><u>Personal Info</u></b>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>First Name</mat-label>
+        <input matInput [(ngModel)]="first_Name" type="text">
+        <b matSuffix style="font-size: 25px;color: red">*</b>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Last Name</mat-label>
+        <input matInput [(ngModel)]="last_Name" type="text">
+        <b matSuffix style="font-size: 25px;color: red">*</b>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="dob">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Email</mat-label>
+        <input matInput [formControl]="email" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Phone No</mat-label>
+        <input matInput type="tel" [maxlength]="10" [(ngModel)]="phone_no">
+        <b matSuffix style="font-size: 25px;color: red">*</b>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Gender</mat-label>
+        <mat-select [(ngModel)]="gender">
+          <mat-option value="Male">Male</mat-option>
+          <mat-option value="Female">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <b style="padding: 5px"><u>Address Info</u></b>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Country</mat-label>
+        <mat-select [(ngModel)]="country">
+          <mat-option *ngFor="let coun of countryList" [value]="coun.name">{{coun.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>State</mat-label>
+        <mat-select [(ngModel)]="state" [disabled]="this.data.flag == 'Update Store'?true:false">
+          <mat-option (click)="bindDistrict(stat.code)" *ngFor="let stat of state_List" [value]="stat.code">{{stat.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>District</mat-label>
+        <mat-select [(ngModel)]="city" [disabled]="this.data.flag == 'Update Store'?true:false">
+          <mat-option *ngFor="let dist of district_list" [value]="dist.district_name">{{dist.district_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="10px"
+         fxLayoutGap.lt-sm="0px">
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Address</mat-label>
+        <textarea matInput type="number" [(ngModel)]="address" rows="2" ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Note</mat-label>
+        <textarea matInput type="number" [(ngModel)]="note" rows="2" ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="32">
+        <mat-label>Source of know</mat-label>
+        <textarea matInput type="number" [(ngModel)]="source_of_know" rows="2" ></textarea>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <button style="margin-top: 23px" [disabled]="(first_Name==''||first_Name==null||phone_no==''||phone_no==null||phone_no.toString().length!=10)?true:false"  (click)="OnsubmitHit()" color="accent"
+              mat-raised-button> SAVE
+      </button>
+    </div>
+
+  </div>
+</div>
+
+

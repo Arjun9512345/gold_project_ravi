@@ -1,0 +1,126 @@
+<div  class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="stockLedger" >
+  <div class="content p-20" pristinePerfectScrollbar>
+    <!--<div >-->
+    <!--  <div >-->
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column" fxLayoutAlign="start">
+
+        <div class=" h3 p-16 pb-0 mb-8">
+          <div fxFlex="1 0 auto" fxFlex.sm fxLayout="row" fxLayout.lt-sm="column"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px">
+            <b>Stock Ledger Report</b>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <button matTooltip="Download Excel"
+                      *ngIf="dataSource?.data?.length>0 && dataSource?.data[0]?.condition?.toLowerCase()!='false'"
+                      mat-raised-button color="accent" (click)="downloadExcel()">
+                <mat-icon class="mx-8">cloud_download</mat-icon>Get Report
+              </button> &nbsp;&nbsp;
+              &nbsp;&nbsp;
+              <button matTooltip="Open Filter"  mat-raised-button color="accent" [matMenuTriggerFor]="filterMenu" >
+                <mat-icon class="mx-8">search</mat-icon>Filter
+              </button>
+              <mat-menu class="p-32 w-600" fxLayout="column" fxLayoutAlign="center stretch" #filterMenu="matMenu">
+                <p class="text-bold m-0 h3" style="color: rgb(72 72 72)">Filter</p>
+                <mat-divider class="mt-12 mb-12"></mat-divider>
+                <div   [formGroup]="stockInventoryFormGroup"  fxLayout="column" fxLayoutAlign="start stretch" (click)="$event.stopPropagation()">
+
+                  <mat-form-field appearance="legacy" style="width: 100%">
+          <mat-label>Store Name</mat-label>
+          <mat-select formControlName="store" (opened)="inp_store.focus();inp_store.value=''" (closed)="storeFilterArray = storeMasterListModels">
+            <input matInput class="h-40 mt-8 p-16" (keyup)="filterOptions($event?.target?.value)"
+                   autocomplete="off"
+                   #inp_store>
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let item of storeFilterArray" [value]="item?.id">{{item?.name}} ( {{item.id}} )</mat-option>
+          </mat-select>
+          <mat-icon class="mx-4" matPrefix >storefront</mat-icon>
+        </mat-form-field>
+                  <!--    Dates-->
+        <div fxLayout="row" fxLayoutAlign="space-between" style="width: 100%">
+          <mat-form-field appearance="legacy" style="width: 48%">
+            <mat-label>Start Date</mat-label>
+            <input matInput formControlName="start_date" [max]="today" [matDatepicker]="start" (click)="start.open()" />
+            <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker  #start></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="legacy" style="width: 48%">
+            <mat-label>End Date</mat-label>
+            <input matInput formControlName="end_date" [matDatepicker]="end" [min]="stockInventoryFormGroup?.get('start_date').value" [max]="today" (click)="end.open()"/>
+            <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+                  <!--        Item-->
+        <mat-form-field appearance="legacy" style="width: 100%" >
+          <mat-label>Item Name</mat-label>
+          <input matInput [matAutocomplete]="item" (keyup)="getItem(itemInput.value)" #itemInput>
+          <mat-autocomplete #item="matAutocomplete">
+            <mat-option *ngFor="let obj of itemArray" (click)="stockInventoryFormGroup.get('item').setValue(obj?.mid)" [value]="obj?.mid">{{obj?.mid}}</mat-option>
+          </mat-autocomplete>
+          <mat-icon class="mx-4" matPrefix >local_mall</mat-icon>
+          <mat-progress-bar mode="indeterminate" *ngIf="itemLoading"></mat-progress-bar>
+        </mat-form-field>
+                </div>
+                <span class="mt-12"  fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%">
+                  <button (click)="getReport();filterMenu.closed" fxFlex="45" [disabled]="stockInventoryFormGroup.invalid"
+                          aria-label="Submit"
+                          color="accent"
+                          mat-flat-button
+                          style="width:48%">
+            Get
+          </button>
+
+
+                  <button (click)="stockInventoryFormGroup.reset(); $event.stopPropagation()" fxFlex="45"
+                          aria-label="Reset"
+                          color="primary"
+                          mat-flat-button
+                          style="width:48%">
+                   Reset
+                  </button>
+                  </span>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+<mat-divider></mat-divider>
+        <!--          Filter Select Options-->
+        <div class="p-16" fxFlex fxLayout="column">
+          <div fxLayout="column">
+            <div fxFlex="80px" class="b px-16 py-6" *ngIf="dataSource?.data?.length>0 && dataSource?.data[0]?.condition?.toLowerCase()!='false'" style="box-sizing: border-box">
+              <p  *ngIf="stockInventoryFormGroup.get('item')?.value?.length>0  ">Item : <b>{{stockInventoryFormGroup?.get('item')?.value}}</b></p>
+              <p>From : <b>{{stockInventoryFormGroup?.get('start_date')?.value | date: 'dd MMM yyyy'}}</b> &nbsp; &nbsp; To : <b>{{stockInventoryFormGroup?.get('end_date')?.value | date: 'dd MMM yyyy'}}</b></p>
+              <p>Store ID : <b>{{stockInventoryFormGroup?.get('store').value}}</b></p>
+            </div>
+            <span class="example-container">
+              <table [dataSource]="dataSource" *ngIf="dataSource?.data?.length>0 && dataSource?.data[0]?.condition?.toLowerCase()!='false'" mat-table matSort>
+                <ng-container *ngFor="let column of displayedColumns;" [matColumnDef]="column" [sticky]="column=='document_no'">
+                  <th *matHeaderCellDef mat-header-cell>
+                    <div class="filterHeader">
+                      <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                      <input (keyup)="applyFilter($event.target.value,column)"
+                             [placeholder]="column|firstAnd_Split">
+                    </div>
+                  </th>
+                  <td *matCellDef="let element;let j = index" mat-cell>
+                    <p >{{element[column]}}</p>
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row [hidden]="row?.document_no.toLowerCase()=='opening balance'"></tr>
+              </table >
+              <div *ngIf="dataSource?.data?.length<=0 || dataSource?.data[0]?.condition=='False'" class="h3 m-16">No Record Found.</div>
+              <mat-divider *ngIf="dataSource?.data?.length<=0 || dataSource?.data[0]?.condition=='False'"></mat-divider>
+            </span>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="RowsPerPage" [length]="length" (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+

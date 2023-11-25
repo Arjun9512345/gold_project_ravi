@@ -1,0 +1,367 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="process_sale_page">
+  <div class="p-24" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div fxLayout="column" fxLayoutAlign="start">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="20px"
+             fxLayoutGap.lt-sm="0px">
+          <!--         todo left side div-->
+          <div fxFlex="50" fxLayout="column" fxLayoutAlign="start">
+            <div fxLayout="row" fxLayoutGap="2px" fxLayout.xs="column" fxLayout.sm="column">
+              <div fxFlex="80">
+                <input class="search_input_pos" #barcodeinputValue type="text" fxFlex="100"
+                       [placeholder]="scan_by_user?'Scan Item Or Barcode...':'Search for a Item...'"
+                       (keyup)="scan_by_user?'':_filterItemAutoComplete(barcodeinputValue.value)"
+                       (keyup.enter)="scan_by_user?sale_barcode_scan_by_user(null,barcodeinputValue.value):'';"
+                       [matAutocomplete]="barcode_autocomplete">
+                <mat-autocomplete fxFlex="1 0 auto" #barcode_autocomplete="matAutocomplete">
+                  <div *ngIf="!scan_by_user">
+                    <mat-option (click)="sale_barcode_scan_by_user(data,null)"
+                                matTooltip="Item Name. : {{data.name}}  Barcode : {{data.desc}}"
+                                *ngFor="let data of autocomplete_itemList"
+                                style="border-bottom:solid 0.5px rgba(170, 170, 170, 0.42);height: 70px ">
+
+                      <img [src]="'assets/images/logos/imageNotFound.png'"
+                           (error)="'assets/images/logos/imageNotFound.png'"
+                           style="width: 50px;height: 50px;object-fit:cover;border: solid 0.5px rgba(170, 170, 170, 0.42);
+            box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(170, 170, 170, 0.42); border-radius: 25px;padding: 2px;margin: 5px"/>
+                      {{data.name}} &nbsp; ( {{data.desc}} )
+                    </mat-option>
+                  </div>
+
+                </mat-autocomplete>
+              </div>
+              <div fxFlex="20">
+                <button (click)="scan_by_user=!scan_by_user" fxFlex mat-stroked-button
+                        style="height: 45px;border-radius: 0px;border-color: #404040;"
+                        [style]="scan_by_user?{'background':'black','color':'white'}:{'background':'','color':''}"
+                        color="primary">
+                  {{scan_by_user ? 'Scanning' : 'Select Item'}}
+                </button>
+              </div>
+            </div>
+            <br>
+            <div class="mat-card mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+              <div class="h3 p-12">
+                <b>Cart Item</b>
+              </div>
+              <div fxLayout="column" pristinePerfectScrollbar>
+                <div
+                  *ngIf="sale_order_header_line_list?.length>0 && sale_order_header_line_list[0].item_name!=null && sale_order_header_line_list[0]?.item_name!=undefined"
+                  style="overflow-y:auto!important;max-height: 550px ">
+                  <div [ngClass]="item.selected_byuser?'item_imageSelected':''"
+                       *ngFor="let item of sale_order_header_line_list;let i=index">
+                    <mat-divider></mat-divider>
+                    <div fxLayout="column" class="p-12" fxLayout="row" fxLayoutAlign="space-between center"
+                         fxLayoutGap="10px"
+                         fxLayoutGap.lt-sm="0px">
+                      <!--         todo left side div-->
+                      <div fxFlex="20" fxLayoutAlign="start">
+                        <img [src]="'assets/images/logos/imageNotFound.png'"
+                             (error)="'assets/images/logos/imageNotFound.png'"
+                             class="Item_image"/>
+                      </div>
+                      <div fxFlex="80" fxLayout="row"
+                           fxLayoutAlign="space-between center">
+                        <div fxLayout="column" fxFlex="100">
+                                  <span>{{item.item_name}} (<b style="color: red"> {{item.item_desc}} </b>)
+                                     <button (click)="delete_ScanedBarcode(item)" mat-icon-button
+                                             matTooltip="Delete Item Line"
+                                             class="rounded_shadow_button">
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                                  </span>
+                          <div fxLayout="row" fxLayoutAlign="space-between center">
+                               <span >
+                            <b>MRP : </b>
+                             &nbsp;&nbsp;₹  <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput [(ngModel)]="item.item_mrp"
+                                       placeholder="Enter Amount">
+                                 <!--                             <b>-->
+                                 <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
+                                 <!--                            </b>-->
+                          </span>
+                            <span>
+                            <b>Qty : </b>
+                               <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput [(ngModel)]="item.qty"
+                                       placeholder="Enter Amount">
+                              <!--                             <b>-->
+                              <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
+                              <!--                            </b>-->
+                          </span>
+                          </div>
+                          <span style="margin-top: 2px">
+                            <b>Weight : </b>
+                              <input type="number" class="myinputbox_style" (keyup)="userManualValueChange()" matInput [(ngModel)]="item.item_weight"
+                                       placeholder="Enter Amount"> &nbsp;/gram
+                            <!--                             <b>-->
+                            <!--                             ₹  {{item.item_mrp.toFixed(2)}}-->
+                            <!--                            </b>-->
+                          </span>
+                          <span
+                            fxLayoutAlign="space-between center"><b>Selling Price : </b>₹ {{item.item_mrp?.toFixed(2)}}</span>
+                          <span
+                            fxLayoutAlign="space-between center"><b>Sub Total : </b>₹ {{item.line_sub_total?.toFixed(2)}}</span>
+                          <span fxLayoutAlign="space-between center"><b> GST : <b
+                            style="font-size: 8px">( {{item.item_gst_per}}
+                            % )</b></b>  ₹  {{item?.line_total_gst_amt }} </span>
+                          <mat-divider class="mt-4 pb-4"></mat-divider>
+                          <span
+                            fxLayoutAlign="space-between center"><b>Total Amount : </b><b>₹  {{item?.line_total_amount }}
+
+                                    </b>
+                                  </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!--          todo right side div -->
+          <div fxFlex="50" fxLayout="column" fxLayoutAlign="start">
+            <div class="mat-card mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+              <div fxLayout="row" class="p-8" fxLayout.xs="column" fxLayoutAlign="space-between center">
+                <button class="textOverflow mr-sm-12 mr-md-12" mat-button
+                        [matTooltip]="!verifyCustomer?'Add Customer':'Phone No. : '+selected_customer_phone_no_byuser"
+                        [matMenuTriggerFor]="customerMenuDesignmenu"
+                        (menuOpened)="searchcustomer.focus()">
+                  <mat-icon *ngIf="!verifyCustomer">person_add</mat-icon>
+                  <mat-icon *ngIf="verifyCustomer">transfer_within_a_station</mat-icon>
+                  &nbsp;
+                  <b *ngIf="!verifyCustomer"> &nbsp;Add Customer</b>
+                  <b *ngIf="verifyCustomer">
+                    &nbsp;{{selected_customer_name_byuser }}
+                    ( <b style="color: red">{{selected_customer_phone_no_byuser }}</b> )
+                    &nbsp;{{selected_customer_address_byuser }}
+                  </b>
+
+                </button>
+                &nbsp;
+              </div>
+              <mat-divider *ngIf="verifyCustomer"></mat-divider>
+              <!--              <div fxLayout="row" class="p-8" fxLayout.xs="column" fxLayoutAlign="space-between center"-->
+              <!--                   *ngIf="verifyCustomer">-->
+              <!--                <button mat-button matTooltip="Add Sale Peerson" [matMenuTriggerFor]="salepersonMenuDesignmenu"-->
+              <!--                        (menuOpened)="searchsaleperson.focus()">-->
+              <!--                  <mat-icon *ngIf="!verifySalePerson">face</mat-icon>-->
+              <!--                  <mat-icon *ngIf="verifySalePerson">accessible</mat-icon>-->
+              <!--                  &nbsp;-->
+              <!--                  <b *ngIf="!verifySalePerson"> &nbsp;Add Sale Person</b>-->
+              <!--                  <b *ngIf="verifySalePerson">-->
+              <!--                    &nbsp;{{sale_order_header_line_list[0]?.sale_person_name}}-->
+              <!--                    ( <b style="color: red">{{sale_order_header_line_list[0]?.sale_person_phone_no}}</b> )-->
+              <!--                  </b>-->
+
+              <!--                </button>-->
+              <!--                <button mat-icon-button matTooltip="Customer History" >-->
+              <!--                  <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M9,4v1.38c-0.83-0.33-1.72-0.5-2.61-0.5c-1.79,0-3.58,0.68-4.95,2.05l3.33,3.33h1.11v1.11c0.86,0.86,1.98,1.31,3.11,1.36 V15H6v3c0,1.1,0.9,2,2,2h10c1.66,0,3-1.34,3-3V4H9z M7.89,10.41V8.26H5.61L4.57,7.22C5.14,7,5.76,6.88,6.39,6.88 c1.34,0,2.59,0.52,3.54,1.46l1.41,1.41l-0.2,0.2c-0.51,0.51-1.19,0.8-1.92,0.8C8.75,10.75,8.29,10.63,7.89,10.41z M19,17 c0,0.55-0.45,1-1,1s-1-0.45-1-1v-2h-6v-2.59c0.57-0.23,1.1-0.57,1.56-1.03l0.2-0.2L15.59,14H17v-1.41l-6-5.97V6h8V17z"/></g></g></svg>-->
+              <!--                </button>-->
+              <!--              </div>-->
+
+              <mat-menu #customerMenuDesignmenu="matMenu" class="w-400" [overlapTrigger]="false">
+                <div class="h3 pl-20 pr-20 pt-8 pb-12">
+                  <b>Select Customer</b>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="column" class="p-20">
+                  <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                                  floatLabel="never">
+                    <mat-label>Enter Customer Name</mat-label>
+                    <input #searchcustomer [value]="selected_customer_name_byuser" autocomplete="off" matInput placeholder="Customer Name"/>
+                    <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
+                                          color="warn"></mat-progress-spinner>
+                  </mat-form-field>
+                  <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                                  floatLabel="never">
+                    <mat-label>Enter Customer Phone No</mat-label>
+                    <input #searchcustomer_phone_no [value]="selected_customer_phone_no_byuser" autocomplete="off" matInput placeholder="Customer Phone No."/>
+                    <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
+                                          color="warn"></mat-progress-spinner>
+                  </mat-form-field>
+                  <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"
+                                  floatLabel="never">
+                    <mat-label>Enter Customer Address</mat-label>
+                    <input #searchcustomer_address [value]="selected_customer_address_byuser" autocomplete="off" matInput placeholder="Customer Address"/>
+                    <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"
+                                          color="warn"></mat-progress-spinner>
+                  </mat-form-field>
+                  <div class="p-8" fxFlex="100">
+                    <button
+                      (click)="selectCutomerAndSubmitHit(searchcustomer.value,searchcustomer_phone_no.value,searchcustomer_address.value);searchcustomer.value='';searchcustomer_phone_no.value='';searchcustomer_address.value=''"
+                      fxFlex="100"
+                      mat-stroked-button style="border-radius: 0px;font-size: 16px;border-color: #404040;"
+                      color="primary" class="p-4"> Submit
+                    </button>
+                  </div>
+                  <!--                  <div fxFlex="100" style="text-align: center" fxLayoutAlign="row">-->
+                  <!--                    <div class="separator_of_add_customer_or_submit">-->
+                  <!--                      <span class="text">OR</span>-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
+                  <!--                  <div class="p-8" fxFlex="100">-->
+                  <!--                    <button (click)="openCustomerMasterDialog(searchcustomer.value)" fxFlex="100" mat-stroked-button-->
+                  <!--                            style="border-radius: 0px;font-size: 16px;border-color: #404040;"-->
+                  <!--                            color="primary" class="p-4">-->
+                  <!--                      Add Customer-->
+                  <!--                    </button>-->
+                  <!--                  </div>-->
+                </div>
+              </mat-menu>
+              <!--              <mat-menu #salepersonMenuDesignmenu="matMenu" [overlapTrigger]="false" class="w-400">-->
+              <!--                <div class="h3 pl-20 pr-20 pt-8 pb-12">-->
+              <!--                  <b>Select Sale Person</b>-->
+              <!--                </div>-->
+              <!--                <mat-divider></mat-divider>-->
+              <!--                <div fxLayout="column" class="p-20">-->
+              <!--                  <mat-form-field class="px-8 w-100-p" appearance="outline" (click)="$event.stopPropagation()"-->
+              <!--                                  floatLabel="never">-->
+              <!--                    <mat-label>Search Sale Person</mat-label>-->
+              <!--                    <input #searchsaleperson autocomplete="off" matInput placeholder="Search Sale Person"-->
+              <!--                           (keyup)="_filterSalePersonAutoComplete(searchsaleperson.value)"-->
+              <!--                           [matAutocomplete]="saleperson_autocomplete"/>-->
+              <!--                    <mat-progress-spinner matSuffix *ngIf="loadding" mode="indeterminate" diameter="30"-->
+              <!--                                          color="warn"></mat-progress-spinner>-->
+              <!--                  </mat-form-field>-->
+              <!--                  <mat-autocomplete fxFlex="1 0 auto" #saleperson_autocomplete="matAutocomplete">-->
+              <!--                    <mat-option [matTooltip]="data.phone_no" (click)="temp_selected_sale_person=data"-->
+              <!--                                *ngFor="let data of sale_person_list_data"-->
+              <!--                                [value]="data.name"-->
+              <!--                                style="border-bottom:solid 0.5px rgba(170, 170, 170, 0.42);">-->
+              <!--                      {{data.name }} ( <b style="color: red">{{data.phone_no}}</b>)-->
+              <!--                    </mat-option>-->
+              <!--                  </mat-autocomplete>-->
+              <!--                  <div class="p-8" fxFlex="100">-->
+              <!--                    <button-->
+              <!--                      (click)="selectSalePersonAndSubmitHit();searchsaleperson.value=''"-->
+              <!--                      fxFlex="100" mat-stroked-button style="border-radius: 0px;font-size: 16px;border-color: #404040;"-->
+              <!--                      color="primary" class="p-4">-->
+              <!--                      Submit-->
+              <!--                    </button>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </mat-menu>-->
+              <!--              todo group button-->
+              <mat-button-toggle-group fxFlex="1 0 auto">
+                <mat-button-toggle class="buttonInsideMain" (click)="discardSale()" fxFlex="50"
+                                   value="bold">Discard
+                </mat-button-toggle>
+                <mat-button-toggle class="buttonInsideMain" (click)="productItemAddInsert()" fxFlex="50"
+                                   value="italic">Item List
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+
+              <div class="p-12" fxLayout="column" fxFlex="1 0 auto">
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Total Qty</b></span>
+                  <span class="title dialog-title"><b> {{total_qty}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Total Weight</b></span>
+                  <span class="title dialog-title"><b> {{total_weight}} /gram</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Subtotal</b></span>
+                  <span
+                    class="title dialog-title"><b> ₹&nbsp;{{sub_total?.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>GST</b></span>
+                  <span
+                    class="title dialog-title"><b> ₹&nbsp;{{total_gst?.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Total</b></span>
+                  <span
+                    class="title dialog-title"><b> ₹&nbsp;{{total_amount?.toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" class="p-12" fxLayoutAlign="space-between center">
+                  <span class="title dialog-title"><b>Rounded Off Amt</b></span>
+                  <span
+                    class="title dialog-title"><b>
+                    ₹&nbsp;{{getRounded_Amount(total_amount).toFixed(2)}}</b></span>
+                </div>
+                <mat-divider></mat-divider>
+              </div>
+              <!--              todo pay section-->
+              <div class="p-12" fxFlex="1 0 auto">
+                <button (click)="openCreatePaymentDialog()" mat-raised-button fxFlex="100" color="primary"
+                        class="buttonInsideMainPay">
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span class="title dialog-title"><b>Pay</b></span>
+                    <span
+                      class="title dialog-title"><b> ₹&nbsp;{{getTotal_Amount(total_amount).toFixed(2)}}</b></span>
+                  </div>
+                </button>
+              </div>
+              <!--              todo total amount and total discount section-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #product_list_ui>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>Product List</b>
+    <button mat-dialog-close mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <div class="mat-elevation-z1" fxLayout="column" fxLayoutAlign="start">
+    <div fxLayout="column">
+      <div style="overflow-y:auto!important;max-height: 550px ">
+        <div *ngFor="let item of product_list;let i=index">
+          <mat-divider></mat-divider>
+          <div fxLayout="column" class="p-12" fxLayout="row" fxLayoutAlign="space-between center"
+               fxLayoutGap="10px"
+               fxLayoutGap.lt-sm="0px">
+            <!--         todo left side div-->
+            <div fxFlex="30" fxLayoutAlign="start">
+              <img [src]="'assets/images/logos/imageNotFound.png'"
+                   (error)="'assets/images/logos/imageNotFound.png'"
+                   class="Item_image" width="100"/>
+            </div>
+            <div fxFlex="70" fxLayout="row"
+                 fxLayoutAlign="space-between center">
+              <div fxLayout="column" fxFlex="100">
+                                  <span>{{item.name}} (<b style="color: red"> {{item.desc}} </b>)
+                                     <button (click)="delete_ScanedBarcode(item)" mat-icon-button
+                                             matTooltip="Delete Item Line"
+                                             class="rounded_shadow_button">
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                                  </span>
+                <span fxLayoutAlign="space-between center">
+                            <b>MRP : </b>
+                             <b>
+                             ₹  {{item.item_type}}
+                            </b>
+                          </span>
+                <span fxLayoutAlign="space-between center"><b> GST : <b
+                  style="font-size: 8px">( {{item.gst_per}}
+                  % )</b></b>  </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+

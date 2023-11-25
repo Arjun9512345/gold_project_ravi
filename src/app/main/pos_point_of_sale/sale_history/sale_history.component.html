@@ -1,0 +1,90 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="sale_history_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate"
+                        style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>Sale History List </b>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+
+          <div class="popup_locationContent" fxLayout="column" matDialogContent>
+            <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="30px"
+                 fxLayoutGap.lt-sm="0px" fxLayoutAlign="space-between center">
+
+              <mat-form-field appearance="outline" fxFlex="30">
+                <mat-label>Store Name</mat-label>
+                <mat-select [(ngModel)]="store_code" (selectionChange)="getSaleHistoryViewList()">
+                  <mat-option (click)="store_code=data.id.toString();getSaleHistoryViewList()" *ngFor="let data of storeMasterListModels"
+                              [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="30">
+                <mat-label>Order Type</mat-label>
+                <mat-select [(ngModel)]="order_type" >
+                  <mat-option (click)="order_type='SALE ORDER';getSaleHistoryViewList()" [value]="'SALE ORDER'">SALE ORDER</mat-option>
+                  <mat-option (click)="order_type='RETURN ORDER';getSaleHistoryViewList()" [value]="'RETURN ORDER'">RETURN ORDER</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="example-container12">
+            <table [dataSource]="viewBrandDataSource" mat-table matSort>
+              <ng-container [sticky]="column=='sale_datetime'||column=='sale_header_no'?true:false"
+                            [stickyEnd]="column=='Action'?true:false"
+                            *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header *ngIf="column!='sale_datetime' && column!='sale_header_no'&&column!='parent_so_no'">{{column|firstAnd_Split}}</b>
+                    <b mat-sort-header *ngIf="column=='sale_datetime'">{{'receipt_date'|firstAnd_Split}}</b>
+                    <b mat-sort-header *ngIf="column=='sale_header_no'">{{'receipt_no'|firstAnd_Split}}</b>
+                    <b mat-sort-header *ngIf="column=='parent_so_no'">{{'parent_receipt_no'|firstAnd_Split}}</b>
+                    <br>
+                    <input autocomplete="off" [id]="'sale_h_'+column" #inputdata *ngIf="column!='Action' && column!='return_status' && column!='order_status'  && column!='sub_total' && column!='sub_total'
+                    &&  column!='total_amount_with_discount' &&  column!='total_gst' &&  column!='total_amount'"
+                           [placeholder]="column|firstAnd_Split"
+                           (keyup)="applyFilter(inputdata.value,column)"
+                           matInput>
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p
+                    *ngIf="column!='sale_header_no' &&  column!='sale_datetime' &&column!='cust_details' && column!='return_status'">{{element[column]}}</p>
+                  <p *ngIf="column=='sale_datetime'">{{element[column]|date:'yyyy-MM-dd'}}</p>
+                  <p *ngIf="column=='sale_header_no'"
+                     (click)="element['order_status']=='PARK'?'':displaySaleHeaderData(element)"><b
+                    class="anchureTag"><u>{{element[column]}}</u></b></p>
+                  <p *ngIf="column=='cust_details'"
+                     [matTooltip]="element['cust_email_id']">{{element['cust_details']}}</p>
+                  <p *ngIf="column=='return_status'">
+                    <b *ngIf="element['order_status']=='INVOICED'" (click)="ReturnCreateOrder(element)"
+                       class="anchureTag" [matTooltip]="'Mark Return This Order'"><u>Create Return</u></b>
+                    <b *ngIf="element['order_status']=='PARK'" (click)="SendDatatoSalePage(element)" class="anchureTag"
+                       [matTooltip]="'Park Order Click And Pay'">Pay</b>
+                    <b *ngIf="element['order_status']!='PARK' && element['order_status']!='INVOICED'">
+                      {{element['order_status']}}
+                    </b>
+                  </p>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row
+                  (click)="clickOnRow(row.sale_header_no)"
+                  [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
+            </table>
+            <div *ngIf="viewBrandDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewBrandDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageIndex]="PageNumber" [pageSize]="RowsPerPage" [length]="length"
+                         (page)="myPagginaterEvent($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

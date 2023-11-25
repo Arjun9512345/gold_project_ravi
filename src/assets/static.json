@@ -1,0 +1,8 @@
+{
+  "url_dev": "https://demo2.pristinefulfil.com",
+  "url_reliance_dev": "https://vendorpaneldev.pristinefulfil.com",
+  "url_zivame_dev": "https://pos.zivame.com",
+  "testurl": "https://localhost:5001",
+  "url_zivame_reliance": "https://reliancepos.zivame.com"
+}
+

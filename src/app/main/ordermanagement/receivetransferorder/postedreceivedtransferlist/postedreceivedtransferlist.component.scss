@@ -1,0 +1,72 @@
+@import "../../../../../@pristine/scss/pristine";
+
+#PostedTransferOrderListPage {
+  .postedexample-container {
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th {
+        padding: 4px;
+        color: black;
+      }
+
+      td {
+        padding-left: 4px;
+        padding-right: 2px;
+        font-size: 12px;
+      }
+
+      th.mat-column-pick_no {
+        font-weight: bold;
+      }
+
+      th.mat-column-priorty {
+        font-weight: bold;
+      }
+
+      th.mat-column-created_datetime {
+        font-weight: bold;
+      }
+
+      td.mat-column-pick_no {
+
+      }
+
+      td.mat-column-priorty {
+        mat-select {
+          width: 100px;
+        }
+      }
+
+      td.mat-column-created_datetime {
+      }
+
+
+      td.mat-column-shipment_no {
+        border-right: 1px solid #e0e0e0;
+      }
+      td.mat-column-Action {
+        width: 20px;
+        border-left: 1px solid #e0e0e0;
+      }
+
+    }
+  }
+  .header_button {
+    height: 30px;
+    width: 30px;
+    float: right;
+    line-height: 30px;
+    box-shadow: 1px 1px 1px 1px rgba(170, 170, 170, 0.42);
+
+    .mat-icon {
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      font-size: 20px;
+    }
+  }
+}

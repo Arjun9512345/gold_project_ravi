@@ -1,0 +1,60 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="brand_List_page">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <mat-progress-bar *ngIf="loadding" mode="indeterminate" style="border-top-left-radius: 10px;border-top-right-radius: 10px"></mat-progress-bar>
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>POS Terminal List</b>
+          <button *ngIf="selectedStoreByUser!=null && selectedStoreByUser!=undefined" mat-icon-button matTooltip="Add Pos Terminal"
+                  (click)="AddUpdatePosTerminalData('Add Pos Terminal',null)"
+                  class="header_button">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div fxLayout="row">
+          <mat-form-field appearance="outline" fxFlex="30">
+            <mat-label>Select Store</mat-label>
+            <mat-select>
+              <mat-option (click)="getPosTerminalViewList(option)" *ngFor="let option of store_ListData" [value]="option.id">{{option.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+          <div class="example-container">
+            <table [dataSource]="viewBrandDataSource" mat-table matSort>
+              <ng-container [sticky]="column=='pos_code'?true:false" [stickyEnd]="column=='Action'?true:false"
+                            *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='Action' && column!='brand_icon'"
+                           [placeholder]="column|firstAnd_Split"
+                           matInput>
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column!='Action'">{{element[column]}}</p>
+                  <mat-chip-list   *ngIf="column=='Action'" mat-icon-button >
+<!--                    <mat-chip matTooltip="Update Pos Terminal" (click)="AddUpdatePosTerminalData('Update Pos Terminal',element)"> <mat-icon>edit</mat-icon></mat-chip>-->
+                    <mat-chip matTooltip="Delete Pos Terminal" (click)="delete_PosTerminal(element)"> <mat-icon>delete</mat-icon></mat-chip>
+                  </mat-chip-list>
+
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="viewBrandDataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="viewBrandDataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator #first_paginator [pageSizeOptions]="[ 5, 10, 20, 30,40,50]" pageSize="10"
+                         showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

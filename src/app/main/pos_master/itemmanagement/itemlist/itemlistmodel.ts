@@ -1,0 +1,50 @@
+export class Itemlist {
+  condition: string;
+  total_rows:number;
+  item_no:string;
+  mid:string;
+  name:string;
+  description:string;
+  base_unit_of_measure:string;
+  purchase_unit_of_measure:string;
+  sale_unit_of_measure:string;
+  main_category:string;
+  sub_category:string;
+  gst_group_id:string;
+  hsn_code:string;
+  unit_price:number;
+  mrp:number;
+  transfer_cost:number;
+  color:string;
+  size:string;
+  style:string;
+  is_open:number;
+  main_category_name:string;
+  sub_category_name:string;
+  gst_group_name:string;
+  hsn_code_name:string;
+  quantity:number;
+  quantity_to_take:number;
+  flag:any;
+  hovered:boolean;
+  highlighted:boolean;
+}
+export interface upload_sample_data {
+  item_no: any;
+  name: any;
+  description: any;
+  purchaseUom:any;
+  saleUom:any;
+  base_uom:any;
+  category:any;
+  subCategory:any;
+  unitPrice:any;
+  gstGroupId:any;
+  gstHsnCode:any;
+  costPerUnit:any;
+  mrp:any;
+  flag:any;
+  created_by:any;
+  updated_by:any;
+  brand_id:any;
+}

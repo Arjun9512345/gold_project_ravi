@@ -1,0 +1,70 @@
+<div class="page-layout simple fullwidth inner-scroll" fxLayout="column" id="UserSetup">
+  <div class="p-12" pristinePerfectScrollbar>
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start">
+      <div class="mat-card mat-elevation-z1" fxFlex="1 0 auto" fxLayout="column"
+           fxLayoutAlign="start">
+        <div class="h3 p-8">
+          <b>User List </b>
+
+          <button (click)="downloadExcel()" matTooltip="Download Excel" mat-icon-button class="header_button">
+            <mat-icon>cloud_download</mat-icon>
+          </button>
+          <button (click)="AddUserDetail()" matTooltip="Create User" mat-icon-button class="header_button"
+                  style="margin-right: 15px;float: right;box-shadow: 1px 1px 1px 1px rgba(170,170,170,0.42)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="p-16" fxFlex fxLayout="column" fxLayout.lt-sm="column">
+          <div class="row">
+            <mat-form-field fxFlex="30" class="formcontollclass" appearance="outline">
+              <mat-label>Store Name</mat-label>
+              <mat-select autocomplete="off" [(ngModel)]="store_code" (selectionChange)="RebindLedger($event.value)">
+                <input #search_byLocation autocomplete="off" class="myInput" focused="'true'" matInput
+                       placeholder="Search" type="text">
+                <mat-option (click)="store_code='All'"  [value]="'All'">All</mat-option>
+                <mat-option (click)="store_code=data.id" *ngFor="let data of storeMasterListModels|search_by_key:'name': search_byLocation.value"
+                            [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="postedexample-container12">
+            <table [dataSource]="dataSource" mat-table matSort>
+              <ng-container [sticky]="column=='name'?true:false"
+                            [stickyEnd]="column=='Action'||column=='Password'?true:false"
+                            *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th *matHeaderCellDef mat-header-cell>
+                  <div class="filterHeader">
+                    <b mat-sort-header>{{column|firstAnd_Split}}</b><br>
+                    <br>
+                    <input (keyup)="applyFilter($event.target.value,column)"
+                           *ngIf="column!='Action' && column!='Password'"
+                           [placeholder]="column|firstAnd_Split"
+                           matInput>
+                  </div>
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <p *ngIf="column!='Action' &&column!='Password'">{{element[column]}}</p>
+                  <button matTooltip="Update Password" (click)="EditUser(element)" *ngIf="column=='Password'"
+                          mat-icon-button class="header_button">
+                    <mat-icon>lock</mat-icon>
+                  </button>
+                  <button (click)="NewEditUser(element)" matTooltip="Update User" *ngIf="column=='Action'"
+                          mat-icon-button class="header_button">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="dataSource?.data?.length<=0" class="h3 m-16">No Record Found.</div>
+            <mat-divider *ngIf="dataSource?.data?.length<=0"></mat-divider>
+          </div>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

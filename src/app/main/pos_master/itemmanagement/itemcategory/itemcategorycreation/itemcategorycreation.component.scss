@@ -1,0 +1,50 @@
+@import "../../../../../../@pristine/scss/pristine";
+
+#AddItemCategory {
+  .wrapper {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+    padding: 0.5em 0px !important;
+    top: -0.19em !important;
+  }
+
+  ::ng-deep .mat-form-field-label-wrapper {
+    top: -1.25em;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  ::ng-deep input:disabled {
+    font-weight: 300 !important;
+    color: black;
+  }
+
+  .btn {
+    border: 1px solid #dbdbdb;
+    color: gray;
+    height: 50%;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+
+  }
+
+}

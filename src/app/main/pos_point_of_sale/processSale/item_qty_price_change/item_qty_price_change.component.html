@@ -1,0 +1,68 @@
+<div class="item_qty_price_change_page">
+  <div fxLayout="column" matDialogTitle>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"><b>{{data.flag}} ( <b
+        style="color: red">{{data.sale_order_header_line_list.product_name}} </b> )</b></span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button class="header_button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+  </div>
+  <div class="popup_locationContent" fxLayout="column" matDialogContent>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="20px"
+         fxLayoutGap.lt-sm="0px">
+      <div fxFlex="40" class="p-4" fxLayoutAlign="space-between center" style="border: solid 1px rgba(128,128,128,0.4)">
+        <img style="object-fit: cover;" fxFlex="100"
+             [src]="data.sale_order_header_line_list.image_url"
+             (error)="'assets/images/logos/imageNotFound.png'"/>
+      </div>
+      <div fxFlex="60">
+        <div class="p-12" fxLayout="column">
+          <div fxLayout="row">
+            <mat-form-field appearance="outline" fxFlex="80">
+              <mat-label>Item Qty</mat-label>
+              <input matInput  [(ngModel)]="qty">
+            </mat-form-field>
+            <button fxFlex="20" (click)="OnsubmitHit()" mat-stroked-button
+                    style="height: 42px;border-radius: 0px;border-color: #404040;margin-top: 5px;margin-left: 10px"
+                    color="primary">Apply
+            </button>
+          </div>
+
+          <div  fxLayout="column" style="border: solid 1px rgba(128,128,128,0.4)">
+            <b class="p-12">Other Fields</b>
+            <mat-divider></mat-divider>
+            <div fxLayout="column" class="p-12">
+              <b>Item No </b> <button style="text-align: left;margin-left: 0px;padding-left: 0px" mat-button (click)="viewinfo(data.sale_order_header_line_list.item_no)">{{data.sale_order_header_line_list.item_no}}</button>
+              <b>Barcode </b> {{data.sale_order_header_line_list.barcode}}
+              <b>Selling Price </b> ₹&nbsp;{{data.sale_order_header_line_list.unit_price}}
+              <b>MRP </b> ₹&nbsp;{{data.sale_order_header_line_list.mrp}}
+              <b>Savings </b> ₹&nbsp;{{data.sale_order_header_line_list.saving_amt}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div matDialogActions>
+    <div fxLayout="column" fxFlex="100" >
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.sm="column" fxLayoutGap="20px"
+           fxLayoutGap.lt-sm="0px">
+        <div fxLayout="row" fxFlex="50">
+         <button [disabled]="select_count<=1?true:false" (click)="previousImage()"  aria-label="Close dialog" mat-icon-button class="header_button">
+           <mat-icon>chevron_left</mat-icon>
+         </button>
+         <button [disabled]="select_count>=4?true:false" (click)="nextImage()" aria-label="Close dialog" mat-icon-button class="header_button">
+           <mat-icon>navigate_next</mat-icon>
+         </button>
+       </div>
+        <div style="text-align: right" fxFlex="50">
+          <b>Sub Total : ₹&nbsp;</b>{{data.sale_order_header_line_list.line_sub_total}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

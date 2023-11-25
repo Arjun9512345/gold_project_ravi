@@ -1,0 +1,138 @@
+<div fxFlex fxLayout="column" fxLayoutAlign="start">
+  <div mat-dialog-title style="margin-top: -45px">
+    <h5>Create User
+      <mat-icon (click)="cancle()" style="float: right;margin-top:5px;cursor: pointer">cancel</mat-icon>
+    </h5>
+    <div fxLayout="column" fxLayoutAlign="start" style="margin-top: -10px;">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div fxLayout="row wrap" mat-dialog-content>
+    <form [formGroup]="registerForm" name="registerForm" novalidate>
+      <div class="pl-8" fxFlex fxLayout="row wrap" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <div fxFlex="45">
+          <mat-form-field appearance="outline" style="width:100%!important;">
+            <mat-label>Name</mat-label>
+            <input autocomplete="false" formControlName="name" matInput>
+            <mat-icon class="secondary-text" matSuffix>account_circle</mat-icon>
+            <mat-error>
+              Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="45">
+          <mat-form-field appearance="outline" style="width:100%!important;">
+            <mat-label>Email</mat-label>
+            <input autocomplete="false" formControlName="email" matInput>
+            <mat-icon class="secondary-text" matSuffix>mail</mat-icon>
+            <mat-error *ngIf="registerForm.get('email').hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('email').hasError('email')">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="45">
+          <mat-form-field appearance="outline" style="width: 100%!important;">
+            <mat-label>User Role</mat-label>
+            <mat-select formControlName="roll_id">
+              <mat-option value="">None</mat-option>
+              <mat-option *ngFor="let rol of AllRoleDetail"
+                          [value]="rol.role_id">{{rol.role_name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="registerForm.get('roll_id').hasError('required')">
+              User Roll is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="45" *ngIf="this.data.flag.toLowerCase() == 'insert'" >
+          <mat-form-field appearance="outline" style="width:100%!important;">
+            <mat-label>Password</mat-label>
+            <input autocomplete="false" formControlName="password" matInput type="password">
+            <mat-icon class="secondary-text" matSuffix>vpn_key</mat-icon>
+<!--            <mat-error>-->
+<!--              Password is required-->
+<!--            </mat-error>-->
+          </mat-form-field>
+        </div>
+        <div fxFlex="45" *ngIf="this.data.flag.toLowerCase() == 'insert'" >
+          <mat-form-field appearance="outline" style="width:100%!important;">
+            <mat-label>Password (Confirm)</mat-label>
+            <input autocomplete="false" formControlName="passwordConfirm" matInput type="password">
+            <mat-icon class="secondary-text" matSuffix>vpn_key</mat-icon>
+<!--            <mat-error *ngIf="registerForm.get('passwordConfirm').hasError('required')">-->
+<!--              Password confirmation is required-->
+<!--            </mat-error>-->
+<!--            <mat-error *ngIf="!registerForm.get('passwordConfirm').hasError('required') &&-->
+<!--                                                       registerForm.get('passwordConfirm').hasError('passwordsNotMatching')">-->
+<!--              Passwords must match-->
+<!--            </mat-error>-->
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="45">
+          <mat-form-field appearance="outline" style="width: 100%!important;">
+            <mat-label>Device Type</mat-label>
+          <mat-select formControlName="device_type">
+            <mat-option value="Manual">Manual</mat-option>
+            <mat-option value="Scanner">Scanner</mat-option>
+          </mat-select>
+          <mat-error *ngIf="registerForm.get('device_type').hasError('required')">
+            Device Type is required
+          </mat-error>
+          </mat-form-field>
+        </div>
+        <mat-checkbox fxFlex="45" formControlName="is_ho" (click)="bindClusterList()" class="example-margin">Is Cluster</mat-checkbox>
+
+
+        <div fxFlex="45">
+          <mat-form-field  *ngIf="!registerForm.get('is_ho').value" class="formcontollclass" appearance="outline"  style="width: 100%!important;">
+            <mat-label>Store Name</mat-label>
+            <mat-select autocomplete="off" formControlName="store_code">
+              <input #search_byLocation autocomplete="off" class="myInput" focused="'true'" matInput placeholder="Search" type="text">
+              <mat-option *ngFor="let data of storeMasterListModels|search_by_key:'name': search_byLocation.value" [value]="data.id.toString()">{{data.name}} ( {{data.id}} )</mat-option>
+            </mat-select>
+            <mat-error *ngIf="registerForm.get('store_code').hasError('required')">
+              User Store Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="registerForm.get('is_ho').value" class="formcontollclass" appearance="outline"  style="width: 100%!important;">
+            <mat-label>Cluster Name</mat-label>
+            <mat-select autocomplete="off" formControlName="store_code">
+              <input #search_byLocation autocomplete="off" class="myInput" focused="'true'" matInput placeholder="Search" type="text">
+              <mat-option *ngFor="let data of cluster_listData|search_by_key:'cluster_name': search_byLocation.value" [value]="data.cluster_name.toString()">{{data.cluster_name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="registerForm.get('store_code').hasError('required')">
+              User Cluster Name is required
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </div>
+    </form>
+
+    <div class="pl-8" fxFlex fxLayout="column" fxLayoutAlign="start">
+<br>
+      <div fxFlex>
+        <button *ngIf="this.data.flag.toLowerCase() == 'insert'" (click)="CreateUser()" [disabled]="registerForm.invalid" aria-label="CREATE AN ACCOUNT"
+                color="warn"
+                mat-raised-button
+                style="width: 45%">
+          CREATE AN ACCOUNT
+        </button>
+        <button *ngIf="this.data.flag.toLowerCase() == 'update'" (click)="UpdateUser()" [disabled]="registerForm.invalid" aria-label="UPDATE ACCOUNT"
+                color="warn"
+                mat-raised-button
+                style="width: 45%">
+          UPDATE ACCOUNT
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

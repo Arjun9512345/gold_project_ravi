@@ -1,0 +1,17 @@
+<h1 matDialogTitle>{{confirmMessage}}</h1>
+<div fxLayoutAlign="center" mat-dialog-actions>
+  <div fxFlex fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>{{inputFieldMessage}}</mat-label>
+      <input #inputValue [placeholder]="inputFieldMessage" matInput>
+    </mat-form-field>
+    <div fxLayout="row">
+      <button (click)="dialogRef.close({condition:'true',message:inputValue.value})" class="mat-accent mr-16"
+              mat-raised-button>{{addbutton}}
+      </button>
+      <button (click)="dialogRef.close(false)" color="warn" mat-raised-button>Cancel</button>
+    </div>
+  </div>
+
+</div>
+

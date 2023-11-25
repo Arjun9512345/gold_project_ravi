@@ -1,0 +1,35 @@
+@import "src/@pristine/scss/pristine";
+.customer_history_page {
+  #mydataOfCustomer{
+    table {
+      width: 100%;
+    }
+
+    .tablestyle {
+      border-collapse: collapse;
+    }
+
+    th {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ebeff5;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ebeff5;
+      //vertical-align:middle;
+      // border-bottom: solid 1px rgba(255,255,255,0.1);
+    }
+
+    tr:nth-child(even) {
+      //background-color: #f5f7fc;
+    }
+
+    tr:hover {
+      background-color: rgba(231, 231, 231, 0.12);
+    }
+
+  }
+
+}

@@ -1,0 +1,87 @@
+@import "../../../../../../@pristine/scss/pristine";
+#itemviewPage{
+  .header_button {
+    height: 30px;
+    width: 30px;
+    float: right;
+    line-height: 30px;
+    box-shadow: 1px 1px 1px 1px rgba(170, 170, 170, 0.42);
+
+    .mat-icon {
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      font-size: 20px;
+    }
+  }
+  .image_main_section{
+    min-height: 450px;
+    max-height: 550px;
+    img{
+      min-height: 450px;
+      max-height: 550px;
+      object-fit: cover;
+    }
+  }
+  .other_image_section{
+    min-height: 100px;
+    max-height: 200px;
+    padding: 15px;
+    border-right: solid 1px rgba(0, 0, 0, 0.12);
+    img{
+      min-height: 85px;
+      max-height: 185px;
+      object-fit: cover;
+    }
+  }
+  .other_image_section4{
+    min-height: 100px;
+    max-height: 200px;
+    padding: 15px;
+    img{
+      min-height: 85px;
+      max-height: 185px;
+      object-fit: cover;
+    }
+  }
+
+  .other_image_section img:hover,.other_image_section4 img:hover{
+    transform: translateY(-8px);
+    transition: 0.5s ease-out;
+    border: solid 1px rgba(221, 53, 53, 0.68);
+    box-shadow: 0px 0px 8px rgba(239, 64, 35, 0.85);
+  }
+
+}
+
+#mydata{
+  table {
+    width: 100%;
+  }
+
+  .tablestyle {
+    border-collapse: collapse;
+  }
+
+  th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ebeff5;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #ebeff5;
+    //vertical-align:middle;
+    // border-bottom: solid 1px rgba(255,255,255,0.1);
+  }
+
+  tr:nth-child(even) {
+    //background-color: #f5f7fc;
+  }
+
+  tr:hover {
+    background-color: rgba(231, 231, 231, 0.12);
+  }
+
+}
